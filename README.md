@@ -28,7 +28,7 @@
 Please run the following commands to host a server:
 
 ```
-git clone https://gitlab.com/nightnetwork/infrared.git
+git clone https://github.com/OGsWorkshop/Infrared.Git
 cd Infrared
 pnpm i
 pnpm start
@@ -44,7 +44,7 @@ git pull --force --allow-unrelated-histories
 
 > [!NOTE]
 > If you'd like to get links, support, or other deployment methods join
-> our [Discord Server]([https://discord.infrared.app](https://discord.gg/yTmmCFv59Q)) or open a discussion.
+> our [Discord Server](https://discord.gg/yTmmCFv59Q)) or open a discussion.
 
 ## Contribution
 
