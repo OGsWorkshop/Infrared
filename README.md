@@ -58,4 +58,4 @@ Thank you to the following people for contributing to Infrared.
 
 ## Discord
 
-[Discord](https://discord.infrared.app)
+[Discord](https://discord.gg/yTmmCFv59Q)
