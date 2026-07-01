@@ -117,7 +117,7 @@
 	animation: baractiveani 10s linear infinite;
 	width: 3px;
 	height: 35px;
-	background: hsl(270, 100%, 50%);
+	background: hsl(0, 100%, 50%);
 	border-top-right-radius: 999px;
 	border-bottom-right-radius: 999px;
 	margin-left: -20px;
@@ -755,7 +755,7 @@ p {
 }
 
 p a {
-	background: #7400ff;
+	background: #cc0000;
 	background: linear-gradient(
 		to top left,
 		var(--dshadow4) 0%,
@@ -774,7 +774,7 @@ p a:hover {
 }
 
 .settingsection li a {
-	background: #7400ff;
+	background: #cc0000;
 	background: linear-gradient(
 		to top left,
 		var(--dshadow4) 0%,

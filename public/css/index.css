@@ -3,8 +3,8 @@
 
 :root {
 	--background-color: #000;
-	--header-active-background-color: rgba(140, 0, 255, 0.55);
-	--header-hover-background-color: rgba(140, 0, 255, 0.13);
+	--header-active-background-color: rgba(232, 0, 0, 0.55);
+	--header-hover-background-color: rgba(232, 0, 0, 0.13);
 	--input-background-color: #0a0a0a;
 	--border-color: #525252;
 	--text-color: #ffffff;
@@ -17,12 +17,12 @@
 	--page-text-color: rgba(82, 82, 82, 0.97);
 	--shortcut-background-color: #fff;
 	--shortcut-box-shadow: 0 0 20px 1px #fff;
-	--image-outline-color: #4400ff;
-	--button-background-color: #4400ff;
+	--image-outline-color: #e80000;
+	--button-background-color: #e80000;
 	--button-gradient-color: linear-gradient(
 		304deg,
-		rgb(204, 0, 245) 0%,
-		#4400ff 100%
+		rgb(255, 0, 34) 0%,
+		#e80000 100%
 	);
 	--scrolltop-background-color: rgba(32, 32, 32, 0.37);
 	--scrolltop-backdrop-filter: blur(10px);
@@ -31,7 +31,7 @@
 	--random-btn-active-background-color: rgb(15, 15, 15);
 	--settingsection-background-color: #0c0c0c;
 	--settingsection-background-color-hover: #101010;
-	--link-hover-color: #7d2ae8;
+	--link-hover-color: #e8202a;
 	--settingsection-hr-background: rgba(255, 255, 255, 0.22);
 	--button-reg-background-color: rgb(22, 22, 22);
 	--button-reg-hover-background-color: rgb(25, 25, 25);
@@ -54,11 +54,11 @@
 	);
 	--slider-background-color: #d84f68;
 	--slider-box-shadow: inset 1px 1px 2px 0px #ff7ca7;
-	--checkbox-background-color: rgb(255, 169, 250);
+	--checkbox-background-color: rgb(255, 150, 150);
 	--checkbox-gradient: linear-gradient(
 		126deg,
-		rgba(255, 169, 250, 1) 0%,
-		rgba(73, 24, 255, 1) 100%
+		rgba(255, 150, 150, 1) 0%,
+		rgba(200, 0, 0, 1) 100%
 	);
 	--password-background-color: #252525;
 	--password-hover-background-color: #181818;
@@ -67,32 +67,32 @@
 	--color-header: '#fff';
 	--accent-color: linear-gradient(
 		101deg,
-		#4400ff7e 0%,
-		rgba(242, 0, 255, 0.336) 100%
+		#e800007e 0%,
+		rgba(255, 34, 0, 0.336) 100%
 	) !important;
 	--color-header: #ff0000 !important;
-	--dshadow1: #ae00ff;
-	--dshadow2: #4400ff;
-	--dshadow3: #ff00d4;
-	--dshadow4: #8400ff;
+	--dshadow1: #ff0011;
+	--dshadow2: #e80000;
+	--dshadow3: #ff2200;
+	--dshadow4: #e80000;
 }
 
-	background: rgba(247, 0, 255, 0.514) !important;
+	background: rgba(232, 0, 0, 0.514) !important;
 	background: linear-gradient(
 		101deg,
-		#4400ff7e 0%,
-		rgba(242, 0, 255, 0.336) 100%
+		#e800007e 0%,
+		rgba(255, 34, 0, 0.336) 100%
 	) !important;
 	backdrop-filter: blur(7px);
 	opacity: 0.9;
 }
 
 .flex.flex-1.justify-between.relative.z-10.px-5.py-5.sm\:px-8 {
-	background: rgba(247, 0, 255, 0.514) !important;
+	background: rgba(232, 0, 0, 0.514) !important;
 	background: linear-gradient(
 		101deg,
-		#4400ff7e 0%,
-		rgba(242, 0, 255, 0.336) 100%
+		#e800007e 0%,
+		rgba(255, 34, 0, 0.336) 100%
 	) !important;
 	backdrop-filter: blur(7px) !important;
 	opacity: 0.9 !important;

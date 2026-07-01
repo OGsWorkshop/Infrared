@@ -225,7 +225,7 @@
 }
 
 .spinner {
-	background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(76, 0, 255));
+	background-image: linear-gradient(rgb(255, 50, 50) 35%, rgb(200, 0, 0));
 	width: 100px;
 	height: 100px;
 	animation: spinning 1.7s linear infinite;
@@ -237,8 +237,8 @@
 	border-radius: 50px;
 	filter: blur(1px);
 	box-shadow:
-		0px -5px 20px 0px rgb(186, 66, 255),
-		0px 5px 20px 0px rgb(76, 0, 255);
+		0px -5px 20px 0px rgb(255, 50, 50),
+		0px 5px 20px 0px rgb(200, 0, 0);
 }
 
 .spinner1 {

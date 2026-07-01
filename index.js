@@ -43,7 +43,7 @@ server.on('upgrade', (req, socket, head) => {
 
 server.on('listening', () => {
 	const address = server.address();
-	const theme = chalk.hex('#8F00FF');
+	const theme = chalk.hex('#E80000');
 	const host = chalk.hex('0d52bd');
 	console.log(
 		chalk.bold(
