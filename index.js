@@ -5,11 +5,11 @@ import path from 'node:path';
 import { hostname } from 'node:os';
 import chalk from 'chalk';
 import { uvPath } from '@titaniumnetwork-dev/ultraviolet';
-import { epoxyPath } from '@OGsWorkshop/epoxy-transport';
-import { libcurlPath } from '@OGsWorkshop/libcurl-transport';
-import { baremuxPath } from '@OGsWorkshop/bare-mux/node';
-import { scramjetPath } from '@OGsWorkshop/scramjet/path';
-import { server as wisp } from '@OGsWorkshop/wisp-js/server';
+import { epoxyPath } from '@mercuryworkshop/epoxy-transport';
+import { libcurlPath } from '@mercuryworkshop/libcurl-transport';
+import { baremuxPath } from '@mercuryworkshop/bare-mux/node';
+import { scramjetPath } from '@mercuryworkshop/scramjet/path';
+import { server as wisp } from '@mercuryworkshop/wisp-js/server';
 import routes from './src/routes.js';
 
 const server = http.createServer();
