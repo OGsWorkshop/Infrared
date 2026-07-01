@@ -1,5 +1,5 @@
 <div align="center">
-        <img src="https://i.imgur.com/OMo4cMz.png" style="width: 1200px"/>
+        <img src="https://i.imgur.com/THCaiVp.png" style="width: 1200px"/>
     <h2>Launch into Infrared, the next gen proxy.</h2>
 </div>
 
