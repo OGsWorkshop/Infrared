@@ -1,10 +1,10 @@
 # Security & Supported versions
 
-> Supported versions of Space are as followed:
+> Supported versions of Infrared are as followed:
 
 | Version | Supported |
 | ------- | --------- |
-| v1.0.0  | ✅ Yes    |
+| v1.0.0  | âœ… Yes    |
 
 ## Why?
 
@@ -14,10 +14,10 @@ repository.
 
 # Current Version
 
-The current version of Space is **v1.0.0**
+The current version of Infrared is **v1.0.0**
 
 > [!IMPORTANT]
-> If you do not have the current version of Space please update
+> If you do not have the current version of Infrared please update
 > your repository or things may not function correctly.
 
 # Support
@@ -25,4 +25,4 @@ The current version of Space is **v1.0.0**
 If you are having issues with your repository and/or its versions, you can
 submit a discussion or open a ticket in our
 [Discord](https://discord.infrared.app) and we will try to reach you ASAP.
-Thank you for using Space.
+Thank you for using Infrared.

@@ -1,4 +1,4 @@
-# Contributing to Space
+# Contributing to Infrared
 
 First of all, thanks for taking interest in the project!
 
