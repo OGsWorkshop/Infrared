@@ -24,5 +24,5 @@ The current version of Infrared is **v1.0.0**
 
 If you are having issues with your repository and/or its versions, you can
 submit a discussion or open a ticket in our
-[Discord](https://discord.infrared.app) and we will try to reach you ASAP.
+[Discord](https://discord.gg/yTmmCFv59Q) and we will try to reach you ASAP.
 Thank you for using Infrared.
