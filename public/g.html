@@ -10,7 +10,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DTW1KTNCF"></script>
 	<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-3DTW1KTNCF');</script>
 	<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-	<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..400,0..1" />
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
@@ -25,18 +25,20 @@
 		<div class="failtoast-progress"></div>
 	</div>
 
-	<nav class="topnav">
-		<div class="topnav-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a><span class="topnav-logo-text">Infrared</span></div>
-		<div class="topnav-links" id="topnavLinks">
-			<a href="/" class="topnav-link"><span class="material-symbols-outlined">cottage</span> Home</a>
-			<a href="/g" class="topnav-link active"><span class="material-symbols-outlined">joystick</span> Games</a>
-			<a href="/a" class="topnav-link"><span class="material-symbols-outlined">apps</span> Apps</a>
-			<a href="/&" class="topnav-link"><span class="material-symbols-outlined">public</span> Browser</a>
-			<a href="/~" class="topnav-link"><span class="material-symbols-outlined">tune</span> Settings</a>
+	<nav class="sidebar">
+		<div class="sidebar-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a><span class="sidebar-logo-text">Infrared</span></div>
+		<div class="sidebar-nav">
+			<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span>Home</span></a>
+			<a href="/g" class="sidebar-link active"><span class="material-symbols-outlined">joystick</span><span>Games</span></a>
+			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span>Apps</span></a>
+			<a href="/&" class="sidebar-link"><span class="material-symbols-outlined">public</span><span>Browser</span></a>
 		</div>
-		<div class="topnav-right">
-			<a href="https://discord.infrared.app" target="_blank" class="topnav-discord"><i class="fa-brands fa-discord"></i> Discord</a>
-			<button class="topnav-hamburger" id="hamburgerBtn" aria-label="Menu"><span class="material-symbols-outlined">menu</span></button>
+		<div class="sidebar-divider"></div>
+		<div class="sidebar-nav">
+			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span>Settings</span></a>
+		</div>
+		<div class="sidebar-bottom">
+			<a href="https://discord.gg/infrared" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span>Discord</span></a>
 		</div>
 	</nav>
 
@@ -45,22 +47,14 @@
 		<div class="bg-orb bg-orb-2"></div>
 		<div class="bg-orb bg-orb-3"></div>
 		<div class="bg-grid"></div>
-
 		<div class="page-container">
 			<div class="page-header">
 				<h1 class="page-title">Games</h1>
 				<div class="search-bar">
-					<div class="search-input-wrapper">
-						<span class="material-symbols-outlined search-input-icon" style="font-size:20px">search</span>
-						<input type="text" class="search-input gameSearchInput" placeholder="Search games..." />
-					</div>
-					<button class="random-btn">
-						<span class="material-symbols-outlined" style="font-size:18px">shuffle</span>
-						Random
-					</button>
+					<div class="search-input-wrapper"><span class="material-symbols-outlined search-input-icon" style="font-size:20px">search</span><input type="text" class="search-input gameSearchInput" placeholder="Search games..." /></div>
+					<button class="random-btn"><span class="material-symbols-outlined" style="font-size:18px">shuffle</span>Random</button>
 				</div>
 			</div>
-
 			<div class="category-tabs" id="gameCatTabs">
 				<button class="category-tab active" data-cat="all">All</button>
 				<button class="category-tab" data-cat="action">Action</button>
@@ -73,24 +67,14 @@
 				<button class="category-tab" data-cat="retro">Retro</button>
 				<button class="category-tab" data-cat="popular">Popular</button>
 			</div>
-
-			<div class="bento-grid gameContain" id="gameGrid">
-				<div class="empty-state" id="gameEmpty" style="display:none">
-					<span class="material-symbols-outlined empty-state-icon">sports_esports</span>
-					<h3>No games found</h3>
-					<p>Try a different search or category</p>
-				</div>
-			</div>
+			<div class="bento-grid gameContain" id="gameGrid"></div>
 		</div>
 	</div>
-
 	<div class="scrolltop" id="scrollTopBtn"><span class="material-symbols-outlined">arrow_upward</span></div>
 
 	<script src="/js/themes.js"></script>
 	<script src="/js/c.js"></script>
 	<script src="/js/json-loader.js"></script>
-	<script>
-		let CLF_config = { app_id: '163a312a-7cde-41ab-a80c-cb4cf281efdf', data: { user_id: '123456', user_email: 'user@email.com', user_name: 'User Name', custom_data: { JobRole: 'CEO', Plan: 'Pro', teamMates: '4', MonthlySpend: '50 USD' } } };
-	</script>
+	<script>let CLF_config={app_id:'163a312a-7cde-41ab-a80c-cb4cf281efdf',data:{user_id:'123456',user_email:'user@email.com',user_name:'User Name',custom_data:{JobRole:'CEO',Plan:'Pro',teamMates:'4',MonthlySpend:'50 USD'}}};</script>
 </body>
 </html>

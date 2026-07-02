@@ -10,7 +10,7 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DTW1KTNCF"></script>
 	<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-3DTW1KTNCF');</script>
 	<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-	<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..400,0..1" />
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
@@ -30,51 +30,50 @@
 		<div class="failtoast-progress"></div>
 	</div>
 
-	<nav class="topnav" style="border-bottom-color:var(--theme-border)">
-		<div class="topnav-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a><span class="topnav-logo-text">Infrared</span></div>
-		<div class="topnav-links" id="topnavLinks">
-			<a href="/" class="topnav-link"><span class="material-symbols-outlined">cottage</span> Home</a>
-			<a href="/g" class="topnav-link"><span class="material-symbols-outlined">joystick</span> Games</a>
-			<a href="/a" class="topnav-link"><span class="material-symbols-outlined">apps</span> Apps</a>
-			<a href="/&" class="topnav-link active"><span class="material-symbols-outlined">public</span> Browser</a>
-			<a href="/~" class="topnav-link"><span class="material-symbols-outlined">tune</span> Settings</a>
+	<nav class="sidebar">
+		<div class="sidebar-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a><span class="sidebar-logo-text">Infrared</span></div>
+		<div class="sidebar-nav">
+			<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span>Home</span></a>
+			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span>Games</span></a>
+			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span>Apps</span></a>
+			<a href="/&" class="sidebar-link active"><span class="material-symbols-outlined">public</span><span>Browser</span></a>
 		</div>
-		<div class="topnav-right">
-			<a href="https://discord.infrared.app" target="_blank" class="topnav-discord"><i class="fa-brands fa-discord"></i> Discord</a>
-			<button class="topnav-hamburger" id="hamburgerBtn" aria-label="Menu"><span class="material-symbols-outlined">menu</span></button>
+		<div class="sidebar-divider"></div>
+		<div class="sidebar-nav">
+			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span>Settings</span></a>
+		</div>
+		<div class="sidebar-bottom">
+			<a href="https://discord.gg/infrared" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span>Discord</span></a>
 		</div>
 	</nav>
 
-	<div class="browser-page">
-		<div class="browser-toolbar utilityBar" id="utilityBar">
-			<button class="browser-nav-btn backButton" id="backBtn" disabled><span class="material-symbols-outlined">arrow_back</span></button>
-			<button class="browser-nav-btn forwardButton" id="fwdBtn" disabled><span class="material-symbols-outlined">arrow_forward</span></button>
-			<button class="browser-nav-btn refreshButton" id="refreshBtn"><span class="material-symbols-outlined">refresh</span></button>
-			<div class="browser-url-bar">
-				<span class="browser-url-secure webSecurityIcon" id="securityIcon"><span class="material-symbols-outlined" style="font-size:16px">lock</span></span>
-				<input type="text" class="browser-url-input" id="gointoinfrared2" placeholder="Enter search or web address" />
-			</div>
-			<button class="browser-nav-btn homeButton" id="homeBtn" title="Home"><span class="material-symbols-outlined">cottage</span></button>
-			<button class="browser-nav-btn" onclick="inspectelement()" title="Dev Tools"><span class="material-symbols-outlined">code</span></button>
-			<button class="browser-nav-btn fullscreenButton" id="fullscreenBtn" title="Fullscreen"><span class="material-symbols-outlined">fullscreen</span></button>
-			<a href="/~/#/proxy" class="browser-nav-btn" title="Proxy Settings"><span class="material-symbols-outlined">instant_mix</span></a>
-		</div>
-
-		<div class="browser-iframe-wrapper">
-			<div class="browser-home" id="browserHome">
-				<div class="browser-home-search">
-					<span class="material-symbols-outlined" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px">search</span>
-					<input type="text" id="gointoinfrared" placeholder="Search or enter website URL..." />
+	<div class="main-content">
+		<div class="browser-page">
+			<div class="browser-toolbar utilityBar" id="utilityBar">
+				<button class="browser-nav-btn backButton" id="backBtn" disabled><span class="material-symbols-outlined">arrow_back</span></button>
+				<button class="browser-nav-btn forwardButton" id="fwdBtn" disabled><span class="material-symbols-outlined">arrow_forward</span></button>
+				<button class="browser-nav-btn refreshButton" id="refreshBtn"><span class="material-symbols-outlined">refresh</span></button>
+				<div class="browser-url-bar">
+					<span class="browser-url-secure webSecurityIcon" id="securityIcon"><span class="material-symbols-outlined" style="font-size:16px">lock</span></span>
+					<input type="text" class="browser-url-input" id="gointoinfrared2" placeholder="Enter search or web address" />
 				</div>
-				<div class="browser-shortcuts-big shortcutsBig" style="display:none"></div>
-				<div class="browser-shortcuts shortcuts"></div>
+				<button class="browser-nav-btn homeButton" id="homeBtn" title="Home"><span class="material-symbols-outlined">cottage</span></button>
+				<button class="browser-nav-btn" onclick="inspectelement()" title="Dev Tools"><span class="material-symbols-outlined">code</span></button>
+				<button class="browser-nav-btn fullscreenButton" id="fullscreenBtn" title="Fullscreen"><span class="material-symbols-outlined">fullscreen</span></button>
+				<a href="/~/#/proxy" class="browser-nav-btn" title="Proxy Settings"><span class="material-symbols-outlined">instant_mix</span></a>
 			</div>
-			<iframe id="intoinfrared" class="browser-iframe" style="display:none" frameborder="0"></iframe>
+			<div class="browser-iframe-wrapper">
+				<div class="browser-home" id="browserHome">
+					<div class="browser-home-search"><span class="material-symbols-outlined" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px">search</span><input type="text" id="gointoinfrared" placeholder="Search or enter website URL..." /></div>
+					<div class="browser-shortcuts-big shortcutsBig" style="display:none"></div>
+					<div class="browser-shortcuts shortcuts"></div>
+				</div>
+				<iframe id="intoinfrared" class="browser-iframe" style="display:none" frameborder="0"></iframe>
+			</div>
 		</div>
 	</div>
 
 	<div class="spinner-wrapper" id="spinnerWrapper"><div class="spinner-ring"></div></div>
-
 	<div class="bg-orb bg-orb-1"></div>
 	<div class="bg-orb bg-orb-2"></div>
 	<div class="bg-orb bg-orb-3"></div>
@@ -85,8 +84,6 @@
 	<script src="/js/c.js"></script>
 	<script src="/js/p.js"></script>
 	<script src="/js/&.js"></script>
-	<script>
-		let CLF_config = { app_id: '163a312a-7cde-41ab-a80c-cb4cf281efdf', data: { user_id: '123456', user_email: 'user@email.com', user_name: 'User Name', custom_data: { JobRole: 'CEO', Plan: 'Pro', teamMates: '4', MonthlySpend: '50 USD' } } };
-	</script>
+	<script>let CLF_config={app_id:'163a312a-7cde-41ab-a80c-b4cf281efdf',data:{user_id:'123456',user_email:'user@email.com',user_name:'User Name',custom_data:{JobRole:'CEO',Plan:'Pro',teamMates:'4',MonthlySpend:'50 USD'}}};</script>
 </body>
 </html>

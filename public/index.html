@@ -8,64 +8,41 @@
 	<meta property="og:image" content="/assets/logo.webp" />
 	<meta name="google-adsense-account" content="ca-pub-3747175608041884" />
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DTW1KTNCF"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-3DTW1KTNCF');
-	</script>
+	<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-3DTW1KTNCF');</script>
 	<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-	<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..400,0..1" />
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
-	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+	<script src="https://unpkg.com/lucide@latest"></script>
 	<title>Infrared - Next Gen Proxy</title>
 	<link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
 </head>
 <body>
 	<script src="/js/localforage.min.js"></script>
 	<div class="failtoast" id="failtoast">
-		<div class="failtoast-content">
-			<i class="fa fa-solid fa-circle-exclamation"></i>
-			<div class="failtoast-message">
-				<span class="text-1">Failed</span>
-				<span class="text-2">Something went wrong. Please try again.</span>
-			</div>
-		</div>
+		<div class="failtoast-content"><i class="fa fa-solid fa-circle-exclamation"></i><div class="failtoast-message"><span class="text-1">Failed</span><span class="text-2">Something went wrong. Please try again.</span></div></div>
 		<i class="fa-solid fa-xmark failtoast-close" onclick="this.parentElement.classList.remove('active')"></i>
 		<div class="failtoast-progress"></div>
 	</div>
 
-	<nav class="topnav">
-		<div class="topnav-logo">
+	<nav class="sidebar">
+		<div class="sidebar-logo">
 			<a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a>
-			<span class="topnav-logo-text">Infrared</span>
+			<span class="sidebar-logo-text">Infrared</span>
 		</div>
-		<div class="topnav-links" id="topnavLinks">
-			<a href="/" class="topnav-link active" data-page="home">
-				<span class="material-symbols-outlined">cottage</span> Home
-			</a>
-			<a href="/g" class="topnav-link" data-page="games">
-				<span class="material-symbols-outlined">joystick</span> Games
-			</a>
-			<a href="/a" class="topnav-link" data-page="apps">
-				<span class="material-symbols-outlined">apps</span> Apps
-			</a>
-			<a href="/&" class="topnav-link" data-page="browser">
-				<span class="material-symbols-outlined">public</span> Browser
-			</a>
-			<a href="/~" class="topnav-link" data-page="settings">
-				<span class="material-symbols-outlined">tune</span> Settings
-			</a>
+		<div class="sidebar-nav">
+			<a href="/" class="sidebar-link active"><span class="material-symbols-outlined">cottage</span><span>Home</span></a>
+			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span>Games</span></a>
+			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span>Apps</span></a>
+			<a href="/&" class="sidebar-link"><span class="material-symbols-outlined">public</span><span>Browser</span></a>
 		</div>
-		<div class="topnav-right">
-			<a href="https://discord.infrared.app" target="_blank" class="topnav-discord">
-				<i class="fa-brands fa-discord"></i> Discord
-			</a>
-			<button class="topnav-hamburger" id="hamburgerBtn" aria-label="Menu">
-				<span class="material-symbols-outlined">menu</span>
-			</button>
+		<div class="sidebar-divider"></div>
+		<div class="sidebar-nav">
+			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span>Settings</span></a>
+		</div>
+		<div class="sidebar-bottom">
+			<a href="https://discord.gg/infrared" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span>Discord</span></a>
 		</div>
 	</nav>
 
@@ -77,82 +54,48 @@
 
 		<div class="hero">
 			<div class="hero-text">
-				<div class="hero-badge">
-					<i data-lucide="sparkles" style="width:14px;height:14px"></i>
-					Next Generation Proxy
+				<h1 class="hero-title">Unblock <span class="accent" id="typewriterText">everything</span><span class="cursor"></span></h1>
+				<div style="margin:24px 0">
+					<div class="browser-home-search" style="max-width:500px">
+						<span class="material-symbols-outlined" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px">search</span>
+						<input type="text" id="homeSearchBar" placeholder="Search or enter a URL..." style="width:100%;padding:16px 20px 16px 50px;background:var(--theme-input-bg);border:1px solid var(--theme-input-border);border-radius:var(--radius-lg);color:var(--theme-text);font-size:16px;outline:none;font-family:var(--font-primary);transition:all var(--transition-fast)" />
+					</div>
 				</div>
-				<h1 class="hero-title">
-					Welcome to<br>
-					<span class="accent" id="typewriterText">Infrared</span><span class="cursor"></span>
-				</h1>
-				<p class="hero-subtitle">
-					Unblock everything. Browse freely with enterprise-grade proxy technology.
-					Fast, private, and beautiful.
-				</p>
-				<div class="hero-actions">
-					<a href="/&" class="btn-primary">
-						Get Started
-						<span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span>
-					</a>
-					<a href="/g" class="btn-ghost">
-						<span class="material-symbols-outlined" style="font-size:18px">joystick</span>
-						Browse Games
-					</a>
-				</div>
+				<div class="browser-shortcuts shortcuts" style="justify-content:flex-start;gap:12px;max-width:500px"></div>
 			</div>
 			<div class="hero-visual">
-				<div class="hero-card featured" onclick="location.href='/&?q=Google'">
-					<div class="hero-card-icon" style="background:var(--theme-accent-glow)">
-						<span class="material-symbols-outlined">public</span>
-					</div>
-					<div class="hero-card-info">
-						<h4>Start Browsing</h4>
-						<span>Open any website through the proxy</span>
-					</div>
+				<div class="hero-card featured" onclick="location.href='/&'">
+					<div class="hero-card-icon" style="background:var(--theme-accent-glow)"><span class="material-symbols-outlined">public</span></div>
+					<div class="hero-card-info"><h4>Start Browsing</h4><span>Open any site through the proxy</span></div>
 				</div>
-				<div class="hero-card" onclick="location.href='/g'">
-					<div class="hero-card-icon" style="background:var(--theme-accent-glow)">
-						<span class="material-symbols-outlined">joystick</span>
-					</div>
-					<div class="hero-card-info">
-						<h4>Games</h4>
-						<span>100+ titles</span>
-					</div>
-				</div>
-				<div class="hero-card" onclick="location.href='/a'">
-					<div class="hero-card-icon" style="background:var(--theme-accent-glow)">
-						<span class="material-symbols-outlined">apps</span>
-					</div>
-					<div class="hero-card-info">
-						<h4>Apps</h4>
-						<span>Proxied services</span>
-					</div>
-				</div>
+				<div class="hero-card" onclick="location.href='/g'"><div class="hero-card-icon" style="background:var(--theme-accent-glow)"><span class="material-symbols-outlined">joystick</span></div><div class="hero-card-info"><h4>Games</h4><span>328 titles</span></div></div>
+				<div class="hero-card" onclick="location.href='/a'"><div class="hero-card-icon" style="background:var(--theme-accent-glow)"><span class="material-symbols-outlined">apps</span></div><div class="hero-card-info"><h4>Apps</h4><span>80+ services</span></div></div>
 			</div>
 		</div>
 	</div>
 
-	<script src="https://unpkg.com/lucide@latest"></script>
 	<script src="/js/themes.js"></script>
 	<script src="/js/c.js"></script>
 	<script>
 		lucide.createIcons();
-		var words = ['Infrared', 'freedom', 'exploration', 'privacy', 'speed', 'possibility'];
-		var i = 0, j = 0, isDeleting = false;
-		var el = document.getElementById('typewriterText');
-		function type() {
-			var word = words[i];
-			el.textContent = isDeleting ? word.substring(0, j-1) : word.substring(0, j+1);
-			j += isDeleting ? -1 : 1;
-			if (!isDeleting && j === word.length) { setTimeout(function(){ isDeleting = true; type(); }, 2000); return; }
-			if (isDeleting && j === 0) { isDeleting = false; i = (i+1) % words.length; }
-			setTimeout(type, isDeleting ? 50 : 100 + Math.random() * 80);
-		}
-		type();
+		var words=['everything','freedom','any site','games','privacy','speed'];
+		var i=0,j=0,del=false,el=document.getElementById('typewriterText');
+		function type(){var w=words[i];el.textContent=del?w.substring(0,j-1):w.substring(0,j+1);j+=del?-1:1;if(!del&&j===w.length){setTimeout(function(){del=true;type()},2000);return}if(del&&j===0){del=false;i=(i+1)%words.length}setTimeout(type,del?50:100+Math.random()*80)}type();
+
+		document.getElementById('homeSearchBar').addEventListener('keydown',function(e){if(e.key==='Enter'){location.href='/&?q='+encodeURIComponent(this.value)}});
+
+		fetch('/json/s.json').then(function(r){return r.json()}).then(function(data){
+			var c=document.querySelector('.shortcuts');
+			data.forEach(function(s){
+				var a=document.createElement('a');
+				a.href=s.name.toLowerCase()==='settings'?'/~':'/&?q='+encodeURIComponent(s.name);
+				var d=document.createElement('div');d.className='browser-shortcut';if(s.bg)d.style.backgroundColor=s.bg;
+				var img=document.createElement('img');img.src=s.img;img.alt=s.name;img.onerror=function(){this.src='/assets/default.png'};
+				d.appendChild(img);a.appendChild(d);c.appendChild(a)
+			})
+		});
 	</script>
-	<script>
-		let CLF_config = { app_id: '163a312a-7cde-41ab-a80c-cb4cf281efdf', data: { user_id: '123456', user_email: 'user@email.com', user_name: 'User Name', custom_data: { JobRole: 'CEO', Plan: 'Pro', teamMates: '4', MonthlySpend: '50 USD' } } };
-	</script>
+	<script>let CLF_config={app_id:'163a312a-7cde-41ab-a80c-cb4cf281efdf',data:{user_id:'123456',user_email:'user@email.com',user_name:'User Name',custom_data:{JobRole:'CEO',Plan:'Pro',teamMates:'4',MonthlySpend:'50 USD'}}};</script>
 	<script src="https://pl29046858.profitablecpmratenetwork.com/59/2d/fa/592dfab1692cc524d861443567c7b621.js"></script>
 </body>
 </html>

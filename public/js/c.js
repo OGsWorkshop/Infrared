@@ -1,21 +1,6 @@
 // Global configuration - loaded on every page
 localforage.setItem('e', 'e');
 
-// Hamburger menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-	var hamburger = document.getElementById('hamburgerBtn');
-	var links = document.getElementById('topnavLinks');
-	if (hamburger && links) {
-		hamburger.addEventListener('click', function() {
-			links.classList.toggle('open');
-		});
-	}
-	// Close mobile menu on link click
-	links.querySelectorAll('.topnav-link').forEach(function(link) {
-		link.addEventListener('click', function() { links.classList.remove('open'); });
-	});
-});
-
 // Cloaking
 function isInLocalStorage(key) { return localStorage.getItem(key) !== null; }
 
