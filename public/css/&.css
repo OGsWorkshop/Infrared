@@ -1,216 +1,250 @@
 #utilityactive {
-	background: var(--accent);
-	color: #fff !important;
-	border-radius: 6px;
-}
-
-.utility {
-	list-style: none;
-	padding: 6px 10px;
-	margin: 0;
-	width: calc(100% - var(--navbar-w) - 40px);
-	height: 48px;
-	background: var(--bg-glass);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
-	position: fixed;
-	left: calc(var(--navbar-w) + 16px);
-	top: 12px;
-	border-radius: var(--radius-md);
-	border: 1px solid var(--border-subtle);
-	box-shadow: var(--shadow-sm);
-	display: flex;
-	align-items: center;
-	gap: 4px;
-	z-index: 2147483641;
-}
-
-.utility li {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.utility span.material-symbols-outlined {
-	font-size: 18px;
-	padding: 6px;
-	margin: 0;
-	color: var(--text-tertiary);
-	border-radius: 6px;
-	transition: all 0.15s ease;
-	cursor: pointer;
-}
-
-.utility span.material-symbols-outlined:hover {
-	background: var(--bg-glass-hover);
-	color: var(--text-primary);
+	background-color: var(--header-active-background-color);
+	border-radius: 7px;
 }
 
 .utility .utilityIcon:hover {
-	background: var(--bg-glass-hover);
-	border-radius: 6px;
+	background-color: var(--header-hover-background-color);
+	border-radius: 7px;
+	transition: 0.2s all ease-in-out;
+}
+
+.utility span {
+	transition: 0.2s all ease-in-out;
+	padding: 100px;
+}
+
+.utility .search-header__input {
+	font-family: 'DM Sans';
+	font-size: 16px;
+	background-color: var(--input-background-color);
+	border: solid 0.5px var(--border-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border-radius: 25px;
+	min-width: 240px;
+	height: 20px;
+	transition: all ease-in-out 0.5s;
+	margin-right: -2rem;
+	opacity: 1;
+	text-align: left;
+}
+
+.utility .search-header__input:hover,
+.utility .search-header__input:focus {
+	box-shadow: none;
+	padding: 0.5rem 1rem;
+}
+
+.utility span.material-symbols-outlined {
+	font-size: 20px;
+	margin: 0;
+	padding: 8px;
+	color: var(--text-color);
+}
+
+.utility {
+	list-style-type: none;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin: 0;
+	direction: ltr;
+	width: calc(100% - 2.5rem - 9px);
+	height: 3.633em;
+	background-color: var(--utility-background-color);
+	position: fixed;
+	text-align: center;
+	box-shadow: 1.5px 1px 1px 0 var(--utility-shadow-color);
+	z-index: 2147483641;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	left: calc(2.5rem + 9px);
+}
+
+.utility li {
+	display: inline-block;
+	margin-left: 2px;
+	margin-right: 2px;
+	transition: 0.2s all ease-in-out;
+}
+
+.utility li:first-child {
+	margin-left: 0;
 }
 
 .utility hr {
 	width: 1px;
-	height: 24px;
-	background: var(--border-subtle);
+	height: 35px;
+	background: var(--hr-background);
 	border: none;
-	margin: 0 6px;
-	flex-shrink: 0;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 #gointoinfrared2 {
-	font-family: 'DM Sans', sans-serif;
-	font-size: 0.85rem;
-	background: transparent;
-	border: 1px solid var(--border-subtle);
-	color: var(--text-secondary);
-	padding: 6px 12px 6px 36px;
-	border-radius: 20px;
-	width: 240px;
-	outline: none;
-	transition: all 0.2s ease;
-}
-
-#gointoinfrared2:focus {
-	border-color: var(--accent);
-	box-shadow: 0 0 0 2px var(--accent-glow);
-	color: var(--text-primary);
-}
-
-#gointoinfrared2:hover {
-	border-color: var(--border-medium);
-	color: var(--text-primary);
+	font-family: 'DM Sans';
+	font-size: 16px;
+	transition: color ease-in-out 0.5s;
+	color: var(--page-text-color);
+	text-overflow: ellipsis;
+	padding-right: 32px;
+	padding-left: 40px;
 }
 
 #gointoinfrared {
-	padding: 6px 12px 6px 36px;
-	font-family: 'DM Sans', sans-serif;
-	font-size: 0.85rem;
-	background: transparent;
-	border: 1px solid var(--border-subtle);
-	color: var(--text-secondary);
-	border-radius: 20px;
-	width: 200px;
-	outline: none;
-	transition: all 0.2s ease;
+	padding-right: 38px;
+	padding-left: 38px;
+	text-overflow: ellipsis;
 }
 
-#gointoinfrared:focus {
-	border-color: var(--accent);
-	box-shadow: 0 0 0 2px var(--accent-glow);
-	color: var(--text-primary);
+#gointoinfrared2:hover {
+	color: var(--hover-text-color);
 }
 
-.refreshButton { transition: transform 0.2s ease; }
-
-.refreshButton:hover {
-	animation: rotateReload 0.3s forwards;
+#gointoinfrared2:active,
+#gointoinfrared2:focus,
+#gointoinfrared2:focus-visible {
+	color: var(--active-text-color);
 }
 
-@keyframes rotateReload {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
+.refreshButton {
+	transition: transform 0.2s ease-in-out;
 }
 
 .backButton,
 .forwardButton {
-	transition: transform 0.2s ease;
-	opacity: 0.4;
+	transition: transform 0.2s ease-in-out;
+	opacity: 0.5;
+}
+
+.refreshButton:hover {
+	animation: rotateReload 0.3s forwards;
+	animation-fill-mode: forwards;
+	animation-direction: alternate;
+}
+
+@keyframes rotateReload {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 .webSecurityIcon {
-	color: var(--text-tertiary);
-	font-size: 14px !important;
-	width: 14px !important;
-	height: 14px !important;
+	position: absolute !important;
+	top: 19px !important;
+	left: 165px !important;
+	color: var(--hover-text-color);
+	height: 16px !important;
+	width: 16px !important;
+	font-size: 16px !important;
 }
 
-/* ─── Proxy shortcuts ─── */
 .shortcutsBig {
-	width: 90%;
-	max-width: 1000px;
+	width: 1000px;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 16px;
+	position: absolute;
+	gap: 20px;
 	justify-content: center;
-	margin: 1em auto 0;
+	margin-top: -3.5em;
+	left: 50vw;
+	transform: translateX(-50%);
 }
 
 .shortcutBig {
 	background: none;
-	border-radius: var(--radius-md);
-	transition: all 0.2s ease;
-}
-
-.shortcutBig img {
-	width: 160px;
-	height: 85px;
-	border-radius: var(--radius-md);
-	object-fit: cover;
-	transition: all 0.2s ease;
-	border: 1px solid var(--border-subtle);
-}
-
-.shortcutBig img:hover {
-	transform: scale(1.06);
-	border-color: var(--border-medium);
-	box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+	align-content: center;
+	justify-content: center;
+	transition: 0.2s ease-in-out;
+	opacity: 1;
+	border-radius: 30px;
 }
 
 .shortcutBigimg {
-	animation: fade-in-bottom 0.5s ease forwards;
+	animation: fade-in-bottom 1s;
 	opacity: 0;
 }
 
+.shortcutBig img {
+	width: 170px;
+	height: 90px;
+	border-radius: 20px;
+	transition: 0.2s ease-in-out !important;
+}
+
+.shortcutBig img:hover {
+	transform: scale(1.1);
+	border-radius: 20px;
+	transition: 0.12s ease;
+	cursor: pointer;
+	transition: 0.2s ease-in-out !important;
+}
+
 .shortcuts {
-	width: 90%;
-	max-width: 500px;
+	width: 500px;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 12px;
+	position: absolute;
+	gap: 29px;
 	justify-content: center;
-	margin: 2.5em auto 0;
+	margin-top: 4.5em;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .shortcut {
-	width: 48px;
-	height: 48px;
-	border-radius: var(--radius-sm);
-	background: var(--bg-glass);
-	border: 1px solid var(--border-subtle);
-	display: flex;
-	align-items: center;
+	width: 50px;
+	height: 50px;
+	border-radius: 23%;
+	background-color: var(--shortcut-background-color);
+	align-content: center;
 	justify-content: center;
-	transition: all 0.2s ease;
-	animation: fade-in-bottom 0.5s ease forwards;
+	transition: 0.2s ease-in-out !important;
+	animation: fade-in-bottom 1s;
 	opacity: 0;
 }
 
 .shortcut:hover {
-	border-color: var(--border-medium);
-	background: var(--bg-glass-hover);
-	transform: scale(1.08);
+	transform: scale(1.05);
+	transition: 0.2s ease-in-out !important;
+	cursor: pointer;
+	box-shadow: var(--shortcut-box-shadow);
 }
 
 .shortcut img {
 	width: 28px;
 	height: 28px;
+	padding: 11px;
 	object-fit: cover;
+	transition: 0.2s ease-in-out !important;
 }
 
-/* ─── Spinner ─── */
 .spinner {
-	width: 80px;
-	height: 80px;
-	border-radius: 50%;
-	border: 3px solid var(--border-subtle);
-	border-top-color: var(--accent);
-	animation: spinning 0.8s linear infinite;
-	margin: 0 auto;
+	background-image: linear-gradient(rgb(255, 50, 50) 35%, rgb(200, 0, 0));
+	width: 100px;
+	height: 100px;
+	animation: spinning 1.7s linear infinite;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 30px;
+	position: relative;
+	border-radius: 50px;
+	filter: blur(1px);
+	box-shadow:
+		0px -5px 20px 0px rgb(255, 50, 50),
+		0px 5px 20px 0px rgb(200, 0, 0);
 }
 
 .spinner1 {
-	display: none;
+	background-color: rgb(36, 36, 36);
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	filter: blur(10px);
 }
