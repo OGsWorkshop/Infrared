@@ -1,9 +1,9 @@
 self.__scramjet$config = {
 	prefix: '/scram/res/',
 	files: {
-		wasm: '/scram/scramjet.wasm.wasm',
-		all: '/scram/scramjet.all.js',
-		sync: '/scram/scramjet.sync.js'
+		wasm: '/scram/scramjet.wasm',
+		all: '/scram/scramjet_bundled.js',
+		sync: '/scram/scramjet_bundled.js'
 	},
 	siteFlags: {
 		'https://discord.com/.*': {

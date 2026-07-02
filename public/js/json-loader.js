@@ -1,297 +1,279 @@
-// Handles loading and rendering resources from the json files, hence json-loader.js
-
+// json-loader.js - Handles loading and rendering games/apps from JSON files
 localforage.setItem('e', 'e');
 
-document.addEventListener('DOMContentLoaded', () => {
-	if (window.location.pathname === '/g') {
+document.addEventListener('DOMContentLoaded', function() {
+	var pathname = window.location.pathname;
+
+	// Games page
+	if (pathname === '/g') {
 		fetch('/json/g.json')
-			.then(response => response.json())
-			.then(data => {
-				const gameContainer = document.querySelector('.gameContain');
+			.then(function(r) { return r.json(); })
+			.then(function(data) {
+				var grid = document.querySelector('.gameContain');
+				var emptyEl = document.getElementById('gameEmpty');
+				var catTabs = document.getElementById('gameCatTabs');
+				var activeCat = 'all';
 
-				data.sort((a, b) => a.name.localeCompare(b.name));
+				data.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
-				data.forEach(game => {
-					const gameLink = document.createElement('a');
-					gameLink.href = `/&?q=${encodeURIComponent(game.name)}`;
-					gameLink.className = 'gameAnchor';
+				function renderGames(filter) {
+					grid.innerHTML = '';
+					var filtered = data.filter(function(game) {
+						if (filter === 'all') return true;
+						return game.categories && game.categories.indexOf(filter) !== -1;
+					});
 
-					if (game.categories && game.name) {
-						game.categories.forEach(category => {
-							gameLink.id =
-								(gameLink.id ? gameLink.id + ' ' : '') +
-								category;
+					if (filtered.length === 0) {
+						grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined empty-state-icon">sports_esports</span><h3>No games found</h3><p>Try a different search or category</p></div>';
+						return;
+					}
+
+					filtered.forEach(function(game) {
+						var card = document.createElement('a');
+						card.href = '/&?q=' + encodeURIComponent(game.name);
+						card.className = 'bento-card';
+
+						if (game.featured) card.className += ' featured';
+
+						if (game.categories && game.name) {
+							game.categories.forEach(function(cat) {
+								card.setAttribute('data-cat', (card.getAttribute('data-cat')||'')+' '+cat);
+							});
+						}
+
+						var img = document.createElement('img');
+						img.src = game.img || '/assets/default.png';
+						img.alt = game.name;
+						img.className = 'bento-card-img';
+						img.loading = 'lazy';
+						img.onerror = function() { this.src = '/assets/default.png'; };
+
+						var label = document.createElement('div');
+						label.className = 'bento-card-label';
+						label.textContent = game.name.replace(/^[!] /, '');
+
+						card.appendChild(img);
+						card.appendChild(label);
+						grid.appendChild(card);
+					});
+				}
+
+				renderGames('all');
+
+				// Category tabs
+				if (catTabs) {
+					catTabs.querySelectorAll('.category-tab').forEach(function(tab) {
+						tab.addEventListener('click', function() {
+							catTabs.querySelectorAll('.category-tab').forEach(function(t) { t.classList.remove('active'); });
+							this.classList.add('active');
+							activeCat = this.getAttribute('data-cat');
+							renderGames(activeCat);
 						});
-
-						let gameNameClass = game.name
-							.toLowerCase()
-							.replace(/\s+/g, '-')
-							.replace(/[^a-z0-9]/g, '-');
-						gameLink.className += ' ' + gameNameClass;
-					}
-
-					const gameImage = document.createElement('img');
-					gameImage.src = game.img;
-					gameImage.alt = game.name;
-					gameImage.title = game.name;
-					gameImage.className = 'gameImage';
-
-					gameImage.onerror = () => {
-						gameImage.src = '/assets/default.png';
-					};
-
-					gameLink.appendChild(gameImage);
-					gameContainer.appendChild(gameLink);
-				});
-
-				const gameSearchInput =
-					document.querySelector('.gameSearchInput');
-				gameSearchInput.addEventListener('input', () => {
-					const gameImages = document.querySelectorAll('.gameImage');
-					gameImages.forEach(image => {
-						image.classList.add('no-animation');
 					});
+				}
 
-					const searchQuery = gameSearchInput.value
-						.toLowerCase()
-						.replace(/\s+/g, '-')
-						.replace(/[^a-z0-9]/g, '-');
+				// Search
+				var searchInput = document.querySelector('.gameSearchInput');
+				if (searchInput) {
+					searchInput.addEventListener('input', function() {
+						var query = this.value.toLowerCase().trim();
+						if (query === '') { renderGames(activeCat); return; }
+						var filtered = data.filter(function(game) {
+							return game.name.toLowerCase().indexOf(query) !== -1;
+						});
+						grid.innerHTML = '';
+						if (filtered.length === 0) {
+							grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined empty-state-icon">sports_esports</span><h3>No games match "' + query + '"</h3><p>Try different keywords</p></div>';
+							return;
+						}
+						filtered.forEach(function(game) {
+							var card = document.createElement('a');
+							card.href = '/&?q=' + encodeURIComponent(game.name);
+							card.className = 'bento-card';
+							var img = document.createElement('img');
+							img.src = game.img || '/assets/default.png';
+							img.alt = game.name;
+							img.className = 'bento-card-img';
+							img.loading = 'lazy';
+							img.onerror = function() { this.src = '/assets/default.png'; };
+							var label = document.createElement('div');
+							label.className = 'bento-card-label';
+							label.textContent = game.name.replace(/^[!] /, '');
+							card.appendChild(img);
+							card.appendChild(label);
+							grid.appendChild(card);
+						});
+					});
+				}
 
-					const gameLinks =
-						document.querySelectorAll('.gameContain a');
-					gameLinks.forEach(link => {
-						if (link.className.includes(searchQuery)) {
-							link.style.display = '';
-						} else {
-							link.style.display = 'none';
+				// Random button
+				var randomBtn = document.querySelector('.random-btn');
+				if (randomBtn) {
+					randomBtn.addEventListener('click', function() {
+						var visible = data.filter(function(g) { return activeCat === 'all' || (g.categories && g.categories.indexOf(activeCat)!==-1); });
+						if (visible.length > 0) {
+							var rand = visible[Math.floor(Math.random() * visible.length)];
+							window.location.href = '/&?q=' + encodeURIComponent(rand.name);
 						}
 					});
-				});
-
-				document
-					.querySelector('.randomBtn')
-					.addEventListener('click', () => {
-						const gameAnchors = Array.from(
-							document.querySelectorAll('.gameAnchor')
-						);
-						const visibleGameAnchors = gameAnchors.filter(
-							anchor => anchor.style.display !== 'none'
-						);
-
-						if (visibleGameAnchors.length > 0) {
-							const randomIndex = Math.floor(
-								Math.random() * visibleGameAnchors.length
-							);
-							visibleGameAnchors[randomIndex].click();
-						} else {
-							// console.log('No visible games to select.');
-						}
-					});
+				}
 			})
-			.catch(error => console.error('Error loading game :( ', error));
-		const scrollToTopBtn = document.querySelector('.scrolltop');
+			.catch(function(err) { console.error('Error loading games:', err); });
 
-		window.addEventListener('scroll', function () {
-			if (window.scrollY === 0) {
-				scrollToTopBtn.style.opacity = '0';
-			} else {
-				scrollToTopBtn.style.opacity = '1';
-			}
-		});
-
-		scrollToTopBtn.addEventListener('click', function () {
-			window.scrollTo({
-				top: 0,
-				behavior: 'smooth'
+		// Scroll to top
+		var scrollBtn = document.getElementById('scrollTopBtn');
+		if (scrollBtn) {
+			window.addEventListener('scroll', function() {
+				scrollBtn.classList.toggle('visible', window.scrollY > 100);
 			});
-		});
+			scrollBtn.addEventListener('click', function() { window.scrollTo({top:0, behavior:'smooth'}); });
+		}
 	}
 
-	if (
-		window.location.pathname === '/&' &&
-		localStorage.getItem('smallIcons') === 'true'
-	) {
-		fetch('/json/s.json')
-			.then(response => response.json())
-			.then(data => {
-				const shortcuts = document.querySelector('.shortcuts');
-
-				data.forEach(shortcut => {
-					const shortcutLink = document.createElement('a');
-
-					if (shortcut.name.toLowerCase() === 'settings') {
-						shortcutLink.href = '/~/#/proxy';
-					} else {
-						shortcutLink.href = `/&?q=${encodeURIComponent(shortcut.name)}`;
-					}
-
-					const shortcutImage = document.createElement('img');
-					shortcutImage.src = shortcut.img;
-					shortcutImage.alt = shortcut.name;
-					shortcutImage.title = shortcut.name;
-					shortcutImage.classList.add('shortcut');
-
-					shortcutImage.style.width = '28px';
-					shortcutImage.style.height = '28px';
-					shortcutImage.style.padding = '11px';
-					shortcutImage.style.objectFit = 'cover';
-					shortcutImage.style.transition = '0.2s';
-
-					document.querySelector('.searchEngineIcon').style.display =
-						'none';
-					document.querySelector(
-						'.gointoinfraredSearchButton'
-					).style.cssText =
-						'transform: translate(-11px, 3px); user-select: none; cursor: default;';
-					document.getElementById('formintoinfrared').style.transform =
-						'translateY(150px)';
-
-					if (shortcut.style) {
-						shortcutImage.style.cssText += shortcut.style;
-					}
-
-					if (shortcut.bg) {
-						shortcutImage.style.backgroundColor = shortcut.bg;
-					}
-
-					shortcutImage.onerror = () => {
-						shortcutImage.src = '/assets/default.png';
-					};
-
-					shortcutLink.appendChild(shortcutImage);
-					shortcuts.appendChild(shortcutLink);
-				});
-			})
-			.catch(error => console.error('Error loading shortcut :( ', error));
-	} else if (
-		window.location.pathname === '/&' &&
-		(localStorage.getItem('smallIcons') === 'false' ||
-			!localStorage.getItem('smallIcons'))
-	) {
-		fetch('/json/sb.json')
-			.then(response => response.json())
-			.then(data => {
-				const shortcuts = document.querySelector('.shortcutsBig');
-
-				data.forEach(shortcut => {
-					const shortcutLink = document.createElement('a');
-
-					if (shortcut.name.toLowerCase() === 'settings') {
-						shortcutLink.href = '/~/#/proxy';
-					} else {
-						shortcutLink.href = `/&?q=${encodeURIComponent(shortcut.name)}`;
-					}
-
-					const shortcutImage = document.createElement('img');
-					shortcutImage.src = shortcut.img;
-					shortcutImage.alt = shortcut.name;
-					shortcutImage.title = shortcut.name;
-					shortcutLink.classList.add('shortcutBig');
-					shortcutImage.classList.add('shortcutBigimg');
-
-					shortcutImage.style.width = '170px';
-					shortcutImage.style.height = '90px';
-					shortcutImage.style.padding = '0';
-					shortcutImage.style.transition = '0.2s';
-
-					document.getElementById('gointoinfrared').style.cssText =
-						'width: 500px; text-align: left; padding: 15px; margin-right: -0.5rem; padding-left: 49.5px;';
-					document.querySelector(
-						'.gointoinfraredSearchButton'
-					).style.cssText =
-						'transform: translate(-34px, 3px); user-select: none; cursor: default;';
-
-					shortcutImage.onerror = () => {
-						shortcutImage.src = '/assets/default.png';
-					};
-
-					shortcutLink.appendChild(shortcutImage);
-					shortcuts.appendChild(shortcutLink);
-				});
-			})
-			.catch(error => console.error('Error loading shortcut :( ', error));
-	}
-
-	if (window.location.pathname === '/a') {
+	// Apps page
+	if (pathname === '/a') {
 		fetch('/json/a.json')
-			.then(response => response.json())
-			.then(data => {
-				const appsContainer = document.querySelector('.appsContainer');
+			.then(function(r) { return r.json(); })
+			.then(function(data) {
+				var grid = document.querySelector('.appsContainer');
+				var catTabs = document.getElementById('appCatTabs');
+				var activeCat = 'all';
 
-				data.sort((a, b) => a.name.localeCompare(b.name));
+				data.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
-				data.forEach(app => {
-					const appLink = document.createElement('a');
-					appLink.href = `/&?q=${encodeURIComponent(app.name)}`;
+				function renderApps(filter) {
+					grid.innerHTML = '';
+					var filtered = data.filter(function(app) {
+						if (filter === 'all') return true;
+						return app.categories && app.categories.indexOf(filter) !== -1;
+					});
 
-					if (app.categories && app.name) {
-						app.categories.forEach(category => {
-							appLink.id =
-								(appLink.id ? appLink.id + ' ' : '') + category;
-						});
-
-						let appNameClass = app.name
-							.toLowerCase()
-							.replace(/\s+/g, '-')
-							.replace(/[^a-z0-9]/g, '-');
-						appLink.className = appNameClass;
+					if (filtered.length === 0) {
+						grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined empty-state-icon">apps</span><h3>No apps found</h3><p>Try a different search or category</p></div>';
+						return;
 					}
 
-					const appImage = document.createElement('img');
-					appImage.src = app.img;
-					appImage.alt = app.name;
-					appImage.title = app.name;
-					appImage.className = 'appImage';
-
-					appImage.onerror = () => {
-						appImage.src = '/assets/default.png';
-					};
-
-					appLink.appendChild(appImage);
-					appsContainer.appendChild(appLink);
-				});
-
-				const appsSearchInput =
-					document.querySelector('.appsSearchInput');
-				appsSearchInput.addEventListener('input', () => {
-					const appsImages = document.querySelectorAll('.appImage');
-					appsImages.forEach(image => {
-						image.classList.add('no-animation');
+					filtered.forEach(function(app) {
+						var card = document.createElement('a');
+						card.href = '/&?q=' + encodeURIComponent(app.name);
+						card.className = 'bento-card';
+						var img = document.createElement('img');
+						img.src = app.img || '/assets/default.png';
+						img.alt = app.name;
+						img.className = 'bento-card-img';
+						img.loading = 'lazy';
+						img.onerror = function() { this.src = '/assets/default.png'; };
+						var label = document.createElement('div');
+						label.className = 'bento-card-label';
+						label.textContent = app.name.replace(/^[!] /, '');
+						card.appendChild(img);
+						card.appendChild(label);
+						grid.appendChild(card);
 					});
+				}
 
-					const searchQuery = appsSearchInput.value
-						.toLowerCase()
-						.replace(/\s+/g, '-')
-						.replace(/[^a-z0-9]/g, '-');
+				renderApps('all');
 
-					const appLinks =
-						document.querySelectorAll('.appsContainer a');
-					appLinks.forEach(link => {
-						if (link.className.includes(searchQuery)) {
-							link.style.display = '';
-						} else {
-							link.style.display = 'none';
+				if (catTabs) {
+					catTabs.querySelectorAll('.category-tab').forEach(function(tab) {
+						tab.addEventListener('click', function() {
+							catTabs.querySelectorAll('.category-tab').forEach(function(t) { t.classList.remove('active'); });
+							this.classList.add('active');
+							activeCat = this.getAttribute('data-cat');
+							renderApps(activeCat);
+						});
+					});
+				}
+
+				var searchInput = document.querySelector('.appsSearchInput');
+				if (searchInput) {
+					searchInput.addEventListener('input', function() {
+						var query = this.value.toLowerCase().trim();
+						if (query === '') { renderApps(activeCat); return; }
+						var filtered = data.filter(function(app) { return app.name.toLowerCase().indexOf(query) !== -1; });
+						grid.innerHTML = '';
+						if (filtered.length === 0) {
+							grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined empty-state-icon">apps</span><h3>No apps match "' + query + '"</h3><p>Try different keywords</p></div>';
+							return;
 						}
+						filtered.forEach(function(app) {
+							var card = document.createElement('a');
+							card.href = '/&?q=' + encodeURIComponent(app.name);
+							card.className = 'bento-card';
+							var img = document.createElement('img');
+							img.src = app.img || '/assets/default.png';
+							img.alt = app.name;
+							img.className = 'bento-card-img';
+							img.loading = 'lazy';
+							img.onerror = function() { this.src = '/assets/default.png'; };
+							var label = document.createElement('div');
+							label.className = 'bento-card-label';
+							label.textContent = app.name.replace(/^[!] /, '');
+							card.appendChild(img);
+							card.appendChild(label);
+							grid.appendChild(card);
+						});
+					});
+				}
+			})
+			.catch(function(err) { console.error('Error loading apps:', err); });
+
+		var scrollBtn = document.getElementById('scrollTopBtn');
+		if (scrollBtn) {
+			window.addEventListener('scroll', function() { scrollBtn.classList.toggle('visible', window.scrollY > 100); });
+			scrollBtn.addEventListener('click', function() { window.scrollTo({top:0, behavior:'smooth'}); });
+		}
+	}
+
+	// Browser shortcuts
+	if (pathname === '/&') {
+		if (localStorage.getItem('smallIcons') === 'true') {
+			fetch('/json/s.json')
+				.then(function(r) { return r.json(); })
+				.then(function(data) {
+					var container = document.querySelector('.shortcuts');
+					if (!container) return;
+					data.forEach(function(shortcut) {
+						var link = document.createElement('a');
+						link.href = shortcut.name.toLowerCase() === 'settings' ? '/~/#/proxy' : '/&?q=' + encodeURIComponent(shortcut.name);
+						var div = document.createElement('div');
+						div.className = 'browser-shortcut';
+						if (shortcut.bg) div.style.backgroundColor = shortcut.bg;
+						var img = document.createElement('img');
+						img.src = shortcut.img;
+						img.alt = shortcut.name;
+						if (shortcut.style) img.style.cssText += shortcut.style;
+						img.onerror = function() { this.src = '/assets/default.png'; };
+						div.appendChild(img);
+						link.appendChild(div);
+						container.appendChild(link);
 					});
 				});
-			})
-			.catch(error => console.error('Error loading app :( ', error));
-
-		const scrollToTopBtn = document.querySelector('.scrolltop');
-
-		window.addEventListener('scroll', function () {
-			if (window.scrollY === 0) {
-				scrollToTopBtn.style.opacity = '0';
-			} else {
-				scrollToTopBtn.style.opacity = '1';
-			}
-		});
-
-		scrollToTopBtn.addEventListener('click', function () {
-			window.scrollTo({
-				top: 0,
-				behavior: 'smooth'
-			});
-		});
+		} else {
+			fetch('/json/sb.json')
+				.then(function(r) { return r.json(); })
+				.then(function(data) {
+					var container = document.querySelector('.shortcutsBig');
+					if (!container) return;
+					container.style.display = 'flex';
+					data.forEach(function(shortcut) {
+						var link = document.createElement('a');
+						link.href = shortcut.name.toLowerCase() === 'settings' ? '/~/#/proxy' : '/&?q=' + encodeURIComponent(shortcut.name);
+						var div = document.createElement('div');
+						div.className = 'browser-shortcut-big';
+						if (shortcut.bg) div.style.backgroundColor = shortcut.bg;
+						var img = document.createElement('img');
+						img.src = shortcut.img;
+						img.alt = shortcut.name;
+						img.style.width = '170px';
+						img.style.height = '90px';
+						img.style.objectFit = 'cover';
+						img.onerror = function() { this.src = '/assets/default.png'; };
+						div.appendChild(img);
+						link.appendChild(div);
+						container.appendChild(link);
+					});
+				});
+		}
 	}
 });

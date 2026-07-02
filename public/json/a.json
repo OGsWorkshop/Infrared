@@ -3,198 +3,776 @@
 		"name": "! Request a game",
 		"url": "https://docs.google.com/forms/d/e/1FAIpQLSeZcPMt3toVL8EtKLfHMbKpx4lZzqAAr5ifvZJRwoXqsLSf-A/viewform?usp=pp_url",
 		"img": "/assets/requestApp.jpg",
-		"categories": ["all"]
+		"categories": [
+			"all"
+		]
 	},
 	{
 		"name": "Amazon",
 		"url": "https://www.amazon.com/",
 		"img": "/assets/imgs/a/Amazon.webp",
-		"categories": ["all", "media"]
+		"categories": [
+			"all",
+			"media"
+		]
 	},
 	{
 		"name": "Amazon Luna",
 		"url": "https://luna.amazon.com/",
 		"img": "/assets/imgs/a/Amazon_Luna.webp",
-		"categories": ["all", "game"]
+		"categories": [
+			"all",
+			"game"
+		]
 	},
 	{
 		"name": "OpenAI",
 		"url": "https://chat.openai.com/",
 		"img": "/assets/imgs/a/OpenAI.webp",
-		"categories": ["all", "media", "popular", "ai"]
+		"categories": [
+			"all",
+			"media",
+			"popular",
+			"ai"
+		]
 	},
 	{
 		"name": "Chess.com",
 		"url": "https://chess.com/",
 		"img": "/assets/imgs/a/Chess_com.webp",
-		"categories": ["all", "game"]
+		"categories": [
+			"all",
+			"game"
+		]
 	},
 	{
 		"name": "Cool Math Games",
 		"url": "https://www.coolmathgames.com/cmg.jpg",
 		"img": "/assets/imgs/a/Cool_Math_Games.webp",
-		"categories": ["all", "game"]
+		"categories": [
+			"all",
+			"game"
+		]
 	},
 	{
 		"name": "Discord",
 		"url": "https://discord.com/",
 		"img": "/assets/imgs/a/Discord.webp",
-		"categories": ["all", "social", "messaging", "media"]
+		"categories": [
+			"all",
+			"social",
+			"messaging",
+			"media"
+		]
 	},
 	{
 		"name": "Discord | Login",
 		"url": "https://discord.com/login",
 		"img": "/assets/imgs/a/Discord.webp",
-		"categories": ["all", "social", "messaging", "media"]
+		"categories": [
+			"all",
+			"social",
+			"messaging",
+			"media"
+		]
 	},
 	{
 		"name": "ESPN",
 		"url": "https://www.espn.com/",
 		"img": "/assets/imgs/a/ESPN.webp",
-		"categories": ["all", "media", "popular"]
+		"categories": [
+			"all",
+			"media",
+			"popular"
+		]
 	},
 	{
 		"name": "Flix HQ",
 		"url": "https://flixhq.bz/",
 		"img": "/assets/imgs/a/Flix_HQ.webp",
-		"categories": ["all", "media", "popular"]
+		"categories": [
+			"all",
+			"media",
+			"popular"
+		]
 	},
 	{
 		"name": "Geforce NOW",
 		"url": "https://play.geforcenow.com/",
 		"img": "/assets/imgs/a/Geforce_NOW.webp",
-		"categories": ["all", "game", "popular"]
+		"categories": [
+			"all",
+			"game",
+			"popular"
+		]
 	},
 	{
 		"name": "GitHub",
 		"url": "https://github.com/",
 		"img": "/assets/imgs/a/GitHub.webp",
-		"categories": ["all", "social", "ai"]
+		"categories": [
+			"all",
+			"social",
+			"ai"
+		]
 	},
 	{
 		"name": "HBO MAX",
 		"url": "https://www.max.com/",
 		"img": "/assets/imgs/a/HBO_MAX.webp",
-		"categories": ["all", "media"]
+		"categories": [
+			"all",
+			"media"
+		]
 	},
 	{
 		"name": "Newgrounds",
 		"url": "https://www.newgrounds.com/",
 		"img": "/assets/imgs/a/Newgrounds.webp",
-		"categories": ["all", "media", "social"]
+		"categories": [
+			"all",
+			"media",
+			"social"
+		]
 	},
 	{
 		"name": "Paramount Plus",
 		"url": "https://www.paramountplus.com/",
 		"img": "/assets/imgs/a/Paramount_Plus.webp",
-		"categories": ["all", "media"]
+		"categories": [
+			"all",
+			"media"
+		]
 	},
 	{
 		"name": "Pinterest",
 		"url": "https://www.pinterest.com/",
 		"img": "/assets/imgs/a/Pinterest.webp",
-		"categories": ["all", "media", "social"]
+		"categories": [
+			"all",
+			"media",
+			"social"
+		]
 	},
 	{
 		"name": "Pixlr",
 		"url": "https://pixlr.com/",
 		"img": "/assets/imgs/a/Pixlr.webp",
-		"categories": ["all", "media"]
+		"categories": [
+			"all",
+			"media"
+		]
 	},
 	{
 		"name": "Poki",
 		"url": "https://poki.com/",
 		"img": "/assets/imgs/a/Poki.webp",
-		"categories": ["all", "game"]
+		"categories": [
+			"all",
+			"game"
+		]
 	},
 	{
 		"name": "Soundcloud",
 		"url": "https://soundcloud.com/",
 		"img": "/assets/imgs/a/Soundcloud.webp",
-		"categories": ["all", "media"]
+		"categories": [
+			"all",
+			"media"
+		]
 	},
 	{
 		"name": "Telegram",
 		"url": "https://web.telegram.org/",
 		"img": "/assets/imgs/a/Telegram.webp",
-		"categories": ["all", "messaging", "media", "social"]
+		"categories": [
+			"all",
+			"messaging",
+			"media",
+			"social"
+		]
 	},
 	{
 		"name": "Temu",
 		"url": "https://www.temu.com/",
 		"img": "/assets/imgs/a/Temu.webp",
-		"categories": ["all", "media"]
+		"categories": [
+			"all",
+			"media"
+		]
 	},
 	{
 		"name": "TikTok",
 		"url": "https://www.tiktok.com/explore",
 		"img": "/assets/imgs/a/TikTok.webp",
-		"categories": ["all", "media", "social"]
+		"categories": [
+			"all",
+			"media",
+			"social"
+		]
 	},
 	{
 		"name": "Tumblr",
 		"url": "https://www.tumblr.com/",
 		"img": "/assets/imgs/a/Tumblr.webp",
-		"categories": ["all", "messaging", "social", "media"]
+		"categories": [
+			"all",
+			"messaging",
+			"social",
+			"media"
+		]
 	},
 	{
 		"name": "Twitch",
 		"url": "https://www.twitch.tv/",
 		"img": "/assets/imgs/a/Twitch.webp",
-		"categories": ["all", "social", "media", "game"]
+		"categories": [
+			"all",
+			"social",
+			"media",
+			"game"
+		]
 	},
 	{
 		"name": "Twitter X",
 		"url": "https://twitter.com/",
 		"img": "/assets/imgs/a/Twitter_X.webp",
-		"categories": ["all", "media", "messaging"]
+		"categories": [
+			"all",
+			"media",
+			"messaging"
+		]
 	},
 	{
 		"name": "VS Code",
 		"url": "https://vscode.dev/",
 		"img": "/assets/imgs/a/VS_Code.webp",
-		"categories": ["all", "media"]
+		"categories": [
+			"all",
+			"media"
+		]
 	},
 	{
 		"name": "Y8 Games",
 		"url": "https://www.y8.com/",
 		"img": "/assets/imgs/a/Y8_Games.webp",
-		"categories": ["all", "game"]
+		"categories": [
+			"all",
+			"game"
+		]
 	},
 	{
 		"name": "YouTube",
 		"url": "https://www.youtube.com",
 		"img": "/assets/imgs/a/YouTube.webp",
-		"categories": ["all", "media", "popular"]
+		"categories": [
+			"all",
+			"media",
+			"popular"
+		]
 	},
 	{
 		"name": "webretro",
 		"url": "https://binbashbanana.github.io/webretro/",
 		"img": "/assets/imgs/a/webretro.webp",
-		"categories": ["all", "game", "popular"]
+		"categories": [
+			"all",
+			"game",
+			"popular"
+		]
 	},
 	{
 		"name": "Character.AI",
 		"url": "https://beta.character.ai",
 		"img": "/assets/imgs/a/Character_AI.webp",
-		"categories": ["all", "ai", "popular"]
+		"categories": [
+			"all",
+			"ai",
+			"popular"
+		]
 	},
 	{
 		"name": "Snapchat",
 		"url": "https://www.snapchat.com",
 		"img": "/assets/imgs/a/Snapchat.webp",
-		"categories": ["all", "media", "messaging", "popular"]
+		"categories": [
+			"all",
+			"media",
+			"messaging",
+			"popular"
+		]
 	},
 	{
 		"name": "Shuttle.lol",
 		"url": "https://shuttle.lol",
 		"img": "/assets/imgs/a/Shuttle_lol.webp",
-		"categories": ["all", "game"]
+		"categories": [
+			"all",
+			"game"
+		]
 	},
 	{
 		"name": "Wattpad",
 		"url": "https://wattpad.com",
 		"img": "/assets/imgs/a/Wattpad.webp",
-		"categories": ["all", "popular", "media"]
+		"categories": [
+			"all",
+			"popular",
+			"media"
+		]
+	},
+	{
+		"name": "Netflix",
+		"url": "https://www.netflix.com/",
+		"img": "/assets/imgs/a/Netflix.webp",
+		"categories": [
+			"all",
+			"streaming",
+			"media",
+			"popular"
+		]
+	},
+	{
+		"name": "Spotify",
+		"url": "https://open.spotify.com/",
+		"img": "/assets/imgs/a/Spotify.webp",
+		"categories": [
+			"all",
+			"music",
+			"popular"
+		]
+	},
+	{
+		"name": "Google Drive",
+		"url": "https://drive.google.com/",
+		"img": "/assets/imgs/a/Google_Drive.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Google Docs",
+		"url": "https://docs.google.com/",
+		"img": "/assets/imgs/a/Google_Docs.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Google",
+		"url": "https://google.com/",
+		"img": "/assets/imgs/a/Google.webp",
+		"categories": [
+			"all",
+			"media",
+			"popular"
+		]
+	},
+	{
+		"name": "Hulu",
+		"url": "https://www.hulu.com/",
+		"img": "/assets/imgs/a/Hulu.webp",
+		"categories": [
+			"all",
+			"streaming",
+			"media"
+		]
+	},
+	{
+		"name": "Disney+",
+		"url": "https://www.disneyplus.com/",
+		"img": "/assets/imgs/a/Disney_Plus.webp",
+		"categories": [
+			"all",
+			"streaming",
+			"media"
+		]
+	},
+	{
+		"name": "Peacock",
+		"url": "https://www.peacocktv.com/",
+		"img": "/assets/imgs/a/Peacock.webp",
+		"categories": [
+			"all",
+			"streaming",
+			"media"
+		]
+	},
+	{
+		"name": "Max",
+		"url": "https://play.max.com/",
+		"img": "/assets/imgs/a/Max.webp",
+		"categories": [
+			"all",
+			"streaming",
+			"media"
+		]
+	},
+	{
+		"name": "Apple Music",
+		"url": "https://music.apple.com/",
+		"img": "/assets/imgs/a/Apple_Music.webp",
+		"categories": [
+			"all",
+			"music"
+		]
+	},
+	{
+		"name": "Pandora",
+		"url": "https://www.pandora.com/",
+		"img": "/assets/imgs/a/Pandora.webp",
+		"categories": [
+			"all",
+			"music"
+		]
+	},
+	{
+		"name": "Reddit",
+		"url": "https://www.reddit.com/",
+		"img": "/assets/imgs/a/Reddit.webp",
+		"categories": [
+			"all",
+			"social",
+			"media"
+		]
+	},
+	{
+		"name": "Instagram",
+		"url": "https://www.instagram.com/",
+		"img": "/assets/imgs/a/Instagram.webp",
+		"categories": [
+			"all",
+			"social"
+		]
+	},
+	{
+		"name": "Facebook",
+		"url": "https://www.facebook.com/",
+		"img": "/assets/imgs/a/Facebook.webp",
+		"categories": [
+			"all",
+			"social"
+		]
+	},
+	{
+		"name": "WhatsApp",
+		"url": "https://web.whatsapp.com/",
+		"img": "/assets/imgs/a/WhatsApp.webp",
+		"categories": [
+			"all",
+			"social",
+			"messaging"
+		]
+	},
+	{
+		"name": "Slack",
+		"url": "https://slack.com/",
+		"img": "/assets/imgs/a/Slack.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Notion",
+		"url": "https://www.notion.so/",
+		"img": "/assets/imgs/a/Notion.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Canva",
+		"url": "https://www.canva.com/",
+		"img": "/assets/imgs/a/Canva.webp",
+		"categories": [
+			"all",
+			"productivity",
+			"media"
+		]
+	},
+	{
+		"name": "Figma",
+		"url": "https://www.figma.com/",
+		"img": "/assets/imgs/a/Figma.webp",
+		"categories": [
+			"all",
+			"dev",
+			"productivity"
+		]
+	},
+	{
+		"name": "CodePen",
+		"url": "https://codepen.io/",
+		"img": "/assets/imgs/a/CodePen.webp",
+		"categories": [
+			"all",
+			"dev"
+		]
+	},
+	{
+		"name": "Replit",
+		"url": "https://replit.com/",
+		"img": "/assets/imgs/a/Replit.webp",
+		"categories": [
+			"all",
+			"dev"
+		]
+	},
+	{
+		"name": "Stack Overflow",
+		"url": "https://stackoverflow.com/",
+		"img": "/assets/imgs/a/Stack_Overflow.webp",
+		"categories": [
+			"all",
+			"dev"
+		]
+	},
+	{
+		"name": "Bard/Gemini",
+		"url": "https://gemini.google.com/",
+		"img": "/assets/imgs/a/Gemini.webp",
+		"categories": [
+			"all",
+			"ai"
+		]
+	},
+	{
+		"name": "Claude AI",
+		"url": "https://claude.ai/",
+		"img": "/assets/imgs/a/Claude_AI.webp",
+		"categories": [
+			"all",
+			"ai"
+		]
+	},
+	{
+		"name": "Copilot",
+		"url": "https://copilot.microsoft.com/",
+		"img": "/assets/imgs/a/Copilot.webp",
+		"categories": [
+			"all",
+			"ai"
+		]
+	},
+	{
+		"name": "Perplexity",
+		"url": "https://www.perplexity.ai/",
+		"img": "/assets/imgs/a/Perplexity.webp",
+		"categories": [
+			"all",
+			"ai"
+		]
+	},
+	{
+		"name": "Khan Academy",
+		"url": "https://www.khanacademy.org/",
+		"img": "/assets/imgs/a/Khan_Academy.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Quizlet",
+		"url": "https://quizlet.com/",
+		"img": "/assets/imgs/a/Quizlet.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Wikipedia",
+		"url": "https://www.wikipedia.org/",
+		"img": "/assets/imgs/a/Wikipedia.webp",
+		"categories": [
+			"all",
+			"media"
+		]
+	},
+	{
+		"name": "Gmail",
+		"url": "https://mail.google.com/",
+		"img": "/assets/imgs/a/Gmail.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Outlook",
+		"url": "https://outlook.live.com/",
+		"img": "/assets/imgs/a/Outlook.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "eBay",
+		"url": "https://www.ebay.com/",
+		"img": "/assets/imgs/a/eBay.webp",
+		"categories": [
+			"all"
+		]
+	},
+	{
+		"name": "Walmart",
+		"url": "https://www.walmart.com/",
+		"img": "/assets/imgs/a/Walmart.webp",
+		"categories": [
+			"all"
+		]
+	},
+	{
+		"name": "Target",
+		"url": "https://www.target.com/",
+		"img": "/assets/imgs/a/Target.webp",
+		"categories": [
+			"all"
+		]
+	},
+	{
+		"name": "Crazy Games",
+		"url": "https://www.crazygames.com/",
+		"img": "/assets/imgs/a/Crazy_Games.webp",
+		"categories": [
+			"all",
+			"game"
+		]
+	},
+	{
+		"name": "Now.gg",
+		"url": "https://now.gg/",
+		"img": "/assets/imgs/a/Now_gg.webp",
+		"categories": [
+			"all",
+			"game"
+		]
+	},
+	{
+		"name": "Roblox",
+		"url": "https://www.roblox.com/",
+		"img": "/assets/imgs/a/Roblox.webp",
+		"categories": [
+			"all",
+			"game",
+			"popular"
+		]
+	},
+	{
+		"name": "Krunker.io",
+		"url": "https://krunker.io/",
+		"img": "/assets/imgs/a/Krunker_io.webp",
+		"categories": [
+			"all",
+			"game",
+			"popular"
+		]
+	},
+	{
+		"name": "DuckDuckGo",
+		"url": "https://duckduckgo.com/",
+		"img": "/assets/imgs/a/DuckDuckGo.webp",
+		"categories": [
+			"all",
+			"media"
+		]
+	},
+	{
+		"name": "Bing",
+		"url": "https://www.bing.com/",
+		"img": "/assets/imgs/a/Bing.webp",
+		"categories": [
+			"all",
+			"media"
+		]
+	},
+	{
+		"name": "IMDb",
+		"url": "https://www.imdb.com/",
+		"img": "/assets/imgs/a/IMDb.webp",
+		"categories": [
+			"all",
+			"media",
+			"streaming"
+		]
+	},
+	{
+		"name": "Rotten Tomatoes",
+		"url": "https://www.rottentomatoes.com/",
+		"img": "/assets/imgs/a/Rotten_Tomatoes.webp",
+		"categories": [
+			"all",
+			"media"
+		]
+	},
+	{
+		"name": "Weather.com",
+		"url": "https://weather.com/",
+		"img": "/assets/imgs/a/Weather.webp",
+		"categories": [
+			"all"
+		]
+	},
+	{
+		"name": "Google Translate",
+		"url": "https://translate.google.com/",
+		"img": "/assets/imgs/a/Google_Translate.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Adobe Express",
+		"url": "https://express.adobe.com/",
+		"img": "/assets/imgs/a/Adobe_Express.webp",
+		"categories": [
+			"all",
+			"media",
+			"productivity"
+		]
+	},
+	{
+		"name": "Photopea",
+		"url": "https://www.photopea.com/",
+		"img": "/assets/imgs/a/Photopea.webp",
+		"categories": [
+			"all",
+			"media",
+			"dev"
+		]
+	},
+	{
+		"name": "Schoology",
+		"url": "https://app.schoology.com/",
+		"img": "/assets/imgs/a/Schoology.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Classroom",
+		"url": "https://classroom.google.com/",
+		"img": "/assets/imgs/a/Classroom.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
+	},
+	{
+		"name": "Desmos",
+		"url": "https://www.desmos.com/calculator",
+		"img": "/assets/imgs/a/Desmos.webp",
+		"categories": [
+			"all",
+			"productivity"
+		]
 	}
 ]

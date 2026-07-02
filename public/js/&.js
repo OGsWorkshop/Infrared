@@ -1,58 +1,39 @@
-// & is the name of the proxy page, so &.js is the js for the proxy page minus the actual proxy code, because thats long enough to cause readability issues
+// &.js - Browser page functionality
 
-let encodedUrl = '';
+var encodedUrl = '';
 async function executeSearch(query) {
-	encodedUrl = swConfigSettings.prefix + __uv$config.encodeUrl(search(query));
+	if (!swConfigSettings) return;
+	encodedUrl = swConfigSettings.prefix + (swConfigSettings.encodeUrl ? swConfigSettings.encodeUrl(search(query)) : search(query));
 	localStorage.setItem('input', query);
 	localStorage.setItem('output', encodedUrl);
-	document.querySelectorAll('.spinnerParent')[0].style.display = 'block';
-	document.querySelectorAll('.spinner')[0].style.display = 'block';
-	document.getElementById('gointoinfrared').style.display = 'none';
-	const iframe = document.getElementById('intoinfrared');
+	var spinner = document.getElementById('spinnerWrapper');
+	if (spinner) spinner.style.display = 'block';
+	var home = document.getElementById('browserHome');
+	if (home) home.style.display = 'none';
+	var iframe = document.getElementById('intoinfrared');
 	await registerSW();
 	iframe.src = encodedUrl;
-	await registerSW().then(async () => {
-		await setTransports();
-		setTimeout(() => {
-			iframe.src = iframe.src;
-		}, 100);
-	});
+	try { await registerSW(); } catch(e) {}
 	iframe.style.display = 'block';
-
-	if (iframe.src) {
-		document.querySelector('.shortcuts').style.display = 'none';
-		document.querySelector('.shortcutsBig').style.display = 'none';
-	}
-
-	document.querySelectorAll('input').forEach(input => input.blur());
-
-	// make check for uv error
-	iframe.addEventListener('load', function () {
-		const iframeDocument =
-			iframe.contentDocument || iframe.contentWindow.document;
-		const errorList = iframeDocument.querySelectorAll('ul li');
-		if (
-			errorList &&
-			Array.from(errorList).some(
-				li =>
-					li.textContent.trim() ===
-					'Checking your internet connection'
-			)
-		) {
-			iframe.src = '/500';
-		}
-
+	if (spinner) spinner.style.display = 'none';
+	document.querySelectorAll('input').forEach(function(input) { input.blur(); });
+	iframe.addEventListener('load', function() {
+		try {
+			var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+			if (iframeDoc) {
+				var errorList = iframeDoc.querySelectorAll('ul li');
+				if (errorList && Array.from(errorList).some(function(li) { return li.textContent.trim() === 'Checking your internet connection'; })) {
+					iframe.src = '/500';
+				}
+			}
+		} catch(e) {}
 		startURLMonitoring();
 	});
 }
 
-let historyArray = JSON.parse(localStorage.getItem('historyArray')) || [];
-let currentIndex = parseInt(localStorage.getItem('currentIndex')) || -1;
-
-if (historyArray.length > 0) {
-	currentIndex = historyArray.length;
-	saveHistory();
-}
+var historyArray = JSON.parse(localStorage.getItem('historyArray')) || [];
+var currentIndex = parseInt(localStorage.getItem('currentIndex')) || -1;
+if (historyArray.length > 0) { currentIndex = historyArray.length; saveHistory(); }
 
 function saveHistory() {
 	localStorage.setItem('historyArray', JSON.stringify(historyArray));
@@ -60,468 +41,203 @@ function saveHistory() {
 }
 
 function startURLMonitoring() {
-	const iframe = document.getElementById('intoinfrared');
-	let lastUrl = iframe.contentWindow.location.href;
-
-	const checkIframeURL = () => {
+	var iframe = document.getElementById('intoinfrared');
+	var lastUrl = '';
+	try { lastUrl = iframe.contentWindow.location.href; } catch(e) { return; }
+	var checkIframeURL = function() {
 		try {
-			const currentUrl = iframe.contentWindow.location.href;
+			var currentUrl = iframe.contentWindow.location.href;
 			if (currentUrl !== lastUrl) {
 				lastUrl = currentUrl;
-
 				if (historyArray[currentIndex] !== currentUrl) {
-					// if the user navigates while in history, it clears the history after
 					historyArray = historyArray.slice(0, currentIndex + 1);
 					historyArray.push(currentUrl);
 					currentIndex++;
 					saveHistory();
 				}
-
-				devToggle = false;
-				erudaScriptLoaded = false;
-				erudaScriptInjecting = false;
-				console.log('Iframe navigation detected, Eruda toggle reset.');
-
-				updateGointoinfrared2(currentUrl);
-				updateButtonStates();
+				updateAddressBar(currentUrl);
+				updateNavButtons();
 			}
-		} catch (e) {
-			console.log('Error getting iframe url:', e);
-		}
+		} catch(e) {}
 	};
-
 	setInterval(checkIframeURL, 250);
 }
 
-function updateGointoinfrared2(url) {
-	document.querySelectorAll('.search-header__icon')[0].style.display = 'none';
-
-	let cleanedUrl = __uv$config.decodeUrl(
-		url.split(swConfigSettings.prefix).pop()
-	);
-
-	let isSecure = cleanedUrl.startsWith('https://');
-
-	cleanedUrl = cleanedUrl.replace(/^https?:\/\//, '');
-
-	if (cleanedUrl === 'a`owt8bnalk') {
-		address2.value = 'Loading...';
-	} else if (__uv$config.decodeUrl(cleanedUrl).endsWith('/500')) {
-		address2.value = 'Internal Server Error! Did you load a broken link?';
+function updateAddressBar(url) {
+	var addr = document.getElementById('gointoinfrared2');
+	if (!addr) return;
+	var cleaned = '';
+	if (swConfigSettings && swConfigSettings.decodeUrl) {
+		try {
+			var parts = url.split(swConfigSettings.prefix);
+			cleaned = swConfigSettings.decodeUrl(parts.length > 1 ? parts[parts.length-1] : url);
+		} catch(e) { cleaned = url; }
 	} else {
-		address2.value = cleanedUrl;
+		cleaned = url;
 	}
-
-	let webSecurityIcon = document.querySelector('.webSecurityIcon');
-	if (isSecure) {
-		webSecurityIcon.id = 'secure';
-		webSecurityIcon.innerHTML =
-			'<span class="material-icons" style="font-size: 20px !important; height: 16px !important; width: 16px !important; padding: 0 !important; background-color: transparent !important;">lock</span>';
-	} else {
-		webSecurityIcon.id = 'notSecure';
-		webSecurityIcon.innerHTML =
-			'<span class="material-icons" style="font-size: 20px !important; height: 16px !important; width: 16px !important; padding: 0 !important; background-color: transparent !important;">lock_open</span>';
-	}
+	if (cleaned === 'a`owt8bnalk') { addr.value = 'Loading...'; }
+	else { addr.value = cleaned.replace(/^https?:\/\//, ''); }
 }
 
-address2.addEventListener('click', function () {
-	let currentValue = this.value;
+function updateNavButtons() {
+	var backBtn = document.getElementById('backBtn');
+	var fwdBtn = document.getElementById('fwdBtn');
+	if (currentIndex > 0) { backBtn.disabled = false; backBtn.style.opacity = '1'; }
+	else { backBtn.disabled = true; backBtn.style.opacity = '0.35'; }
+	if (currentIndex < historyArray.length - 1) { fwdBtn.disabled = false; fwdBtn.style.opacity = '1'; }
+	else { fwdBtn.disabled = true; fwdBtn.style.opacity = '0.35'; }
+}
 
-	if (
-		!currentValue.startsWith('http://') &&
-		!currentValue.startsWith('https://') &&
-		intoinfrared.src &&
-		currentValue != 'Internal Server Error! Did you load a broken link?' &&
-		currentValue != 'Loading...'
-	) {
-		let isSecure = __uv$config
-			.decodeUrl(
-				iframe.contentWindow.location.href
-					.split(swConfigSettings.prefix)
-					.pop()
-			)
-			.startsWith('https://');
-		if (isSecure) {
-			this.value = 'https://' + currentValue;
-		} else {
-			this.value = 'http://' + currentValue;
+// Address bar click to edit
+if (address2) {
+	address2.addEventListener('click', function() {
+		var val = this.value;
+		if (!val.startsWith('http://') && !val.startsWith('https://') && val.indexOf('.') > -1 && val !== 'Loading...') {
+			this.value = 'https://' + val;
 		}
-	}
+		this.select();
+	});
+	address2.addEventListener('keydown', function(e) {
+		if (e.key === 'Enter') { e.preventDefault(); executeSearch(this.value); }
+	});
+	address2.addEventListener('blur', function() {
+		this.value = this.value.replace(/^https?:\/\//, '');
+	});
+}
 
-	this.select();
-});
+// Search input on new tab page
+if (address1) {
+	address1.addEventListener('keydown', function(e) {
+		if (e.key === 'Enter') { e.preventDefault(); document.getElementById('browserHome').style.display = 'none'; executeSearch(this.value); }
+	});
+}
 
-address2.addEventListener('blur', function () {
-	let currentValue = this.value;
+// Navigation buttons
+var backBtn = document.getElementById('backBtn');
+var fwdBtn = document.getElementById('fwdBtn');
+var refreshBtn = document.getElementById('refreshBtn');
+var homeBtn = document.getElementById('homeBtn');
+var fullscreenBtn = document.getElementById('fullscreenBtn');
+var iframe = document.getElementById('intoinfrared');
 
-	if (
-		currentValue.startsWith('http://') ||
-		currentValue.startsWith('https://')
-	) {
-		this.value = currentValue.replace(/^https?:\/\//, '');
-	}
-});
-
-const refreshButton = document.querySelector('.refreshButton');
-const homeButton = document.querySelector('.homeButton');
-const fullscreenButton = document.querySelector('.fullscreenButton');
-const backButton = document.querySelector('.backButton');
-const forwardButton = document.querySelector('.forwardButton');
-
-refreshButton.addEventListener('click', function () {
-	iframe.contentWindow.location.reload();
-});
-
-homeButton.addEventListener('click', function () {
-	window.location.href = '/&';
-});
-
-fullscreenButton.addEventListener('click', () => {
-	if (document.fullscreenElement) {
-		document.exitFullscreen?.() ||
-			document.mozCancelFullScreen?.() ||
-			document.webkitExitFullscreen?.() ||
-			document.msExitFullscreen?.();
-	} else {
-		const requestFullscreen = element => {
-			element.requestFullscreen?.() ||
-				element.mozRequestFullScreen?.() ||
-				element.webkitRequestFullscreen?.() ||
-				element.msRequestFullscreen?.();
-		};
-
-		if (!iframe.src || iframe.src === 'about:blank') {
-			requestFullscreen(document.documentElement);
-		} else {
-			requestFullscreen(iframe);
-		}
-	}
-});
-
-document.addEventListener('fullscreenchange', () => {
-	if (!document.fullscreenElement) {
-		fullscreenButton.innerText = 'fullscreen';
-	} else {
-		fullscreenButton.innerText = 'fullscreen_exit';
-	}
-});
-
-backButton.addEventListener('click', function () {
+if (backBtn) backBtn.addEventListener('click', function() {
 	if (currentIndex > 0) {
 		currentIndex--;
 		iframe.src = historyArray[currentIndex];
 		iframe.style.display = 'block';
-		setTimeout(() => {
-			document.getElementById('gointoinfrared2').style.paddingLeft = '40px';
-		}, 250);
-		updateButtonStates();
+		document.getElementById('browserHome').style.display = 'none';
+		updateNavButtons();
 		saveHistory();
 	}
 });
 
-forwardButton.addEventListener('click', function () {
+if (fwdBtn) fwdBtn.addEventListener('click', function() {
 	if (currentIndex < historyArray.length - 1) {
 		currentIndex++;
 		iframe.src = historyArray[currentIndex];
 		iframe.style.display = 'block';
-		setTimeout(() => {
-			document.getElementById('gointoinfrared2').style.paddingLeft = '40px';
-		}, 250);
-		updateButtonStates();
+		document.getElementById('browserHome').style.display = 'none';
+		updateNavButtons();
 		saveHistory();
 	}
 });
 
-function updateButtonStates() {
-	if (currentIndex > 0) {
-		backButton.style.opacity = '1';
-		backButton.style.cursor = 'pointer';
-	} else {
-		backButton.style.opacity = '0.5';
-		backButton.style.cursor = 'default';
-	}
+if (refreshBtn) refreshBtn.addEventListener('click', function() {
+	try { iframe.contentWindow.location.reload(); } catch(e) { iframe.src = iframe.src; }
+});
 
-	if (currentIndex < historyArray.length - 1) {
-		forwardButton.style.opacity = '1';
-		forwardButton.style.cursor = 'pointer';
+if (homeBtn) homeBtn.addEventListener('click', function() {
+	iframe.style.display = 'none';
+	iframe.src = 'about:blank';
+	document.getElementById('browserHome').style.display = '';
+});
+
+if (fullscreenBtn) fullscreenBtn.addEventListener('click', function() {
+	if (document.fullscreenElement) {
+		document.exitFullscreen();
 	} else {
-		forwardButton.style.opacity = '0.5';
-		forwardButton.style.cursor = 'default';
+		var el = iframe.src && iframe.src !== 'about:blank' ? iframe : document.documentElement;
+		(el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
 	}
-}
-async function registerSW() {
-	if ('serviceWorker' in navigator) {
-		await setTransports();
-		await navigator.serviceWorker
-			.register(swFile, { scope: swConfigSettings.prefix })
-			.catch(error => {
-				console.error('ServiceWorker registration failed:', error);
-			});
-	}
-}
-// register event listeners for shit
-if (address1) {
-	address1.addEventListener('keydown', function (event) {
-		if (event.key === 'Enter') {
-			event.preventDefault();
-			let query = address1.value;
-			executeSearch(query);
-		}
-	});
-}
-if (address2) {
-	address2.addEventListener('keydown', function (event) {
-		if (event.key === 'Enter') {
-			event.preventDefault();
-			let query = address2.value;
-			executeSearch(query);
-		}
-	});
-}
-// Make it so that if the user goes to /&?q= it searches it
-document.addEventListener('DOMContentLoaded', function () {
-	const urlParams = new URLSearchParams(window.location.search);
-	const queryParam = urlParams.get('q');
+});
+
+document.addEventListener('fullscreenchange', function() {
+	if (fullscreenBtn) fullscreenBtn.querySelector('.material-symbols-outlined').textContent = document.fullscreenElement ? 'fullscreen_exit' : 'fullscreen';
+});
+
+// URL query param handling
+document.addEventListener('DOMContentLoaded', function() {
+	var urlParams = new URLSearchParams(window.location.search);
+	var queryParam = urlParams.get('q');
 	if (queryParam) {
 		Promise.all([
-			fetch('/json/g.json').then(response => response.json()),
-			fetch('/json/a.json').then(response => response.json()),
-			fetch('/json/s.json').then(response => response.json())
-		])
-			.then(([gData, aData, shortcutsData]) => {
-				let data = [];
-				let source = '';
-
-				if (
-					gData.some(
-						d => d.name.toLowerCase() === queryParam.toLowerCase()
-					)
-				) {
-					data = gData;
-					source = 'g';
-				} else if (
-					aData.some(
-						d => d.name.toLowerCase() === queryParam.toLowerCase()
-					)
-				) {
-					data = aData;
-					source = 'a';
-				} else if (
-					shortcutsData.some(
-						d => d.name.toLowerCase() === queryParam.toLowerCase()
-					)
-				) {
-					data = shortcutsData;
-					source = 'shortcuts';
-				}
-
-				const item = data.find(
-					d => d.name.toLowerCase() === queryParam.toLowerCase()
-				);
-
-				if (item) {
-					if (source === 'g') {
-						document.querySelector('.gPage').id = 'navactive';
-					} else if (source === 'a') {
-						document.querySelector('.aPage').id = 'navactive';
-					} else {
-						document.querySelector('.pPage').id = 'navactive';
-					}
-					executeSearch(item.url);
-				} else {
-					console.error('Param not found in json file :(');
-				}
-			})
-			.catch(error => console.error('Error fetching json:', error));
-		document.querySelector('.utilityBar').style.display = 'none';
-		document.getElementById('intoinfrared').style.height = '100vh';
-		document.getElementById('intoinfrared').style.top = '0';
+			fetch('/json/g.json').then(function(r){return r.json()}).catch(function(){return []}),
+			fetch('/json/a.json').then(function(r){return r.json()}).catch(function(){return []}),
+			fetch('/json/s.json').then(function(r){return r.json()}).catch(function(){return []})
+		]).then(function(results) {
+			var allData = [].concat(results[0], results[1], results[2]);
+			var item = allData.find(function(d) { return d.name && d.name.toLowerCase() === queryParam.toLowerCase(); });
+			if (item) {
+				document.getElementById('browserHome').style.display = 'none';
+				executeSearch(item.url || item.name);
+			} else {
+				document.getElementById('browserHome').style.display = 'none';
+				executeSearch(queryParam);
+			}
+		});
 	} else {
 		if (localStorage.getItem('utilBarHidden') === 'true') {
-			document.querySelector('.utilityBar').style.display = 'none';
-			document.getElementById('intoinfrared').style.height = '100%';
-		} else {
-			document.querySelector('.utilityBar').style.display = 'block';
-			document.getElementById('intoinfrared').style.height =
-				'calc(100% - 3.633em)';
-		}
-
-		document.querySelector('.pPage').id = 'navactive';
-	}
-	startURLMonitoring();
-	updateButtonStates();
-	if (localStorage.getItem('smallIcons') === 'false') {
-		switch (localStorage.getItem('dropdown-selected-text-searchEngine')) {
-			case 'Duck Duck Go':
-				document.querySelector('.searchEngineIcon').src =
-					'/assets/imgs/b/ddg.webp';
-				document.querySelector('.searchEngineIcon').style.transform =
-					'scale(1.35)';
-				break;
-			case 'Bing':
-				document.querySelector('.searchEngineIcon').src =
-					'/assets/imgs/b/bing.webp';
-				document.querySelector('.searchEngineIcon').style.transform =
-					'scale(1.65)';
-				break;
-			case 'Google (default)':
-				document.querySelector('.searchEngineIcon').src =
-					'/assets/imgs/b/google.webp';
-				document.querySelector('.searchEngineIcon').style.transform =
-					'scale(1.2)';
-				break;
-			case 'Yahoo!':
-				document.querySelector('.searchEngineIcon').src =
-					'/assets/imgs/b/yahoo.webp';
-				document.querySelector('.searchEngineIcon').style.transform =
-					'scale(1.5)';
-				break;
-			default:
-				document.querySelector('.searchEngineIcon').src =
-					'/assets/imgs/b/google.webp';
-				document.querySelector('.searchEngineIcon').style.transform =
-					'scale(1.2)';
+			var utilBar = document.querySelector('.utilityBar');
+			if (utilBar) utilBar.style.display = 'none';
 		}
 	}
+	updateNavButtons();
 });
 
-const iframe = document.getElementById('intoinfrared');
-const observer = new MutationObserver(function (mutationsList) {
-	mutationsList.forEach(function (mutation) {
-		if (
-			mutation.type === 'attributes' &&
-			mutation.attributeName === 'src'
-		) {
-			iframe.addEventListener(
-				'load',
-				function () {
-					const initialUrl = iframe.contentWindow.location.href;
-					updateGointoinfrared2(initialUrl);
-					startURLMonitoring();
-				},
-				{ once: true }
-			);
-		}
-	});
-});
-
-if (iframe) {
-	observer.observe(iframe, {
-		attributes: true,
-		attributeFilter: ['src']
-	});
-}
-
-let devToggle = false;
-let erudaScriptLoaded = false;
-let erudaScriptInjecting = false;
+// Eruda dev tools injection
+var devToggle = false;
+var erudaScriptLoaded = false;
+var erudaScriptInjecting = false;
 
 function injectErudaScript(iframeDocument) {
-	return new Promise((resolve, reject) => {
-		if (erudaScriptLoaded) {
-			resolve();
-			return;
-		}
-
-		if (erudaScriptInjecting) {
-			console.warn('Eruda script is already being injected.');
-			resolve();
-			return;
-		}
-
+	return new Promise(function(resolve, reject) {
+		if (erudaScriptLoaded) { resolve(); return; }
+		if (erudaScriptInjecting) { resolve(); return; }
 		erudaScriptInjecting = true;
-
-		const script = iframeDocument.createElement('script');
-		script.type = 'text/javascript';
+		var script = iframeDocument.createElement('script');
 		script.src = 'https://cdn.jsdelivr.net/npm/eruda';
-		script.onload = () => {
-			erudaScriptLoaded = true;
-			erudaScriptInjecting = false;
-			resolve();
-		};
-		script.onerror = event => {
-			erudaScriptInjecting = false;
-			reject(new Error('Failed to load Eruda script:', event));
-		};
-		iframeDocument.body.appendChild(script);
+		script.onload = function() { erudaScriptLoaded = true; erudaScriptInjecting = false; resolve(); };
+		script.onerror = function() { erudaScriptInjecting = false; reject(new Error('Eruda load failed')); };
+		try { iframeDocument.body.appendChild(script); } catch(e) { erudaScriptInjecting = false; reject(e); }
 	});
 }
 
-function injectShowScript(iframeDocument) {
-	return new Promise(resolve => {
-		const script = iframeDocument.createElement('script');
-		script.type = 'text/javascript';
-		script.textContent = `
-			eruda.init({
-				defaults: {
-					displaySize: 50,
-					transparency: 0.9,
-					theme: 'Material Palenight'
-				}
-			});
-			eruda.show();
-			document.currentScript.remove();
-		`;
-		iframeDocument.body.appendChild(script);
-		resolve();
-	});
+function injectErudaShow(iframeDocument) {
+	var script = iframeDocument.createElement('script');
+	script.textContent = 'eruda.init({defaults:{displaySize:50,transparency:0.9,theme:"Material Palenight"}});eruda.show();document.currentScript.remove();';
+	try { iframeDocument.body.appendChild(script); } catch(e) {}
 }
 
-function injectHideScript(iframeDocument) {
-	return new Promise(resolve => {
-		const script = iframeDocument.createElement('script');
-		script.type = 'text/javascript';
-		script.textContent = `
-			eruda.hide();
-			document.currentScript.remove();
-		`;
-		iframeDocument.body.appendChild(script);
-		resolve();
-	});
+function injectErudaHide(iframeDocument) {
+	var script = iframeDocument.createElement('script');
+	script.textContent = 'eruda.hide();document.currentScript.remove();';
+	try { iframeDocument.body.appendChild(script); } catch(e) {}
 }
 
 function inspectelement() {
-	const iframe = document.getElementById('intoinfrared');
-	if (!iframe || !iframe.contentWindow) {
-		console.error(
-			"Iframe not found or inaccessible. \\(°□°)/ (This shouldn't happen btw)"
-		);
-		return;
-	}
-
-	const iframeDocument = iframe.contentWindow.document;
-
-	const forbiddenSrcs = ['about:blank', null, 'a%60owt8bnalk', 'a`owt8bnalk'];
-	if (iframe.contentWindow.location.href.includes(forbiddenSrcs)) {
-		console.warn('Iframe src is forbidden, skipping.');
-		return;
-	}
-
-	if (iframe.contentWindow.document.readyState == 'loading') {
-		console.warn(
-			'Iframe has not finished loading, skipping Eruda injection. Be patient, jesus fuck.'
-		);
-		return;
-	}
-
-	injectErudaScript(iframeDocument)
-		.then(() => {
-			if (!devToggle) {
-				injectShowScript(iframeDocument);
-			} else {
-				injectHideScript(iframeDocument);
-			}
-
-			devToggle = !devToggle;
-		})
-		.catch(error => {
-			console.error('Error injecting Eruda script:', error);
-		});
-
-	iframe.contentWindow.addEventListener('unload', () => {
-		devToggle = false;
-		erudaScriptLoaded = false;
-		erudaScriptInjecting = false;
-		console.log('Iframe navigation detected, Eruda toggle reset.');
+	var iframe = document.getElementById('intoinfrared');
+	if (!iframe || !iframe.contentWindow) return;
+	var forbidden = ['about:blank', null, 'a%60owt8bnalk', 'a`owt8bnalk'];
+	if (!iframe.contentWindow.location.href) return;
+	if (forbidden.some(function(f) { return !f ? false : iframe.contentWindow.location.href.includes(f); })) return;
+	var iframeDocument = iframe.contentWindow.document;
+	if (!iframeDocument || iframeDocument.readyState === 'loading') return;
+	injectErudaScript(iframeDocument).then(function() {
+		if (!devToggle) injectErudaShow(iframeDocument);
+		else injectErudaHide(iframeDocument);
+		devToggle = !devToggle;
+	}).catch(function(e) { console.warn('Eruda:', e); });
+	iframe.contentWindow.addEventListener('unload', function() {
+		devToggle = false; erudaScriptLoaded = false; erudaScriptInjecting = false;
 	});
 }
