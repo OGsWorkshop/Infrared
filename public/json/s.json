@@ -1,16 +1,87 @@
 [
-	{"name":"Google","url":"https://google.com/","img":"/assets/imgs/s/Google.webp","bg":"#fff"},
-	{"name":"YouTube","url":"https://youtube.com/","img":"/assets/imgs/s/Youtube.webp","bg":"#ff0000"},
-	{"name":"Spotify","url":"https://open.spotify.com/","img":"/assets/imgs/s/Spotify.webp","bg":"#1db954"},
-	{"name":"Discord","url":"https://discord.com/login","img":"https://i.imgur.com/jphc5Th.png","style":"width:50px;height:50px;padding:0px","bg":"#5865f2"},
-	{"name":"ChatGPT","url":"https://chatgpt.com/","img":"/assets/imgs/s/ChatGPT.webp","bg":"#fff"},
-	{"name":"TikTok","url":"https://tiktok.com/","img":"/assets/imgs/s/Tiktok.webp","bg":"#fff"},
-	{"name":"GeForce Now","url":"https://play.geforcenow.com/mall/","img":"/assets/imgs/s/Geforce_Now.webp","bg":"#76b900"},
-	{"name":"GitHub","url":"https://github.com/","img":"/assets/imgs/s/GitHub.webp","bg":"#000"},
-	{"name":"Twitch","url":"https://twitch.com/","img":"/assets/imgs/s/Twitch.webp","bg":"#9146ff"},
-	{"name":"ESPN","url":"https://www.espn.com/","img":"/assets/imgs/s/ESPN.webp","bg":"#fff"},
-	{"name":"Reddit","url":"https://www.reddit.com/","img":"/assets/imgs/s/Reddit.webp","bg":"#ff4500"},
-	{"name":"Netflix","url":"https://www.netflix.com/","img":"/assets/imgs/s/Netflix.webp","bg":"#e50914"},
-	{"name":"Now.gg","url":"https://now.gg/","img":"/assets/imgs/s/Now_gg.webp","style":"width:45px;height:45px;padding:3px","bg":"#fff"},
-	{"name":"Settings","url":"/~/#/proxy?t=1","img":"/assets/imgs/s/Settings.webp","bg":"#fff"}
+	{
+		"name": "Google",
+		"url": "https://google.com/",
+		"img": "/assets/imgs/s/Google.webp",
+		"bg": "#fff"
+	},
+	{
+		"name": "YouTube",
+		"url": "https://youtube.com/",
+		"img": "/assets/imgs/s/YouTube.webp",
+		"bg": "#ff0000"
+	},
+	{
+		"name": "Spotify",
+		"url": "https://open.spotify.com/",
+		"img": "/assets/imgs/s/Spotify.webp",
+		"bg": "#1db954"
+	},
+	{
+		"name": "Discord",
+		"url": "https://discord.com/login",
+		"img": "/assets/imgs/s/Discord.webp",
+		"bg": "#5865f2"
+	},
+	{
+		"name": "ChatGPT",
+		"url": "https://chatgpt.com/",
+		"img": "/assets/imgs/s/ChatGPT.webp",
+		"bg": "#fff"
+	},
+	{
+		"name": "TikTok",
+		"url": "https://tiktok.com/",
+		"img": "/assets/imgs/s/TikTok.webp",
+		"bg": "#fff"
+	},
+	{
+		"name": "GeForce Now",
+		"url": "https://play.geforcenow.com/mall/",
+		"img": "/assets/imgs/s/GeForce_Now.webp",
+		"bg": "#76b900"
+	},
+	{
+		"name": "GitHub",
+		"url": "https://github.com/",
+		"img": "/assets/imgs/s/GitHub.webp",
+		"bg": "#000"
+	},
+	{
+		"name": "Twitch",
+		"url": "https://twitch.com/",
+		"img": "/assets/imgs/s/Twitch.webp",
+		"bg": "#9146ff"
+	},
+	{
+		"name": "ESPN",
+		"url": "https://www.espn.com/",
+		"img": "/assets/imgs/s/ESPN.webp",
+		"bg": "#fff"
+	},
+	{
+		"name": "Reddit",
+		"url": "https://www.reddit.com/",
+		"img": "/assets/imgs/s/Reddit.png",
+		"bg": "#ff4500"
+	},
+	{
+		"name": "Netflix",
+		"url": "https://www.netflix.com/",
+		"img": "/assets/imgs/s/Netflix.png",
+		"bg": "#e50914"
+	},
+	{
+		"name": "Now.gg",
+		"url": "https://now.gg/",
+		"img": "/assets/imgs/s/Now_gg.webp",
+		"style": "width:45px;height:45px;padding:3px",
+		"bg": "#fff"
+	},
+	{
+		"name": "Settings",
+		"url": "/~/#/proxy?t=1",
+		"img": "/assets/imgs/s/Settings.webp",
+		"bg": "#fff"
+	}
 ]

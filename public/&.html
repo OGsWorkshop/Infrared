@@ -33,16 +33,13 @@
 	<nav class="sidebar">
 		<div class="sidebar-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a></div>
 		<div class="sidebar-nav">
-			<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span class="sidebar-tooltip">Home</span></a>
+		<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span class="sidebar-tooltip">Home</span></a>
 			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span class="sidebar-tooltip">Games</span></a>
 			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span class="sidebar-tooltip">Apps</span></a>
 			<a href="/&" class="sidebar-link active"><span class="material-symbols-outlined">public</span><span class="sidebar-tooltip">Browser</span></a>
-		</div>
-		<div class="sidebar-divider"></div>
-		<div class="sidebar-nav">
-			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span class="sidebar-tooltip">Settings</span></a>
-		</div>
-		<div class="sidebar-bottom">
+		<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span class="sidebar-tooltip">Settings</span></a>
+	</div>
+	<div class="sidebar-bottom">
 			<a href="https://discord.gg/yTmmCFv59Q" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span class="sidebar-tooltip">Discord</span></a>
 		</div>
 	</nav>
@@ -64,11 +61,13 @@
 			</div>
 			<div class="browser-iframe-wrapper">
 				<div class="browser-home" id="browserHome">
-					<div class="browser-home-search"><span style="position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px;font-weight:700;font-family:var(--font-display)">G</span><input type="text" id="gointoinfrared" placeholder="Search Infrared..." /></div>
-					<div class="browser-shortcuts-big shortcutsBig" style="display:none"></div>
-					<div class="browser-shortcuts shortcuts"></div>
+					<div class="browser-home-panel">
+						<div class="browser-home-search"><span style="position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px;font-weight:700;font-family:var(--font-display)">G</span><input type="text" id="gointoinfrared" placeholder="Search Infrared..." /></div>
+						<div class="browser-shortcuts-big shortcutsBig" style="display:none"></div>
+						<div class="browser-shortcuts shortcuts"></div>
+					</div>
 				</div>
-				<iframe id="intoinfrared" class="browser-iframe" style="display:none" frameborder="0"></iframe>
+				<iframe id="intoinfrared" class="browser-iframe" style="display:none" frameborder="0" sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-modals"></iframe>
 			</div>
 		</div>
 	</div>

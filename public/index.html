@@ -14,7 +14,6 @@
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
 	<script src="/js/themes.js"></script>
-	<script src="https://unpkg.com/lucide@latest"></script>
 	<title>Infrared - Next Gen Proxy</title>
 	<link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
 </head>
@@ -35,9 +34,6 @@
 			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span class="sidebar-tooltip">Games</span></a>
 			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span class="sidebar-tooltip">Apps</span></a>
 			<a href="/&" class="sidebar-link"><span class="material-symbols-outlined">public</span><span class="sidebar-tooltip">Browser</span></a>
-		</div>
-		<div class="sidebar-divider"></div>
-		<div class="sidebar-nav">
 			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span class="sidebar-tooltip">Settings</span></a>
 		</div>
 		<div class="sidebar-bottom">
@@ -50,23 +46,14 @@
 		<div class="bg-glow"></div>
 		<div class="bg-grid"></div>
 
-		<div class="hero">
+		<div class="hero hero-centered">
 			<div class="hero-text">
-				<div class="hero-announcement"><span class="material-symbols-outlined" style="font-size:14px">campaign</span><span>v2.0 is here</span></div>
-				<h1 class="hero-title">Welcome to <span class="accent">all you need</span><span class="cursor"></span></h1>
+				<h1 class="hero-title">Welcome to <span class="accent">all you need.</span><span class="cursor"></span></h1>
 				<p class="hero-subtitle">Start your unblocking journey today!</p>
 				<div class="hero-actions">
-					<a href="/&" class="btn-primary"><i data-lucide="sparkles" style="width:18px;height:18px"></i> Get Started</a>
-					<a href="/g" class="btn-ghost">Browse Games</a>
+					<a href="/&" class="btn-primary">Get Started</a>
+					<a href="https://discord.gg/yTmmCFv59Q" target="_blank" class="btn-ghost"><i class="fa-brands fa-discord" style="font-size:18px"></i> Join Discord</a>
 				</div>
-			</div>
-			<div class="hero-visual">
-				<div class="hero-card featured" onclick="location.href='/&'">
-					<div class="hero-card-icon" style="background:var(--theme-accent-glow)"><span class="material-symbols-outlined">public</span></div>
-					<div class="hero-card-info"><h4>Start Browsing</h4><span>Open any site through the proxy</span></div>
-				</div>
-				<div class="hero-card" onclick="location.href='/g'"><div class="hero-card-icon" style="background:var(--theme-accent-glow)"><span class="material-symbols-outlined">joystick</span></div><div class="hero-card-info"><h4>Games</h4><span>328 titles</span></div></div>
-				<div class="hero-card" onclick="location.href='/a'"><div class="hero-card-icon" style="background:var(--theme-accent-glow)"><span class="material-symbols-outlined">apps</span></div><div class="hero-card-info"><h4>Apps</h4><span>80+ services</span></div></div>
 			</div>
 		</div>
 	</div>
@@ -74,8 +61,7 @@
 	<script src="/js/starfield.js"></script>
 	<script src="/js/c.js"></script>
 	<script>
-		if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
-		var words=['all you need','everything','freedom','any site','games','privacy','speed'];
+		var words=['all you need.','everything.','freedom.','any site.','games.','privacy.','speed.'];
 		var i=0,j=0,del=false,el=document.querySelector('.hero-title .accent');
 		function type(){var w=words[i];el.textContent=del?w.substring(0,j-1):w.substring(0,j+1);j+=del?-1:1;if(!del&&j===w.length){setTimeout(function(){del=true;type()},2000);return}if(del&&j===0){del=false;i=(i+1)%words.length}setTimeout(type,del?50:100+Math.random()*80)}type();
 	</script>

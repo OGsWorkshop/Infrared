@@ -1,13 +1,5 @@
 [
 	{
-		"name": "! Request a game",
-		"url": "https://docs.google.com/forms/d/e/1FAIpQLSeZcPMt3toVL8EtKLfHMbKpx4lZzqAAr5ifvZJRwoXqsLSf-A/viewform?usp=pp_url",
-		"img": "/assets/requestApp.jpg",
-		"categories": [
-			"all"
-		]
-	},
-	{
 		"name": "Amazon",
 		"url": "https://www.amazon.com/",
 		"img": "/assets/imgs/a/Amazon.webp",
@@ -68,7 +60,7 @@
 	{
 		"name": "Discord | Login",
 		"url": "https://discord.gg/yTmmCFv59Q",
-		"img": "/assets/imgs/a/Discord.webp",
+		"img": "/assets/imgs/a/Discord_Login.png",
 		"categories": [
 			"all",
 			"social",
@@ -324,7 +316,7 @@
 	{
 		"name": "Netflix",
 		"url": "https://www.netflix.com/",
-		"img": "/assets/imgs/a/Netflix.webp",
+		"img": "/assets/imgs/a/Netflix.png",
 		"categories": [
 			"all",
 			"streaming",
@@ -335,7 +327,7 @@
 	{
 		"name": "Spotify",
 		"url": "https://open.spotify.com/",
-		"img": "/assets/imgs/a/Spotify.webp",
+		"img": "/assets/imgs/a/Spotify.png",
 		"categories": [
 			"all",
 			"music",
@@ -345,7 +337,7 @@
 	{
 		"name": "Google Drive",
 		"url": "https://drive.google.com/",
-		"img": "/assets/imgs/a/Google_Drive.webp",
+		"img": "/assets/imgs/a/Google_Drive.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -354,7 +346,7 @@
 	{
 		"name": "Google Docs",
 		"url": "https://docs.google.com/",
-		"img": "/assets/imgs/a/Google_Docs.webp",
+		"img": "/assets/imgs/a/Google_Docs.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -363,7 +355,7 @@
 	{
 		"name": "Google",
 		"url": "https://google.com/",
-		"img": "/assets/imgs/a/Google.webp",
+		"img": "/assets/imgs/a/Google.png",
 		"categories": [
 			"all",
 			"media",
@@ -373,7 +365,7 @@
 	{
 		"name": "Hulu",
 		"url": "https://www.hulu.com/",
-		"img": "/assets/imgs/a/Hulu.webp",
+		"img": "/assets/imgs/a/Hulu.png",
 		"categories": [
 			"all",
 			"streaming",
@@ -383,7 +375,7 @@
 	{
 		"name": "Disney+",
 		"url": "https://www.disneyplus.com/",
-		"img": "/assets/imgs/a/Disney_Plus.webp",
+		"img": "/assets/imgs/a/Disney.png",
 		"categories": [
 			"all",
 			"streaming",
@@ -393,7 +385,7 @@
 	{
 		"name": "Peacock",
 		"url": "https://www.peacocktv.com/",
-		"img": "/assets/imgs/a/Peacock.webp",
+		"img": "/assets/imgs/a/Peacock.png",
 		"categories": [
 			"all",
 			"streaming",
@@ -403,7 +395,7 @@
 	{
 		"name": "Max",
 		"url": "https://play.max.com/",
-		"img": "/assets/imgs/a/Max.webp",
+		"img": "/assets/imgs/a/Max.png",
 		"categories": [
 			"all",
 			"streaming",
@@ -413,7 +405,7 @@
 	{
 		"name": "Apple Music",
 		"url": "https://music.apple.com/",
-		"img": "/assets/imgs/a/Apple_Music.webp",
+		"img": "/assets/imgs/a/Apple_Music.png",
 		"categories": [
 			"all",
 			"music"
@@ -422,7 +414,7 @@
 	{
 		"name": "Pandora",
 		"url": "https://www.pandora.com/",
-		"img": "/assets/imgs/a/Pandora.webp",
+		"img": "/assets/imgs/a/Pandora.png",
 		"categories": [
 			"all",
 			"music"
@@ -431,7 +423,7 @@
 	{
 		"name": "Reddit",
 		"url": "https://www.reddit.com/",
-		"img": "/assets/imgs/a/Reddit.webp",
+		"img": "/assets/imgs/a/Reddit.png",
 		"categories": [
 			"all",
 			"social",
@@ -441,7 +433,7 @@
 	{
 		"name": "Instagram",
 		"url": "https://www.instagram.com/",
-		"img": "/assets/imgs/a/Instagram.webp",
+		"img": "/assets/imgs/a/Instagram.png",
 		"categories": [
 			"all",
 			"social"
@@ -450,7 +442,7 @@
 	{
 		"name": "Facebook",
 		"url": "https://www.facebook.com/",
-		"img": "/assets/imgs/a/Facebook.webp",
+		"img": "/assets/imgs/a/Facebook.png",
 		"categories": [
 			"all",
 			"social"
@@ -459,7 +451,7 @@
 	{
 		"name": "WhatsApp",
 		"url": "https://web.whatsapp.com/",
-		"img": "/assets/imgs/a/WhatsApp.webp",
+		"img": "/assets/imgs/a/WhatsApp.png",
 		"categories": [
 			"all",
 			"social",
@@ -469,7 +461,7 @@
 	{
 		"name": "Slack",
 		"url": "https://slack.com/",
-		"img": "/assets/imgs/a/Slack.webp",
+		"img": "/assets/imgs/a/Slack.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -478,7 +470,7 @@
 	{
 		"name": "Notion",
 		"url": "https://www.notion.so/",
-		"img": "/assets/imgs/a/Notion.webp",
+		"img": "/assets/imgs/a/Notion.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -487,7 +479,7 @@
 	{
 		"name": "Canva",
 		"url": "https://www.canva.com/",
-		"img": "/assets/imgs/a/Canva.webp",
+		"img": "/assets/imgs/a/Canva.png",
 		"categories": [
 			"all",
 			"productivity",
@@ -497,7 +489,7 @@
 	{
 		"name": "Figma",
 		"url": "https://www.figma.com/",
-		"img": "/assets/imgs/a/Figma.webp",
+		"img": "/assets/imgs/a/Figma.png",
 		"categories": [
 			"all",
 			"dev",
@@ -507,7 +499,7 @@
 	{
 		"name": "CodePen",
 		"url": "https://codepen.io/",
-		"img": "/assets/imgs/a/CodePen.webp",
+		"img": "/assets/imgs/a/CodePen.png",
 		"categories": [
 			"all",
 			"dev"
@@ -516,7 +508,7 @@
 	{
 		"name": "Replit",
 		"url": "https://replit.com/",
-		"img": "/assets/imgs/a/Replit.webp",
+		"img": "/assets/imgs/a/Replit.png",
 		"categories": [
 			"all",
 			"dev"
@@ -525,7 +517,7 @@
 	{
 		"name": "Stack Overflow",
 		"url": "https://stackoverflow.com/",
-		"img": "/assets/imgs/a/Stack_Overflow.webp",
+		"img": "/assets/imgs/a/Stack_Overflow.png",
 		"categories": [
 			"all",
 			"dev"
@@ -534,7 +526,7 @@
 	{
 		"name": "Bard/Gemini",
 		"url": "https://gemini.google.com/",
-		"img": "/assets/imgs/a/Gemini.webp",
+		"img": "/assets/imgs/a/Bard_Gemini.png",
 		"categories": [
 			"all",
 			"ai"
@@ -543,7 +535,7 @@
 	{
 		"name": "Claude AI",
 		"url": "https://claude.ai/",
-		"img": "/assets/imgs/a/Claude_AI.webp",
+		"img": "/assets/imgs/a/Claude_AI.png",
 		"categories": [
 			"all",
 			"ai"
@@ -552,7 +544,7 @@
 	{
 		"name": "Copilot",
 		"url": "https://copilot.microsoft.com/",
-		"img": "/assets/imgs/a/Copilot.webp",
+		"img": "/assets/imgs/a/Copilot.png",
 		"categories": [
 			"all",
 			"ai"
@@ -561,7 +553,7 @@
 	{
 		"name": "Perplexity",
 		"url": "https://www.perplexity.ai/",
-		"img": "/assets/imgs/a/Perplexity.webp",
+		"img": "/assets/imgs/a/Perplexity.png",
 		"categories": [
 			"all",
 			"ai"
@@ -570,7 +562,7 @@
 	{
 		"name": "Khan Academy",
 		"url": "https://www.khanacademy.org/",
-		"img": "/assets/imgs/a/Khan_Academy.webp",
+		"img": "/assets/imgs/a/Khan_Academy.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -579,7 +571,7 @@
 	{
 		"name": "Quizlet",
 		"url": "https://quizlet.com/",
-		"img": "/assets/imgs/a/Quizlet.webp",
+		"img": "/assets/imgs/a/Quizlet.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -588,7 +580,7 @@
 	{
 		"name": "Wikipedia",
 		"url": "https://www.wikipedia.org/",
-		"img": "/assets/imgs/a/Wikipedia.webp",
+		"img": "/assets/imgs/a/Wikipedia.png",
 		"categories": [
 			"all",
 			"media"
@@ -597,7 +589,7 @@
 	{
 		"name": "Gmail",
 		"url": "https://mail.google.com/",
-		"img": "/assets/imgs/a/Gmail.webp",
+		"img": "/assets/imgs/a/Gmail.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -606,7 +598,7 @@
 	{
 		"name": "Outlook",
 		"url": "https://outlook.live.com/",
-		"img": "/assets/imgs/a/Outlook.webp",
+		"img": "/assets/imgs/a/Outlook.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -615,7 +607,7 @@
 	{
 		"name": "eBay",
 		"url": "https://www.ebay.com/",
-		"img": "/assets/imgs/a/eBay.webp",
+		"img": "/assets/imgs/a/eBay.png",
 		"categories": [
 			"all"
 		]
@@ -623,7 +615,7 @@
 	{
 		"name": "Walmart",
 		"url": "https://www.walmart.com/",
-		"img": "/assets/imgs/a/Walmart.webp",
+		"img": "/assets/imgs/a/Walmart.png",
 		"categories": [
 			"all"
 		]
@@ -631,7 +623,7 @@
 	{
 		"name": "Target",
 		"url": "https://www.target.com/",
-		"img": "/assets/imgs/a/Target.webp",
+		"img": "/assets/imgs/a/Target.png",
 		"categories": [
 			"all"
 		]
@@ -639,7 +631,7 @@
 	{
 		"name": "Crazy Games",
 		"url": "https://www.crazygames.com/",
-		"img": "/assets/imgs/a/Crazy_Games.webp",
+		"img": "/assets/imgs/a/Crazy_Games.png",
 		"categories": [
 			"all",
 			"game"
@@ -648,7 +640,7 @@
 	{
 		"name": "Now.gg",
 		"url": "https://now.gg/",
-		"img": "/assets/imgs/a/Now_gg.webp",
+		"img": "/assets/imgs/a/Now_gg.png",
 		"categories": [
 			"all",
 			"game"
@@ -657,7 +649,7 @@
 	{
 		"name": "Roblox",
 		"url": "https://www.roblox.com/",
-		"img": "/assets/imgs/a/Roblox.webp",
+		"img": "/assets/imgs/a/Roblox.png",
 		"categories": [
 			"all",
 			"game",
@@ -667,7 +659,7 @@
 	{
 		"name": "Krunker.io",
 		"url": "https://krunker.io/",
-		"img": "/assets/imgs/a/Krunker_io.webp",
+		"img": "/assets/imgs/a/Krunker_io.png",
 		"categories": [
 			"all",
 			"game",
@@ -677,7 +669,7 @@
 	{
 		"name": "DuckDuckGo",
 		"url": "https://duckduckgo.com/",
-		"img": "/assets/imgs/a/DuckDuckGo.webp",
+		"img": "/assets/imgs/a/DuckDuckGo.png",
 		"categories": [
 			"all",
 			"media"
@@ -686,7 +678,7 @@
 	{
 		"name": "Bing",
 		"url": "https://www.bing.com/",
-		"img": "/assets/imgs/a/Bing.webp",
+		"img": "/assets/imgs/a/Bing.png",
 		"categories": [
 			"all",
 			"media"
@@ -695,7 +687,7 @@
 	{
 		"name": "IMDb",
 		"url": "https://www.imdb.com/",
-		"img": "/assets/imgs/a/IMDb.webp",
+		"img": "/assets/imgs/a/IMDb.png",
 		"categories": [
 			"all",
 			"media",
@@ -705,7 +697,7 @@
 	{
 		"name": "Rotten Tomatoes",
 		"url": "https://www.rottentomatoes.com/",
-		"img": "/assets/imgs/a/Rotten_Tomatoes.webp",
+		"img": "/assets/imgs/a/Rotten_Tomatoes.png",
 		"categories": [
 			"all",
 			"media"
@@ -714,7 +706,7 @@
 	{
 		"name": "Weather.com",
 		"url": "https://weather.com/",
-		"img": "/assets/imgs/a/Weather.webp",
+		"img": "/assets/imgs/a/Weather_com.png",
 		"categories": [
 			"all"
 		]
@@ -722,7 +714,7 @@
 	{
 		"name": "Google Translate",
 		"url": "https://translate.google.com/",
-		"img": "/assets/imgs/a/Google_Translate.webp",
+		"img": "/assets/imgs/a/Google_Translate.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -731,7 +723,7 @@
 	{
 		"name": "Adobe Express",
 		"url": "https://express.adobe.com/",
-		"img": "/assets/imgs/a/Adobe_Express.webp",
+		"img": "/assets/imgs/a/Adobe_Express.png",
 		"categories": [
 			"all",
 			"media",
@@ -741,7 +733,7 @@
 	{
 		"name": "Photopea",
 		"url": "https://www.photopea.com/",
-		"img": "/assets/imgs/a/Photopea.webp",
+		"img": "/assets/imgs/a/Photopea.png",
 		"categories": [
 			"all",
 			"media",
@@ -751,7 +743,7 @@
 	{
 		"name": "Schoology",
 		"url": "https://app.schoology.com/",
-		"img": "/assets/imgs/a/Schoology.webp",
+		"img": "/assets/imgs/a/Schoology.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -760,7 +752,7 @@
 	{
 		"name": "Classroom",
 		"url": "https://classroom.google.com/",
-		"img": "/assets/imgs/a/Classroom.webp",
+		"img": "/assets/imgs/a/Classroom.png",
 		"categories": [
 			"all",
 			"productivity"
@@ -769,7 +761,7 @@
 	{
 		"name": "Desmos",
 		"url": "https://www.desmos.com/calculator",
-		"img": "/assets/imgs/a/Desmos.webp",
+		"img": "/assets/imgs/a/Desmos.png",
 		"categories": [
 			"all",
 			"productivity"

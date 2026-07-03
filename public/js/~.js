@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			card.addEventListener('click', function() {
 				InfraredThemes.set(theme.id);
 				renderThemeGrid();
-				showToast('success');
 			});
 			grid.appendChild(card);
 		});

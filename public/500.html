@@ -6,7 +6,7 @@
 	<meta name="description" content="Launch into Infrared, the next gen proxy." />
 	<meta name="keywords" content="Proxy, Unblocker, Infrared Unblocker, Infrared" />
 	<meta property="og:image" content="/assets/logo.webp" />
-	<title>500 - Infrared</title>
+	<title>Connection Error - Infrared</title>
 	<link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
@@ -24,11 +24,39 @@
 		<div class="bg-glow"></div>
 		<div class="bg-grid"></div>
 		<div class="error-page">
-			<img src="/assets/500.png" alt="500" style="width:280px" />
-			<h1>Buckled, we have a problem</h1>
-			<p>You slipped on a snail.</p>
-			<button class="btn-primary" onclick="history.go(-2)">Retry</button>
+			<div class="error-icon" aria-hidden="true">!</div>
+			<h1>Unable to reach this site</h1>
+			<p id="errorMessage">The connection could not be established. This may be a temporary network issue, a blocked destination, or a problem with the proxy service.</p>
+			<p id="errorDetails" class="error-details" style="display:none"></p>
+			<div class="error-actions">
+				<button class="btn-primary" onclick="history.go(-2)">Go Back</button>
+				<a href="/" class="btn-secondary" style="text-decoration:none">Home</a>
+			</div>
 		</div>
 	</div>
+	<script>
+		(function() {
+			var params = new URLSearchParams(window.location.search);
+			var error = params.get('error') || '';
+			var detail = params.get('detail') || '';
+			var messageEl = document.getElementById('errorMessage');
+			var detailsEl = document.getElementById('errorDetails');
+			if (error) {
+				var messages = {
+					'connection': 'The connection could not be established. This may be a temporary network issue, a blocked destination, or a problem with the proxy service.',
+					'offline': 'Your device appears to be offline. Check your network connection and try again.',
+					'timeout': 'The request timed out. The destination may be slow or unavailable right now.',
+					'blocked': 'This destination is blocked or could not be reached through the proxy.',
+					'service': 'The proxy service encountered an error while loading this page.',
+					'unknown': 'An unexpected error occurred while loading this page.'
+				};
+				messageEl.textContent = messages[error] || messages['unknown'];
+			}
+			if (detail) {
+				detailsEl.textContent = 'Error reference: ' + detail;
+				detailsEl.style.display = 'block';
+			}
+		})();
+	</script>
 </body>
 </html>

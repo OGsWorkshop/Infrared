@@ -62,6 +62,8 @@ async function registerServiceWorker() {
 	try {
 		if (swFunction && typeof swFunction === 'function') { await swFunction(); }
 		else { await navigator.serviceWorker.register(swFile, {scope:swConfigSettings.prefix||'/@/infrared/'}); await navigator.serviceWorker.ready; }
+		// Ensure the selected proxy service worker is registered even when a custom init runs
+		try { await navigator.serviceWorker.register(swFile, {scope:swConfigSettings.prefix||'/@/infrared/'}); await navigator.serviceWorker.ready; } catch(e) {}
 		await setTransports();
 	} catch(e) { console.error('SW error:', e); }
 }
