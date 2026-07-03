@@ -291,14 +291,12 @@ a { text-decoration: none; color: var(--theme-link); }
 	margin-bottom: 22px;
 	animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 	white-space: nowrap;
+	display: inline-block;
 }
 
 .accent-wrap {
-	display: inline-block;
-	min-width: 14ch;
-	text-align: center;
-	vertical-align: bottom;
-	white-space: nowrap;
+	display: inline;
+	vertical-align: baseline;
 }
 
 .hero-title .accent {
@@ -1608,7 +1606,6 @@ a { text-decoration: none; color: var(--theme-link); }
 	.bento-card.featured { grid-column: span 2; }
 	.bento-card-img { height: 100px; }
 	.hero-title { font-size: 32px; }
-	.accent-wrap { min-width: 12ch; }
 	.browser-toolbar { flex-wrap: wrap; }
 	.settings-layout { min-height: auto; }
 	.browser-shortcuts-big { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1625,6 +1622,5 @@ a { text-decoration: none; color: var(--theme-link); }
 	.hero { padding: 20px 12px; }
 	.main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); }
 	.hero-title { font-size: 26px; }
-	.accent-wrap { min-width: 10ch; }
 	.browser-shortcuts-big { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
