@@ -1,17 +1,17 @@
-// starfield.js - Lightweight Canvas starfield with parallax drift, theme-aware tint, and click interactions
+// starfield.js - Reactive Canvas starfield with drifting click dots and theme-aware tint
 (function() {
 	var canvas = document.getElementById('starfield');
 	if (!canvas) return;
 
 	var ctx = canvas.getContext('2d');
 	var stars = [];
-	var bursts = [];
-	var maxStars = 180;
+	var clickStars = [];
+	var maxStars = 200;
 	var width, height;
 	var rafId = null;
 	var lastTime = 0;
-	var driftX = 0.08;
-	var driftY = -0.03;
+	var driftX = 0.12;
+	var driftY = -0.05;
 	var hidden = false;
 	var mouse = { x: -1000, y: -1000 };
 
@@ -56,26 +56,23 @@
 				y: Math.random() * height,
 				size: Math.random() * 1.8 + 0.4,
 				opacity: Math.random() * 0.6 + 0.2,
-				parallax: Math.random() * 0.6 + 0.2,
+				parallax: Math.random() * 0.8 + 0.2,
 				phase: Math.random() * Math.PI * 2
 			});
 		}
 	}
 
-	function addBurst(x, y) {
-		for (var i=0; i<8; i++) {
-			var angle = (Math.PI * 2 / 8) * i + Math.random() * 0.5;
-			var speed = Math.random() * 1.5 + 0.5;
-			bursts.push({
-				x: x,
-				y: y,
-				vx: Math.cos(angle) * speed,
-				vy: Math.sin(angle) * speed,
-				size: Math.random() * 2 + 1,
-				life: 1,
-				decay: Math.random() * 0.02 + 0.015
-			});
-		}
+	function spawnClickDot(x, y) {
+		clickStars.push({
+			x: x,
+			y: y,
+			size: Math.random() * 1.8 + 1.2,
+			opacity: 1,
+			parallax: Math.random() * 0.5 + 0.8,
+			phase: Math.random() * Math.PI * 2,
+			life: 1,
+			decay: Math.random() * 0.008 + 0.004
+		});
 	}
 
 	function draw(time) {
@@ -84,50 +81,49 @@
 			return;
 		}
 
-		var dt = time - lastTime;
 		lastTime = time;
-
 		ctx.clearRect(0, 0, width, height);
 
 		var color = parseColor(getColor());
-		var pulseBase = Math.sin(time * 0.0008);
 
 		// mouse parallax influence
 		var mx = (mouse.x - width/2) / width;
 		var my = (mouse.y - height/2) / height;
 
-		for (var i=0; i<stars.length; i++) {
-			var s = stars[i];
-			s.x += (driftX + mx * 0.05) * s.parallax;
-			s.y += (driftY + my * 0.05) * s.parallax;
-
+		function moveStar(s) {
+			s.x += (driftX + mx * 0.08) * s.parallax;
+			s.y += (driftY + my * 0.08) * s.parallax;
 			if (s.x > width) s.x = 0;
 			if (s.x < 0) s.x = width;
 			if (s.y > height) s.y = 0;
 			if (s.y < 0) s.y = height;
+		}
 
-			var pulse = 0.92 + Math.sin(time * 0.001 + s.phase) * 0.08;
+		// draw background stars
+		for (var i=0; i<stars.length; i++) {
+			var s = stars[i];
+			moveStar(s);
+			var pulse = 0.9 + Math.sin(time * 0.0012 + s.phase) * 0.1;
 			var alpha = s.opacity * pulse;
-
 			ctx.beginPath();
 			ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
 			ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + alpha + ')';
 			ctx.fill();
 		}
 
-		// draw click bursts
-		for (var j=bursts.length-1; j>=0; j--) {
-			var b = bursts[j];
-			b.x += b.vx;
-			b.y += b.vy;
-			b.life -= b.decay;
-			if (b.life <= 0) {
-				bursts.splice(j, 1);
+		// draw click-spawned drifting dots
+		for (var j=clickStars.length-1; j>=0; j--) {
+			var c = clickStars[j];
+			moveStar(c);
+			c.life -= c.decay;
+			if (c.life <= 0) {
+				clickStars.splice(j, 1);
 				continue;
 			}
+			var cpulse = 0.9 + Math.sin(time * 0.002 + c.phase) * 0.1;
 			ctx.beginPath();
-			ctx.arc(b.x, b.y, b.size * b.life, 0, Math.PI * 2);
-			ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + b.life * 0.9 + ')';
+			ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+			ctx.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + c.opacity * c.life * cpulse + ')';
 			ctx.fill();
 		}
 
@@ -171,10 +167,9 @@
 
 	document.addEventListener('click', function(e) {
 		if (hidden) return;
-		// spawn bursts on most clicks, but avoid interactive controls
 		var tag = e.target.tagName;
 		if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'BUTTON' || tag === 'A' || tag === 'SELECT') return;
-		addBurst(e.clientX, e.clientY);
+		spawnClickDot(e.clientX, e.clientY);
 	});
 
 	document.addEventListener('visibilitychange', function() {

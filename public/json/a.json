@@ -228,7 +228,7 @@
 	{
 		"name": "Twitter X",
 		"url": "https://twitter.com/",
-		"img": "/assets/imgs/a/Twitter_X.webp",
+		"img": "/assets/imgs/a/Twitter_X.svg",
 		"categories": [
 			"all",
 			"media",
@@ -365,7 +365,7 @@
 	{
 		"name": "Hulu",
 		"url": "https://www.hulu.com/",
-		"img": "/assets/imgs/a/Hulu.png",
+		"img": "/assets/imgs/a/Hulu.svg",
 		"categories": [
 			"all",
 			"streaming",
@@ -461,7 +461,7 @@
 	{
 		"name": "Slack",
 		"url": "https://slack.com/",
-		"img": "/assets/imgs/a/Slack.png",
+		"img": "/assets/imgs/a/Slack.svg",
 		"categories": [
 			"all",
 			"productivity"
@@ -508,7 +508,7 @@
 	{
 		"name": "Replit",
 		"url": "https://replit.com/",
-		"img": "/assets/imgs/a/Replit.png",
+		"img": "/assets/imgs/a/Replit.svg",
 		"categories": [
 			"all",
 			"dev"
@@ -607,7 +607,7 @@
 	{
 		"name": "eBay",
 		"url": "https://www.ebay.com/",
-		"img": "/assets/imgs/a/eBay.png",
+		"img": "/assets/imgs/a/eBay.svg",
 		"categories": [
 			"all"
 		]
@@ -623,7 +623,7 @@
 	{
 		"name": "Target",
 		"url": "https://www.target.com/",
-		"img": "/assets/imgs/a/Target.png",
+		"img": "/assets/imgs/a/Target.svg",
 		"categories": [
 			"all"
 		]
@@ -678,7 +678,7 @@
 	{
 		"name": "Bing",
 		"url": "https://www.bing.com/",
-		"img": "/assets/imgs/a/Bing.png",
+		"img": "/assets/imgs/a/Bing.svg",
 		"categories": [
 			"all",
 			"media"

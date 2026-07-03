@@ -244,6 +244,12 @@ a { text-decoration: none; color: var(--theme-link); }
 	color: #5865f2;
 }
 
+.sidebar-discord i.fa-brands {
+	font-family: "Font Awesome 6 Brands";
+	font-weight: 400;
+	font-style: normal;
+}
+
 /* === Main Content Area === */
 .main-content {
 	margin-left: var(--sidebar-width);
@@ -697,15 +703,18 @@ a { text-decoration: none; color: var(--theme-link); }
 	flex: 1;
 	display: flex;
 	align-items: center;
-	background: var(--theme-input-bg);
-	border: 1px solid var(--theme-input-border);
+	background: rgba(var(--theme-rgb), 0.08);
+	border: 1px solid rgba(var(--theme-rgb), 0.2);
 	border-radius: var(--radius-full);
 	padding: 0 4px;
 	transition: all var(--transition-fast);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
 }
 
 .browser-url-bar:focus-within {
-	border-color: var(--theme-border-accent);
+	background: rgba(var(--theme-rgb), 0.14);
+	border-color: rgba(var(--theme-rgb), 0.5);
 	box-shadow: 0 0 0 3px var(--theme-accent-glow);
 }
 
@@ -774,18 +783,21 @@ a { text-decoration: none; color: var(--theme-link); }
 .browser-home-search input {
 	width: 100%;
 	padding: 16px 20px 16px 50px;
-	background: var(--theme-input-bg);
-	border: 1px solid var(--theme-input-border);
+	background: rgba(var(--theme-rgb), 0.08);
+	border: 1px solid rgba(var(--theme-rgb), 0.2);
 	border-radius: var(--radius-full);
 	color: var(--theme-text);
 	font-size: 16px;
 	outline: none;
 	font-family: var(--font-primary);
 	transition: all var(--transition-fast);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
 }
 
 .browser-home-search input:focus {
-	border-color: var(--theme-border-accent);
+	background: rgba(var(--theme-rgb), 0.14);
+	border-color: rgba(var(--theme-rgb), 0.5);
 	box-shadow: 0 0 0 3px var(--theme-accent-glow);
 }
 

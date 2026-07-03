@@ -33,8 +33,16 @@ async function executeSearch(query) {
 	var home = document.getElementById('browserHome');
 	if (home) home.style.display = 'none';
 	var iframe = document.getElementById('intoinfrared');
+
 	await registerSW();
 	iframe.src = encodedUrl;
+	await registerSW().then(async function() {
+		await setTransports();
+		setTimeout(function() {
+			iframe.src = iframe.src;
+		}, 100);
+	});
+
 	iframe.style.display = 'block';
 	if (spinner) spinner.style.display = 'none';
 	document.querySelectorAll('input').forEach(function(i) { i.blur(); });
