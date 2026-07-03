@@ -13,11 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		return div;
 	}
 
-	function createItemCard(item) {
+	function createItemCard(item, index) {
 		var card = document.createElement('a');
 		card.href = '/&?q=' + encodeURIComponent(item.name);
 		card.className = 'bento-card';
 		if (item.featured) card.className += ' featured';
+		if (typeof index === 'number') card.style.animationDelay = (index * 0.04) + 's';
 
 		var cleanName = item.name.replace(/^[!] /, '');
 		var displayName = cleanName;
@@ -64,8 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
 						return;
 					}
 
-					filtered.forEach(function(game) {
-						grid.appendChild(createItemCard(game));
+					filtered.forEach(function(game, i) {
+						grid.appendChild(createItemCard(game, i));
 					});
 				}
 
@@ -97,9 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
 							grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined empty-state-icon">sports_esports</span><h3>No games match "' + query + '"</h3><p>Try different keywords</p></div>';
 							return;
 						}
-						filtered.forEach(function(game) {
-							grid.appendChild(createItemCard(game));
-						});
+					filtered.forEach(function(game, i) {
+						grid.appendChild(createItemCard(game, i));
+					});
 					});
 				}
 
@@ -150,8 +151,8 @@ document.addEventListener('DOMContentLoaded', function() {
 						return;
 					}
 
-					filtered.forEach(function(app) {
-						grid.appendChild(createItemCard(app));
+					filtered.forEach(function(app, i) {
+						grid.appendChild(createItemCard(app, i));
 					});
 				}
 
@@ -179,8 +180,8 @@ document.addEventListener('DOMContentLoaded', function() {
 							grid.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined empty-state-icon">apps</span><h3>No apps match "' + query + '"</h3><p>Try different keywords</p></div>';
 							return;
 						}
-						filtered.forEach(function(app) {
-							grid.appendChild(createItemCard(app));
+						filtered.forEach(function(app, i) {
+						grid.appendChild(createItemCard(app, i));
 						});
 					});
 				}

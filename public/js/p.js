@@ -2,7 +2,7 @@
 
 var address1 = document.getElementById('gointoinfrared');
 var address2 = document.getElementById('gointoinfrared2');
-var urlPattern = new RegExp('^(https?:\\/\\/)?'+'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
+var urlPattern = new RegExp('^(https?:\\/\\/)?'+'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ '((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
 
 var proxySetting = localStorage.getItem('dropdown-selected-text-proxyDropdown') || 'Scramjet';
 
@@ -23,7 +23,8 @@ var swConfig = {
 
 var swEntry = swConfig[proxySetting] || swConfig['Scramjet'];
 var swFile = swEntry.file;
-var swConfigSettings = swEntry.config || __uv$config || { prefix:'/@/infrared/' };
+var swConfigSettings = swEntry.config;
+if (!swConfigSettings) swConfigSettings = { prefix:'/@/infrared/', encodeUrl:function(u){return u}, decodeUrl:function(u){return u} };
 var swFunction = swEntry.func;
 
 var connection = typeof BareMux !== 'undefined' ? new BareMux.BareMuxConnection('/baremux/worker.js') : null;
@@ -62,8 +63,6 @@ async function registerServiceWorker() {
 	try {
 		if (swFunction && typeof swFunction === 'function') { await swFunction(); }
 		else { await navigator.serviceWorker.register(swFile, {scope:swConfigSettings.prefix||'/@/infrared/'}); await navigator.serviceWorker.ready; }
-		// Ensure the selected proxy service worker is registered even when a custom init runs
-		try { await navigator.serviceWorker.register(swFile, {scope:swConfigSettings.prefix||'/@/infrared/'}); await navigator.serviceWorker.ready; } catch(e) {}
 		await setTransports();
 	} catch(e) { console.error('SW error:', e); }
 }

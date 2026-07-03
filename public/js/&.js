@@ -1,26 +1,31 @@
 // &.js - Browser page functionality
 
 var encodedUrl = '';
-function getEncoder() {
-	if (!swConfigSettings) {
-		return (typeof __uv$config !== 'undefined' && typeof __uv$config.encodeUrl === 'function') ? __uv$config.encodeUrl : function(u){ return u; };
+
+function encodeForProxy(url) {
+	if (!swConfigSettings) return url;
+	if (typeof swConfigSettings.encodeUrl === 'function') {
+		return swConfigSettings.encodeUrl(url);
 	}
-	if (typeof swConfigSettings.encodeUrl === 'function') return swConfigSettings.encodeUrl;
-	if (swConfigSettings.codec && typeof swConfigSettings.codec.encode === 'function') return swConfigSettings.codec.encode;
-	if (typeof __uv$config !== 'undefined' && typeof __uv$config.encodeUrl === 'function') return __uv$config.encodeUrl;
-	return function(u){ return u; };
-}
-function getDecoder() {
-	if (!swConfigSettings) {
-		return (typeof __uv$config !== 'undefined' && typeof __uv$config.decodeUrl === 'function') ? __uv$config.decodeUrl : function(u){ return u; };
+	if (swConfigSettings.codec && typeof swConfigSettings.codec.encode === 'function') {
+		return swConfigSettings.codec.encode(url);
 	}
-	if (typeof swConfigSettings.decodeUrl === 'function') return swConfigSettings.decodeUrl;
-	if (swConfigSettings.codec && typeof swConfigSettings.codec.decode === 'function') return swConfigSettings.codec.decode;
-	if (typeof __uv$config !== 'undefined' && typeof __uv$config.decodeUrl === 'function') return __uv$config.decodeUrl;
-	return function(u){ return u; };
+	return url;
 }
+
+function decodeFromProxy(url) {
+	if (!swConfigSettings) return url;
+	if (typeof swConfigSettings.decodeUrl === 'function') {
+		return swConfigSettings.decodeUrl(url);
+	}
+	if (swConfigSettings.codec && typeof swConfigSettings.codec.decode === 'function') {
+		return swConfigSettings.codec.decode(url);
+	}
+	return url;
+}
+
 async function executeSearch(query) {
-	encodedUrl = swConfigSettings.prefix + getEncoder()(search(query));
+	encodedUrl = swConfigSettings.prefix + encodeForProxy(search(query));
 	localStorage.setItem('input', query);
 	localStorage.setItem('output', encodedUrl);
 	var spinner = document.getElementById('spinnerWrapper');
@@ -73,7 +78,7 @@ function startURLMonitoring() {
 function updateAddressBar(url) {
 	var addr = document.getElementById('gointoinfrared2');
 	if (!addr) return;
-	var cleaned = getDecoder()(url.split(swConfigSettings.prefix).pop());
+	var cleaned = decodeFromProxy(url.split(swConfigSettings.prefix).pop());
 	if (cleaned === 'a`owt8bnalk') { addr.value = 'Loading...'; }
 	else { addr.value = cleaned.replace(/^https?:\/\//,''); }
 }

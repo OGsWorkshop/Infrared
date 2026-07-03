@@ -540,6 +540,12 @@ a { text-decoration: none; color: var(--theme-link); }
 	background: var(--theme-card-bg);
 	backdrop-filter: blur(8px);
 	-webkit-backdrop-filter: blur(8px);
+	animation: cardRise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes cardRise {
+	0% { opacity: 0; transform: translateY(24px) scale(0.96); }
+	100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .bento-card:hover {
@@ -726,7 +732,6 @@ a { text-decoration: none; color: var(--theme-link); }
 .browser-iframe-wrapper {
 	flex: 1;
 	position: relative;
-	background: var(--theme-bg);
 }
 
 .browser-iframe {
