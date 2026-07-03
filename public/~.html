@@ -6,14 +6,14 @@
 	<meta name="description" content="Launch into Infrared, the next gen proxy." />
 	<meta name="keywords" content="Proxy, Unblocker, Infrared Unblocker, Infrared" />
 	<meta property="og:image" content="/assets/logo.webp" />
-	<meta name="google-adsense-account" content="ca-pub-3747175608041884" />
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DTW1KTNCF"></script>
-	<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-3DTW1KTNCF');</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..400,0..1" />
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
+	<script src="/js/themes.js"></script>
 	<title>Settings - Infrared</title>
 	<link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
 </head>
@@ -31,94 +31,97 @@
 	</div>
 
 	<nav class="sidebar">
-		<div class="sidebar-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a><span class="sidebar-logo-text">Infrared</span></div>
+		<div class="sidebar-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a></div>
 		<div class="sidebar-nav">
-			<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span>Home</span></a>
-			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span>Games</span></a>
-			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span>Apps</span></a>
-			<a href="/&" class="sidebar-link"><span class="material-symbols-outlined">public</span><span>Browser</span></a>
+			<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span class="sidebar-tooltip">Home</span></a>
+			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span class="sidebar-tooltip">Games</span></a>
+			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span class="sidebar-tooltip">Apps</span></a>
+			<a href="/&" class="sidebar-link"><span class="material-symbols-outlined">public</span><span class="sidebar-tooltip">Browser</span></a>
 		</div>
 		<div class="sidebar-divider"></div>
 		<div class="sidebar-nav">
-			<a href="/~" class="sidebar-link active"><span class="material-symbols-outlined">tune</span><span>Settings</span></a>
+			<a href="/~" class="sidebar-link active"><span class="material-symbols-outlined">tune</span><span class="sidebar-tooltip">Settings</span></a>
 		</div>
 		<div class="sidebar-bottom">
-			<a href="https://discord.gg/infrared" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span>Discord</span></a>
+			<a href="https://discord.gg/yTmmCFv59Q" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span class="sidebar-tooltip">Discord</span></a>
 		</div>
 	</nav>
 
 	<div class="main-content">
-		<div class="bg-orb bg-orb-1"></div>
-		<div class="bg-orb bg-orb-2"></div>
-		<div class="bg-orb bg-orb-3"></div>
+		<canvas id="starfield"></canvas>
+		<div class="bg-glow"></div>
 		<div class="bg-grid"></div>
 		<div class="settings-page">
-			<div class="settings-header"><h1>Settings</h1><p>Customize your Infrared experience</p></div>
-			<div class="settings-layout">
-				<div class="settings-sidebar" id="settingsSidebar">
-					<button class="settings-sidebar-item active" data-section="cloaking"><span class="material-symbols-outlined">ad_group_off</span> Cloaking</button>
-					<button class="settings-sidebar-item" data-section="performance"><span class="material-symbols-outlined">speed</span> Performance</button>
-					<button class="settings-sidebar-item" data-section="themes"><span class="material-symbols-outlined">palette</span> Themes</button>
-					<button class="settings-sidebar-item" data-section="proxy"><span class="material-symbols-outlined">public</span> Proxy & Browser</button>
-					<div class="settings-sidebar-divider"></div>
-					<button class="settings-sidebar-item" data-section="account"><span class="material-symbols-outlined">account_circle</span> Account</button>
-					<button class="settings-sidebar-item" data-section="about"><span class="material-symbols-outlined">help</span> About</button>
-					<div class="settings-sidebar-divider"></div>
-					<button class="settings-sidebar-item" data-section="news"><span class="material-symbols-outlined">rocket_launch</span> News</button>
-					<button class="settings-sidebar-item" data-section="faq"><span class="material-symbols-outlined">contact_support</span> FAQ</button>
-				</div>
-				<div class="settings-content" id="settingsContent">
-
-					<div class="settings-section active" id="section-cloaking">
-						<div class="settings-card"><h2>About:Blank & Blob Cloaking</h2><p>Hide your tab history and bypass blockers by appearing on a blank tab or using temporary blob data.</p><div class="split-buttons"><button class="btn-reg" onclick="launchAboutBlank()">Launch About:Blank</button><button class="btn-reg" onclick="launchBlob()">Launch Blob</button></div></div>
-						<div class="settings-card"><h2>Automatic Cloaking</h2><p>Automatically apply cloaking when Infrared loads. <strong>Only one can be active.</strong></p><div class="settings-row"><span>Auto-Launch About:Blank</span><label class="toggle-switch"><input type="checkbox" class="checkbox-blob-aboutBlank autoLaunchAboutBlank" /><span class="toggle-slider"></span></label></div><div class="settings-row"><span>Auto-Launch Blob</span><label class="toggle-switch"><input type="checkbox" class="checkbox-blob-aboutBlank autoLaunchBlob" /><span class="toggle-slider"></span></label></div></div>
-						<div class="settings-card"><h2>Tab Cloaking</h2><p>Change the tab title and icon to disguise Infrared.</p><div class="settings-select" id="tabCloakDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">None (Default)</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>None (Default)</li><li>Desmos</li><li>Google Classroom</li><li>Google Drive</li><li>Khan Academy</li><li>Quizlet</li><li>Schoology</li></ul></div></div>
-						<div class="settings-card"><h2>Panic Key</h2><p>Press the configured key to instantly navigate away. Separate multiple keys with commas.</p><div style="display:flex;gap:8px;align-items:center;max-width:320px"><input class="search-input panicKey" placeholder="`" style="flex:1" /><button class="btn-reg panicKeySave">Save</button></div></div>
+			<div class="settings-card-panel">
+				<div class="settings-layout">
+					<div class="settings-sidebar" id="settingsSidebar">
+						<button class="settings-sidebar-item active" data-section="cloaking"><span class="material-symbols-outlined">ad_group_off</span> Cloaking</button>
+						<button class="settings-sidebar-item" data-section="performance"><span class="material-symbols-outlined">speed</span> Performance</button>
+						<button class="settings-sidebar-item" data-section="themes"><span class="material-symbols-outlined">palette</span> Themes</button>
+						<button class="settings-sidebar-item" data-section="proxy"><span class="material-symbols-outlined">public</span> Proxy & Browser</button>
+						<div class="settings-sidebar-divider"></div>
+						<button class="settings-sidebar-item" data-section="account"><span class="material-symbols-outlined">account_circle</span> Account</button>
+						<button class="settings-sidebar-item" data-section="about"><span class="material-symbols-outlined">help</span> About & Statistics</button>
+						<div class="settings-sidebar-divider"></div>
+						<button class="settings-sidebar-item" data-section="news"><span class="material-symbols-outlined">rocket_launch</span> News & Updates</button>
+						<button class="settings-sidebar-item" data-section="faq"><span class="material-symbols-outlined">contact_support</span> FAQ</button>
 					</div>
+					<div class="settings-content" id="settingsContent">
 
-					<div class="settings-section" id="section-performance">
-						<div class="settings-card"><h2>Background Effects</h2><p>Toggle the animated background orbs and grid. Disabling improves performance on low-end devices.</p><div class="settings-row"><span>Enable Effects</span><label class="toggle-switch"><input type="checkbox" class="particlesYesNo" /><span class="toggle-slider"></span></label></div></div>
-					</div>
+						<div class="settings-section active" id="section-cloaking">
+							<div class="settings-card"><h2>About:Blank & Blob Cloaking</h2><p>Hide your tab history and bypass blockers by appearing on a blank tab or using temporary blob data.</p><div class="split-buttons"><button class="btn-reg" onclick="launchAboutBlank()">Launch About:Blank</button><button class="btn-reg" onclick="launchBlob()">Launch Blob</button></div></div>
+							<div class="settings-card"><h2>Automatic Cloaking</h2><p>Automatically apply cloaking when Infrared loads. <strong>Only one can be active.</strong></p><div class="settings-row"><span>Auto-Launch About:Blank</span><label class="toggle-switch"><input type="checkbox" class="checkbox-blob-aboutBlank autoLaunchAboutBlank" /><span class="toggle-slider"></span></label></div><div class="settings-row"><span>Auto-Launch Blob</span><label class="toggle-switch"><input type="checkbox" class="checkbox-blob-aboutBlank autoLaunchBlob" /><span class="toggle-slider"></span></label></div></div>
+							<div class="settings-card"><h2>Tab Cloaking</h2><p>Change the tab title and icon to disguise Infrared.</p><div class="settings-select" id="tabCloakDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">None (Default)</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>None (Default)</li><li>Desmos</li><li>Google Classroom</li><li>Google Drive</li><li>Khan Academy</li><li>Quizlet</li><li>Schoology</li></ul></div></div>
+							<div class="settings-card"><h2>Panic Key</h2><p>Press the configured key to instantly navigate away. Separate multiple keys with commas.</p><div style="display:flex;gap:8px;align-items:center;max-width:320px"><input class="search-input panicKey" placeholder="`" style="flex:1" /><button class="btn-reg panicKeySave">Save</button></div></div>
+						</div>
 
-					<div class="settings-section" id="section-themes">
-						<div class="settings-card"><h2>Choose Theme</h2><p>Select a theme that matches your style. Changes apply instantly.</p><div class="theme-grid" id="themeGrid"></div></div>
-					</div>
+						<div class="settings-section" id="section-performance">
+							<div class="settings-card"><h2>Background Effects</h2><p>Toggle the animated starfield and glow background. Disabling improves performance on low-end devices.</p><div class="settings-row"><span>Enable Background Effects</span><label class="toggle-switch"><input type="checkbox" class="particlesYesNo" /><span class="toggle-slider"></span></label></div></div>
+							<div class="settings-card"><h2>Lazy Loading</h2><p>Game and app thumbnails are lazy-loaded by default. Disabling forces everything to load at once (not recommended on slower connections).</p><div class="settings-row"><span>Lazy Load Thumbnails</span><label class="toggle-switch"><input type="checkbox" class="lazyLoadYesNo" checked /><span class="toggle-slider"></span></label></div></div>
+							<div class="settings-card"><h2>Animations</h2><p>Reduce motion for users who prefer minimal animation.</p><div class="settings-row"><span>Reduce Motion</span><label class="toggle-switch"><input type="checkbox" class="reduceMotionYesNo" /><span class="toggle-slider"></span></label></div></div>
+						</div>
 
-					<div class="settings-section" id="section-proxy">
-						<div class="settings-card"><h2>Proxy Engine</h2><p>Choose which proxy engine to use. Different engines may work better on different sites.</p><div class="settings-select" id="proxyDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">Scramjet</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>Scramjet</li><li>Ultraviolet</li></ul></div></div>
-						<div class="settings-card"><h2>Transport</h2><p>Choose how data is transported. Libcurl is generally more reliable; Epoxy may be faster on some networks.</p><div class="settings-select" id="transportDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">Libcurl</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>Libcurl</li><li>Epoxy</li></ul></div></div>
-						<div class="settings-card"><h2>Wisp Server</h2><p>Custom WebSocket proxy server URL. Must start with ws:// or wss:// and end with /.</p><div style="display:flex;align-items:center;gap:8px;max-width:400px"><input class="search-input input wisp" placeholder="wss://example.com/wisp/" style="flex:1" /><button class="btn-reg wispSave">Save</button><button class="btn-reg wispReset">Reset</button></div></div>
-						<div class="settings-card"><h2>Browser Settings</h2><div class="settings-row"><span>Search Engine</span><div class="settings-select" id="searchEngineDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">DuckDuckGo (default)</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>DuckDuckGo (default)</li><li>Bing</li><li>Google</li><li>Yahoo!</li></ul></div></div><div class="settings-row"><span>Show Utility Bar</span><label class="toggle-switch"><input type="checkbox" class="utilBarYesNo" /><span class="toggle-slider"></span></label></div><div class="settings-row"><span>Large Shortcut Icons</span><label class="toggle-switch"><input type="checkbox" class="smallIconsYesNo" /><span class="toggle-slider"></span></label></div></div>
-					</div>
+						<div class="settings-section" id="section-themes">
+							<div class="settings-card"><h2>Choose Theme</h2><p>Select a theme that matches your style. Changes apply instantly and persist across sessions.</p><div class="theme-grid" id="themeGrid"></div></div>
+						</div>
 
-					<div class="settings-section" id="section-account">
-						<div class="settings-card"><h2>Password Protection</h2><p>Lock Infrared behind a password.</p><div class="settings-row"><span>Enable Password</span><label class="toggle-switch"><input type="checkbox" class="passwordYesNo" /><span class="toggle-slider"></span></label></div><div style="display:flex;gap:8px;align-items:center;max-width:320px;margin-top:12px"><input type="password" class="search-input pPasswordInput" placeholder="Enter password" style="flex:1" /><button class="btn-reg pPasswordSave">Save</button></div></div>
-						<div class="settings-card"><h2>Password Keybind</h2><p>Keybind to toggle the password lock screen (default: ~, hold Shift+`)</p><div style="display:flex;gap:8px;align-items:center;max-width:320px"><input class="search-input passwordHotkeyInput" placeholder="~" style="flex:1" /><button class="btn-reg pPasswordKeybind">Save</button></div></div>
-						<div class="settings-card"><h2>Data Management</h2><p>Export or import your settings, history, and preferences.</p><input type="file" id="dataInput" style="display:none" onchange="importData();" /><div class="split-buttons"><button class="btn-reg" id="exportData">Export Data</button><button class="btn-reg" id="importData">Import Data</button></div><div style="margin-top:16px"><button class="btn-reg btn-danger" id="resetButton">Wipe All Data</button></div></div>
-					</div>
+						<div class="settings-section" id="section-proxy">
+							<div class="settings-card"><h2>Proxy Engine</h2><p>Choose which proxy engine intercepts requests. Scramjet is the default and works for most sites; Ultraviolet is the classic engine.</p><div class="settings-select" id="proxyDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">Scramjet</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>Scramjet</li><li>Ultraviolet</li></ul></div></div>
+							<div class="settings-card"><h2>Transport</h2><p>Choose how proxied data is transported. Libcurl is generally more reliable; Epoxy may be faster on some networks.</p><div class="settings-select" id="transportDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">Libcurl</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>Libcurl</li><li>Epoxy</li></ul></div></div>
+							<div class="settings-card"><h2>Wisp Server</h2><p>Custom WebSocket proxy server URL. Must start with ws:// or wss:// and end with /.</p><div style="display:flex;align-items:center;gap:8px;max-width:420px"><input class="search-input input wisp" placeholder="wss://example.com/wisp/" style="flex:1" /><button class="btn-reg wispSave">Save</button><button class="btn-reg wispReset">Reset</button></div></div>
+							<div class="settings-card"><h2>Browser Settings</h2><div class="settings-row"><span>Search Engine</span><div class="settings-select" id="searchEngineDropdown"><button class="settings-select-btn" onclick="this.parentElement.querySelector('.settings-select-dropdown').classList.toggle('open')"><span class="dropdown-selected">DuckDuckGo (default)</span><span class="material-symbols-outlined" style="font-size:16px;margin-left:auto">expand_more</span></button><ul class="settings-select-dropdown"><li>DuckDuckGo (default)</li><li>Bing</li><li>Google</li><li>Yahoo!</li></ul></div></div><div class="settings-row"><span>Show Utility Bar</span><label class="toggle-switch"><input type="checkbox" class="utilBarYesNo" /><span class="toggle-slider"></span></label></div><div class="settings-row"><span>Large Shortcut Icons</span><label class="toggle-switch"><input type="checkbox" class="smallIconsYesNo" /><span class="toggle-slider"></span></label></div></div>
+						</div>
 
-					<div class="settings-section" id="section-about">
-						<div class="settings-card"><h2>About Infrared</h2><p>Infrared is an open-source web proxy maintained by the Twilight Development Group at Night Network. Source code on <a href="https://gitlab.com/nightnetwork/infrared">GitLab</a>. Join our <a href="https://discord.gg/infrared">Discord</a>.</p></div>
-						<div class="settings-card"><h2>Version & Status</h2><div class="settings-row"><span>Version</span><span style="background:var(--theme-accent-glow);padding:2px 12px;border-radius:var(--radius-full);font-size:13px">v2.0.0</span></div><div class="settings-row"><span>Last Updated</span><span id="last-updated" style="background:var(--theme-surface);padding:2px 12px;border-radius:var(--radius-full);font-size:13px">Loading...</span></div><div class="settings-row"><span>Server Status</span><span style="background:rgba(0,200,50,0.2);padding:2px 12px;border-radius:var(--radius-full);font-size:13px;color:#4ade80">Online</span></div></div>
-					</div>
+						<div class="settings-section" id="section-account">
+							<div class="settings-card"><h2>Password Protection</h2><p>Lock Infrared behind a password.</p><div class="settings-row"><span>Enable Password</span><label class="toggle-switch"><input type="checkbox" class="passwordYesNo" /><span class="toggle-slider"></span></label></div><div style="display:flex;gap:8px;align-items:center;max-width:320px;margin-top:12px"><input type="password" class="search-input pPasswordInput" placeholder="Enter password" style="flex:1" /><button class="btn-reg pPasswordSave">Save</button></div></div>
+							<div class="settings-card"><h2>Password Keybind</h2><p>Keybind to toggle the password lock screen (default: ~, hold Shift+`)</p><div style="display:flex;gap:8px;align-items:center;max-width:320px"><input class="search-input passwordHotkeyInput" placeholder="~" style="flex:1" /><button class="btn-reg pPasswordKeybind">Save</button></div></div>
+							<div class="settings-card"><h2>Data Management</h2><p>Export or import your settings, history, and preferences.</p><input type="file" id="dataInput" style="display:none" onchange="importData();" /><div class="split-buttons"><button class="btn-reg" id="exportData">Export Data</button><button class="btn-reg" id="importData">Import Data</button></div><div style="margin-top:16px"><button class="btn-reg btn-danger" id="resetButton">Wipe All Data</button></div></div>
+						</div>
 
-					<div class="settings-section" id="section-news">
-						<div class="settings-card"><h2>v2.0.0 - Major Redesign <span style="background:var(--theme-toast-success);padding:1px 8px;border-radius:var(--radius-full);font-size:12px">Latest</span></h2><p>Complete UI overhaul, 9 theme options, expanded game and app libraries.</p><ul style="list-style:disc;padding-left:20px;color:var(--theme-text-muted);font-size:13px;line-height:1.8"><li>Left sidebar navigation</li><li>9 customizable themes</li><li>328 games with categories</li><li>82+ apps and services</li></ul></div>
-					</div>
+						<div class="settings-section" id="section-about">
+							<div class="settings-card"><h2>About Infrared</h2><p>Infrared is an open-source web proxy built for speed and privacy. It uses Ultraviolet, Scramjet, Epoxy, Libcurl, and Wisp to route traffic securely through your browser. Join the community on <a href="https://discord.gg/yTmmCFv59Q">Discord</a>.</p></div>
+							<div class="settings-card"><h2>Version & Status</h2><div class="settings-row"><span>Version</span><span style="background:var(--theme-accent-glow);padding:2px 12px;border-radius:var(--radius-full);font-size:13px">v2.0.0</span></div><div class="settings-row"><span>Last Updated</span><span id="last-updated" style="background:var(--theme-surface);padding:2px 12px;border-radius:var(--radius-full);font-size:13px">Loading...</span></div><div class="settings-row"><span>Server Status</span><span style="background:rgba(0,200,50,0.2);padding:2px 12px;border-radius:var(--radius-full);font-size:13px;color:#4ade80">Online</span></div></div>
+							<div class="settings-card"><h2>Statistics</h2><div class="settings-row"><span>Games</span><span style="font-weight:600">328</span></div><div class="settings-row"><span>Apps</span><span style="font-weight:600">80+</span></div><div class="settings-row"><span>Themes</span><span style="font-weight:600">9</span></div></div>
+						</div>
 
-					<div class="settings-section" id="section-faq">
-						<div class="settings-card"><h2>Where can I find links?</h2><p>Join our <a href="https://discord.gg/infrared">Discord</a> for community links.</p></div>
-						<div class="settings-card"><h2>Why do some sites not work?</h2><p>Common reasons: proxy doesn't support that site, server load, site-side issues, or security flags.</p></div>
-						<div class="settings-card"><h2>I found a bug</h2><p>Open an issue on <a href="https://gitlab.com/nightnetwork/infrared">GitLab</a> or a ticket on <a href="https://discord.gg/infrared">Discord</a>.</p></div>
+						<div class="settings-section" id="section-news">
+							<div class="settings-card"><h2>v2.0.0 - Major Redesign <span style="background:var(--theme-toast-success);padding:1px 8px;border-radius:var(--radius-full);font-size:12px">Latest</span></h2><p>Complete UI overhaul, 9 theme options, expanded game and app libraries, and refined sidebar navigation.</p><ul style="list-style:disc;padding-left:20px;color:var(--theme-text-muted);font-size:13px;line-height:1.8"><li>Refined icon-only sidebar with tooltips</li><li>9 customizable themes with live previews</li><li>328 games with accurate categories</li><li>80+ apps and services</li><li>Improved starfield background with theme-aware glow</li></ul></div>
+						</div>
+
+						<div class="settings-section" id="section-faq">
+							<div class="settings-card"><h2>Where can I find links?</h2><p>Join our <a href="https://discord.gg/yTmmCFv59Q">Discord</a> for community links and support.</p></div>
+							<div class="settings-card"><h2>Why do some sites not work?</h2><p>Common reasons: the proxy doesn't support that site, server load, site-side issues, or security flags. Try switching the proxy engine or transport in Proxy & Browser settings.</p></div>
+							<div class="settings-card"><h2>I found a bug</h2><p>Open an issue on GitLab or a ticket on <a href="https://discord.gg/yTmmCFv59Q">Discord</a>.</p></div>
+							<div class="settings-card"><h2>How do I change my theme?</h2><p>Go to Settings &rarr; Themes and click any theme card. The change applies instantly and is saved automatically.</p></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<script src="/js/themes.js"></script>
+	<script src="/js/starfield.js"></script>
 	<script src="/js/c.js"></script>
 	<script src="/js/~.js"></script>
-	<script>let CLF_config={app_id:'163a312a-7cde-41ab-a80c-cb4cf281efdf',data:{user_id:'123456',user_email:'user@email.com',user_name:'User Name',custom_data:{JobRole:'CEO',Plan:'Pro',teamMates:'4',MonthlySpend:'50 USD'}}};</script>
 </body>
 </html>

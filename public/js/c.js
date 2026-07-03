@@ -4,9 +4,16 @@ localforage.setItem('e', 'e');
 // Cloaking
 function isInLocalStorage(key) { return localStorage.getItem(key) !== null; }
 
-var currentLocation = window.location.href;
-document.addEventListener('DOMContentLoaded', function() {
-	if (currentLocation !== 'about:blank' && window.parent.location.href !== 'about:blank' && !currentLocation.includes('blob:')) {
+	var currentLocation = window.location.href;
+	function isCloakedFrame() {
+		try {
+			return currentLocation === 'about:blank' || currentLocation.includes('blob:') || window.parent.location.href === 'about:blank';
+		} catch(e) {
+			return false;
+		}
+	}
+	document.addEventListener('DOMContentLoaded', function() {
+		if (!isCloakedFrame()) {
 		var launchType = localStorage.getItem('launchType');
 		if (launchType === 'blob' && window === window.top) {
 			var currentSiteUrl = currentLocation + '?redirect=true';
@@ -14,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			var blob = new Blob([htmlContent], {type:'text/html'});
 			var blobUrl = URL.createObjectURL(blob);
 			var newWindow = window.open(blobUrl);
-			var tabCloak = localStorage.getItem('dropdown-selected-text-tabCloak') || 'None (Default)';
-			var redirectMap = {'Google Classroom':'https://classroom.google.com','Schoology':'https://app.schoology.com/home','Desmos':'https://www.desmos.com/calculator','Google Drive':'https://drive.google.com','Kahn Academy':'https://www.khanacademy.org/','Quizlet':'https://quizlet.com/'};
-			window.location.href = redirectMap[tabCloak] || 'https://google.com';
+		var tabCloak = localStorage.getItem('dropdown-selected-text-tabCloakDropdown') || 'None (Default)';
+		var redirectMap = {'Google Classroom':'https://classroom.google.com','Schoology':'https://app.schoology.com/home','Desmos':'https://www.desmos.com/calculator','Google Drive':'https://drive.google.com','Khan Academy':'https://www.khanacademy.org/','Quizlet':'https://quizlet.com/'};
+		window.location.href = redirectMap[tabCloak] || 'https://google.com';
 		} else if (launchType === 'aboutBlank' && window === window.top) {
 			var win = window.open();
 			var url = currentLocation;
@@ -26,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			win.document.body.appendChild(iframe);
 			win.document.body.style.overflow = 'hidden';
 			window.close();
-			var selectedTab = localStorage.getItem('dropdown-selected-text-tabCloak') || 'None (Default)';
-			var urlMap = {'Google Classroom':'https://classroom.google.com','Schoology':'https://app.schoology.com/home','Desmos':'https://www.desmos.com/calculator','Google Drive':'https://drive.google.com','Kahn Academy':'https://www.khanacademy.org/','Quizlet':'https://quizlet.com/'};
+			var selectedTab = localStorage.getItem('dropdown-selected-text-tabCloakDropdown') || 'None (Default)';
+			var urlMap = {'Google Classroom':'https://classroom.google.com','Schoology':'https://app.schoology.com/home','Desmos':'https://www.desmos.com/calculator','Google Drive':'https://drive.google.com','Khan Academy':'https://www.khanacademy.org/','Quizlet':'https://quizlet.com/'};
 			window.location.href = urlMap[selectedTab] || 'https://google.com';
 		}
 	}
@@ -55,12 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	function checkCloakTab() {
-		var cloakTab = localStorage.getItem('dropdown-selected-text-tabCloak');
-		if (!cloakTab) localStorage.setItem('dropdown-selected-text-tabCloak', 'None (Default)');
-		else if (cloaks[cloakTab]) setCloak(cloakTab);
+		var cloakTab = localStorage.getItem('dropdown-selected-text-tabCloakDropdown');
+		if (!cloakTab) {
+			cloakTab = 'None (Default)';
+			localStorage.setItem('dropdown-selected-text-tabCloakDropdown', cloakTab);
+		}
+		if (cloaks[cloakTab]) setCloak(cloakTab);
 	}
 	checkCloakTab();
-	window.addEventListener('storage', function(e) { if (e.key === 'dropdown-selected-text-tabCloak') checkCloakTab(); });
+	window.addEventListener('storage', function(e) { if (e.key === 'dropdown-selected-text-tabCloakDropdown') checkCloakTab(); });
 	setTimeout(checkCloakTab, 500);
 
 	// Panic Key
@@ -68,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	function handlePanicKey(event) {
 		var keys = (localStorage.getItem('panicKeyBind')||'`').split(',');
 		if (keys.includes(event.key) && event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
-			var selectedText = localStorage.getItem('dropdown-selected-text-tabCloak') || 'None (Default)';
-			var urlMap = {'Google Classroom':'https://classroom.google.com','Schoology':'https://app.schoology.com/home','Desmos':'https://www.desmos.com/calculator','Google Drive':'https://drive.google.com','Kahn Academy':'https://www.khanacademy.org/','Quizlet':'https://quizlet.com/'};
+			var selectedText = localStorage.getItem('dropdown-selected-text-tabCloakDropdown') || 'None (Default)';
+			var urlMap = {'Google Classroom':'https://classroom.google.com','Schoology':'https://app.schoology.com/home','Desmos':'https://www.desmos.com/calculator','Google Drive':'https://drive.google.com','Khan Academy':'https://www.khanacademy.org/','Quizlet':'https://quizlet.com/'};
 			window.location.href = urlMap[selectedText] || 'https://google.com';
 		}
 	}
@@ -125,7 +135,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	// Background effects toggle
 	function updateEffectsDisplay() {
 		var hidden = localStorage.getItem('particlesHidden') === 'true';
-		document.querySelectorAll('.bg-orb, .bg-grid').forEach(function(el) { el.style.display = hidden ? 'none' : ''; });
+		document.querySelectorAll('.bg-orb, .bg-grid, .bg-glow, #starfield').forEach(function(el) { el.style.display = hidden ? 'none' : ''; });
+		if (window.Starfield && typeof window.Starfield.updateVisibility === 'function') window.Starfield.updateVisibility();
 	}
 	if (localStorage.getItem('particlesHidden') === null) localStorage.setItem('particlesHidden', 'false');
 	updateEffectsDisplay();
@@ -139,11 +150,4 @@ document.addEventListener('DOMContentLoaded', function() {
 		if (prog) prog.classList.add('active');
 		setTimeout(function(){ el.classList.remove('active'); if(prog) prog.classList.remove('active'); }, 5000);
 	};
-
-	// Ad Script
-	if (localStorage.getItem('hideAds') !== 'true') {
-		var adScript = document.createElement('script');
-		adScript.src = 'https://pl29046858.profitablecpmratenetwork.com/59/2d/fa/592dfab1692cc524d861443567c7b621.js';
-		document.body.appendChild(adScript);
-	}
 });

@@ -13,46 +13,47 @@
 		{ id: 'vector', name: 'Vector', desc: 'Neon green cyberpunk', accent: '#00ff41', bg1: '#000000', bg2: '#00ff41' }
 	];
 
+	function storageGet(key, fallback) {
+		try {
+			var v = localStorage.getItem(key);
+			return v !== null ? v : fallback;
+		} catch(e) {}
+		return fallback;
+	}
+
+	function storageSet(key, value) {
+		try {
+			localStorage.setItem(key, value);
+			if (typeof localforage !== 'undefined') {
+				try { localforage.setItem(key, value); } catch(e) {}
+			}
+		} catch(e) {}
+	}
+
 	window.InfraredThemes = {
 		themes: themes,
 		get: function() {
-			return localStorage.getItem(THEME_KEY) || 'infrared';
+			return storageGet(THEME_KEY, 'infrared');
 		},
 		set: function(themeId) {
-			localStorage.setItem(THEME_KEY, themeId);
+			storageSet(THEME_KEY, themeId);
 			this.apply(themeId);
 		},
 		apply: function(themeId) {
 			document.documentElement.setAttribute('data-theme', themeId);
 			var theme = themes.find(function(t) { return t.id === themeId; });
-			if (theme && theme.id === 'spectrum') {
-				document.documentElement.classList.add('spectrum-bg');
-			} else {
-				document.documentElement.classList.remove('spectrum-bg');
+
+			['spectrum-bg', 'flux-bg', 'prism-bg'].forEach(function(cls) {
+				document.documentElement.classList.remove(cls);
+			});
+
+			if (theme) {
+				if (theme.id === 'spectrum') document.documentElement.classList.add('spectrum-bg');
+				if (theme.id === 'flux') document.documentElement.classList.add('flux-bg');
+				if (theme.id === 'prism') document.documentElement.classList.add('prism-bg');
 			}
-			if (theme && theme.id === 'flux') {
-				document.documentElement.classList.add('flux-bg');
-			} else {
-				document.documentElement.classList.remove('flux-bg');
-			}
-			if (theme && theme.id === 'prism') {
-				document.documentElement.classList.add('prism-bg');
-			} else {
-				document.documentElement.classList.remove('prism-bg');
-			}
-			this.updateParticleColor(themeId);
-		},
-		updateParticleColor: function(themeId) {
-			if (typeof particlesJS !== 'undefined' && window.particleColor) {
-				var pjs = document.querySelector('#particles-js');
-				if (pjs && pjs.__particlesJS) {
-					try {
-						var color = getComputedStyle(document.documentElement).getPropertyValue('--theme-particle-color').trim();
-						pjs.__particlesJS.pJS.particles.color.value = color;
-						pjs.__particlesJS.pJS.fn.particlesRefresh();
-					} catch(e) {}
-				}
-			}
+
+			window.dispatchEvent(new CustomEvent('infrared-theme-change', { detail: { theme: themeId } }));
 		},
 		init: function() {
 			var saved = this.get();
@@ -60,11 +61,5 @@
 		}
 	};
 
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', function() {
-			InfraredThemes.init();
-		});
-	} else {
-		InfraredThemes.init();
-	}
+	InfraredThemes.init();
 })();

@@ -4,7 +4,7 @@ var address1 = document.getElementById('gointoinfrared');
 var address2 = document.getElementById('gointoinfrared2');
 var urlPattern = new RegExp('^(https?:\\/\\/)?'+'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
 
-var proxySetting = localStorage.getItem('dropdown-selected-text-proxy') || 'Scramjet';
+var proxySetting = localStorage.getItem('dropdown-selected-text-proxyDropdown') || 'Scramjet';
 
 var swConfig = {
 	'Ultraviolet': { type:'sw', file:'/@/sw.js', config:typeof __uv$config !== 'undefined' ? __uv$config : null, func:null },
@@ -33,7 +33,7 @@ var wispUrl = localStorage.getItem('wisp') || defWisp;
 
 async function setTransports() {
 	if (!connection) return;
-	var transports = localStorage.getItem('dropdown-selected-text-transport') || 'Libcurl';
+	var transports = localStorage.getItem('dropdown-selected-text-transportDropdown') || 'Libcurl';
 	try {
 		if (transports === 'Libcurl') { await connection.setTransport('/libcurl/index.mjs', [{wisp:wispUrl}]); }
 		else if (transports === 'Epoxy') { await connection.setTransport('/epoxy/index.mjs', [{wisp:wispUrl}]); }
@@ -44,7 +44,7 @@ async function setTransports() {
 function search(input) {
 	input = input.trim();
 	var tpl;
-	switch (localStorage.getItem('dropdown-selected-text-searchEngine')) {
+	switch (localStorage.getItem('dropdown-selected-text-searchEngineDropdown')) {
 		case 'Bing': tpl = 'https://bing.com/search?q=%s'; break;
 		case 'Google': tpl = 'https://google.com/search?q=%s'; break;
 		case 'Yahoo!': tpl = 'https://search.yahoo.com/search?p=%s'; break;

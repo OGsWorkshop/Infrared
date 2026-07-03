@@ -6,14 +6,14 @@
 	<meta name="description" content="Launch into Infrared, the next gen proxy." />
 	<meta name="keywords" content="Proxy, Unblocker, Infrared Unblocker, Infrared" />
 	<meta property="og:image" content="/assets/logo.webp" />
-	<meta name="google-adsense-account" content="ca-pub-3747175608041884" />
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DTW1KTNCF"></script>
-	<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-3DTW1KTNCF');</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..400,0..1" />
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
+	<script src="/js/themes.js"></script>
 	<script src="/baremux/index.js"></script>
 	<script src="/@/uv.bundle.js"></script>
 	<script src="/@/uv.config.js"></script>
@@ -31,19 +31,19 @@
 	</div>
 
 	<nav class="sidebar">
-		<div class="sidebar-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a><span class="sidebar-logo-text">Infrared</span></div>
+		<div class="sidebar-logo"><a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a></div>
 		<div class="sidebar-nav">
-			<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span>Home</span></a>
-			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span>Games</span></a>
-			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span>Apps</span></a>
-			<a href="/&" class="sidebar-link active"><span class="material-symbols-outlined">public</span><span>Browser</span></a>
+			<a href="/" class="sidebar-link"><span class="material-symbols-outlined">cottage</span><span class="sidebar-tooltip">Home</span></a>
+			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span class="sidebar-tooltip">Games</span></a>
+			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span class="sidebar-tooltip">Apps</span></a>
+			<a href="/&" class="sidebar-link active"><span class="material-symbols-outlined">public</span><span class="sidebar-tooltip">Browser</span></a>
 		</div>
 		<div class="sidebar-divider"></div>
 		<div class="sidebar-nav">
-			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span>Settings</span></a>
+			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span class="sidebar-tooltip">Settings</span></a>
 		</div>
 		<div class="sidebar-bottom">
-			<a href="https://discord.gg/infrared" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span>Discord</span></a>
+			<a href="https://discord.gg/yTmmCFv59Q" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span class="sidebar-tooltip">Discord</span></a>
 		</div>
 	</nav>
 
@@ -64,7 +64,7 @@
 			</div>
 			<div class="browser-iframe-wrapper">
 				<div class="browser-home" id="browserHome">
-					<div class="browser-home-search"><span class="material-symbols-outlined" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px">search</span><input type="text" id="gointoinfrared" placeholder="Search or enter website URL..." /></div>
+					<div class="browser-home-search"><span style="position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px;font-weight:700;font-family:var(--font-display)">G</span><input type="text" id="gointoinfrared" placeholder="Search Infrared..." /></div>
 					<div class="browser-shortcuts-big shortcutsBig" style="display:none"></div>
 					<div class="browser-shortcuts shortcuts"></div>
 				</div>
@@ -74,16 +74,14 @@
 	</div>
 
 	<div class="spinner-wrapper" id="spinnerWrapper"><div class="spinner-ring"></div></div>
-	<div class="bg-orb bg-orb-1"></div>
-	<div class="bg-orb bg-orb-2"></div>
-	<div class="bg-orb bg-orb-3"></div>
+	<canvas id="starfield"></canvas>
+	<div class="bg-glow"></div>
 	<div class="bg-grid"></div>
 
-	<script src="/js/themes.js"></script>
+	<script src="/js/starfield.js"></script>
 	<script src="/js/json-loader.js"></script>
 	<script src="/js/c.js"></script>
 	<script src="/js/p.js"></script>
 	<script src="/js/&.js"></script>
-	<script>let CLF_config={app_id:'163a312a-7cde-41ab-a80c-b4cf281efdf',data:{user_id:'123456',user_email:'user@email.com',user_name:'User Name',custom_data:{JobRole:'CEO',Plan:'Pro',teamMates:'4',MonthlySpend:'50 USD'}}};</script>
 </body>
 </html>

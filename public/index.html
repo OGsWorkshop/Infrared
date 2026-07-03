@@ -6,14 +6,14 @@
 	<meta name="description" content="Launch into Infrared, the next gen proxy." />
 	<meta name="keywords" content="Proxy, Unblocker, Infrared Unblocker, Infrared" />
 	<meta property="og:image" content="/assets/logo.webp" />
-	<meta name="google-adsense-account" content="ca-pub-3747175608041884" />
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-3DTW1KTNCF"></script>
-	<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-3DTW1KTNCF');</script>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800&display=swap" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..400,0..1" />
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="/css/themes.css" />
+	<script src="/js/themes.js"></script>
 	<script src="https://unpkg.com/lucide@latest"></script>
 	<title>Infrared - Next Gen Proxy</title>
 	<link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
@@ -29,39 +29,36 @@
 	<nav class="sidebar">
 		<div class="sidebar-logo">
 			<a href="/"><img src="/assets/logo.webp" alt="Infrared" /></a>
-			<span class="sidebar-logo-text">Infrared</span>
 		</div>
 		<div class="sidebar-nav">
-			<a href="/" class="sidebar-link active"><span class="material-symbols-outlined">cottage</span><span>Home</span></a>
-			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span>Games</span></a>
-			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span>Apps</span></a>
-			<a href="/&" class="sidebar-link"><span class="material-symbols-outlined">public</span><span>Browser</span></a>
+			<a href="/" class="sidebar-link active"><span class="material-symbols-outlined">cottage</span><span class="sidebar-tooltip">Home</span></a>
+			<a href="/g" class="sidebar-link"><span class="material-symbols-outlined">joystick</span><span class="sidebar-tooltip">Games</span></a>
+			<a href="/a" class="sidebar-link"><span class="material-symbols-outlined">apps</span><span class="sidebar-tooltip">Apps</span></a>
+			<a href="/&" class="sidebar-link"><span class="material-symbols-outlined">public</span><span class="sidebar-tooltip">Browser</span></a>
 		</div>
 		<div class="sidebar-divider"></div>
 		<div class="sidebar-nav">
-			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span>Settings</span></a>
+			<a href="/~" class="sidebar-link"><span class="material-symbols-outlined">tune</span><span class="sidebar-tooltip">Settings</span></a>
 		</div>
 		<div class="sidebar-bottom">
-			<a href="https://discord.gg/infrared" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span>Discord</span></a>
+			<a href="https://discord.gg/yTmmCFv59Q" target="_blank" class="sidebar-discord"><i class="fa-brands fa-discord"></i><span class="sidebar-tooltip">Discord</span></a>
 		</div>
 	</nav>
 
 	<div class="main-content">
-		<div class="bg-orb bg-orb-1"></div>
-		<div class="bg-orb bg-orb-2"></div>
-		<div class="bg-orb bg-orb-3"></div>
+		<canvas id="starfield"></canvas>
+		<div class="bg-glow"></div>
 		<div class="bg-grid"></div>
 
 		<div class="hero">
 			<div class="hero-text">
-				<h1 class="hero-title">Unblock <span class="accent" id="typewriterText">everything</span><span class="cursor"></span></h1>
-				<div style="margin:24px 0">
-					<div class="browser-home-search" style="max-width:500px">
-						<span class="material-symbols-outlined" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--theme-text-dim);font-size:22px">search</span>
-						<input type="text" id="homeSearchBar" placeholder="Search or enter a URL..." style="width:100%;padding:16px 20px 16px 50px;background:var(--theme-input-bg);border:1px solid var(--theme-input-border);border-radius:var(--radius-lg);color:var(--theme-text);font-size:16px;outline:none;font-family:var(--font-primary);transition:all var(--transition-fast)" />
-					</div>
+				<div class="hero-announcement"><span class="material-symbols-outlined" style="font-size:14px">campaign</span><span>v2.0 is here</span></div>
+				<h1 class="hero-title">Welcome to <span class="accent">all you need</span><span class="cursor"></span></h1>
+				<p class="hero-subtitle">Start your unblocking journey today!</p>
+				<div class="hero-actions">
+					<a href="/&" class="btn-primary"><i data-lucide="sparkles" style="width:18px;height:18px"></i> Get Started</a>
+					<a href="/g" class="btn-ghost">Browse Games</a>
 				</div>
-				<div class="browser-shortcuts shortcuts" style="justify-content:flex-start;gap:12px;max-width:500px"></div>
 			</div>
 			<div class="hero-visual">
 				<div class="hero-card featured" onclick="location.href='/&'">
@@ -74,28 +71,13 @@
 		</div>
 	</div>
 
-	<script src="/js/themes.js"></script>
+	<script src="/js/starfield.js"></script>
 	<script src="/js/c.js"></script>
 	<script>
-		lucide.createIcons();
-		var words=['everything','freedom','any site','games','privacy','speed'];
-		var i=0,j=0,del=false,el=document.getElementById('typewriterText');
+		if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons();
+		var words=['all you need','everything','freedom','any site','games','privacy','speed'];
+		var i=0,j=0,del=false,el=document.querySelector('.hero-title .accent');
 		function type(){var w=words[i];el.textContent=del?w.substring(0,j-1):w.substring(0,j+1);j+=del?-1:1;if(!del&&j===w.length){setTimeout(function(){del=true;type()},2000);return}if(del&&j===0){del=false;i=(i+1)%words.length}setTimeout(type,del?50:100+Math.random()*80)}type();
-
-		document.getElementById('homeSearchBar').addEventListener('keydown',function(e){if(e.key==='Enter'){location.href='/&?q='+encodeURIComponent(this.value)}});
-
-		fetch('/json/s.json').then(function(r){return r.json()}).then(function(data){
-			var c=document.querySelector('.shortcuts');
-			data.forEach(function(s){
-				var a=document.createElement('a');
-				a.href=s.name.toLowerCase()==='settings'?'/~':'/&?q='+encodeURIComponent(s.name);
-				var d=document.createElement('div');d.className='browser-shortcut';if(s.bg)d.style.backgroundColor=s.bg;
-				var img=document.createElement('img');img.src=s.img;img.alt=s.name;img.onerror=function(){this.src='/assets/default.png'};
-				d.appendChild(img);a.appendChild(d);c.appendChild(a)
-			})
-		});
 	</script>
-	<script>let CLF_config={app_id:'163a312a-7cde-41ab-a80c-cb4cf281efdf',data:{user_id:'123456',user_email:'user@email.com',user_name:'User Name',custom_data:{JobRole:'CEO',Plan:'Pro',teamMates:'4',MonthlySpend:'50 USD'}}};</script>
-	<script src="https://pl29046858.profitablecpmratenetwork.com/59/2d/fa/592dfab1692cc524d861443567c7b621.js"></script>
 </body>
 </html>

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Hash-based navigation
 	function handleHash() {
-		var hash = window.location.hash.replace('#', '');
+		var hash = window.location.hash.replace(/^#\/?/, '').trim();
 		if (hash) switchSection(hash);
 	}
 	window.addEventListener('hashchange', handleHash);
@@ -208,16 +208,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 
 	// Checkboxes
-	function checkboxToggle(className, storageKey, defaultChecked) {
+	function checkboxToggle(className, storageKey, defaultChecked, callback) {
 		var cb = document.querySelector('.' + className);
 		if (!cb) return;
 		if (localStorage.getItem(storageKey) === null) localStorage.setItem(storageKey, defaultChecked ? 'false' : 'true');
 		cb.checked = !(localStorage.getItem(storageKey) === 'true');
 		cb.addEventListener('change', function() {
 			localStorage.setItem(storageKey, this.checked ? 'false' : 'true');
+			if (callback) callback(this.checked);
 			if (storageKey === 'particlesHidden') {
 				var hidden = !this.checked;
-				document.querySelectorAll('.bg-orb, .bg-grid').forEach(function(el) { el.style.display = hidden ? 'none' : ''; });
+				document.querySelectorAll('.bg-orb, .bg-grid, .bg-glow, #starfield').forEach(function(el) { el.style.display = hidden ? 'none' : ''; });
+				if (window.Starfield && typeof window.Starfield.updateVisibility === 'function') window.Starfield.updateVisibility();
 			}
 		});
 	}
@@ -226,6 +228,12 @@ document.addEventListener('DOMContentLoaded', function() {
 	checkboxToggle('particlesYesNo', 'particlesHidden', true);
 	checkboxToggle('smallIconsYesNo', 'smallIcons', true);
 	checkboxToggle('passwordYesNo', 'passwordOff', false);
+	checkboxToggle('lazyLoadYesNo', 'lazyLoadDisabled', true);
+	checkboxToggle('reduceMotionYesNo', 'reduceMotion', false, function(checked) {
+		document.documentElement.style.setProperty('--transition-fast', checked ? '0.01s' : '0.15s ease');
+		document.documentElement.style.setProperty('--transition-normal', checked ? '0.01s' : '0.25s ease');
+		document.documentElement.style.setProperty('--transition-slow', checked ? '0.01s' : '0.4s ease');
+	});
 
 	// Data export/import
 	document.getElementById('importData').addEventListener('click', function() { document.getElementById('dataInput').click(); });
@@ -290,10 +298,15 @@ document.addEventListener('DOMContentLoaded', function() {
 	if (wispVal) wispVal.addEventListener('keydown', function(e) { if (e.key === 'Enter') { localStorage.setItem('wisp', this.value); showToast('success'); }});
 
 	// Fetch last commit date
+	var lastUpdatedEl = document.getElementById('last-updated');
 	fetch('https://api.github.com/repos/nightproxy/infrared/commits').then(function(r){return r.json()}).then(function(commits){
-		if (commits.length > 0) {
+		if (commits && commits.length > 0 && commits[0].commit && commits[0].commit.committer) {
 			var d = new Date(commits[0].commit.committer.date);
-			document.getElementById('last-updated').textContent = d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+			lastUpdatedEl.textContent = d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+		} else {
+			lastUpdatedEl.textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 		}
-	}).catch(function(){});
+	}).catch(function(){
+		if (lastUpdatedEl) lastUpdatedEl.textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+	});
 });

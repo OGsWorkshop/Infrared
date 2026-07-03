@@ -3,6 +3,43 @@ localforage.setItem('e', 'e');
 
 document.addEventListener('DOMContentLoaded', function() {
 	var pathname = window.location.pathname;
+	var lazyDisabled = localStorage.getItem('lazyLoadDisabled') === 'true';
+
+	function createPlaceholder(name) {
+		var div = document.createElement('div');
+		div.className = 'bento-card-img bento-card-placeholder';
+		div.textContent = name.replace(/^[!] /, '').charAt(0).toUpperCase();
+		div.title = name.replace(/^[!] /, '');
+		return div;
+	}
+
+	function createItemCard(item) {
+		var card = document.createElement('a');
+		card.href = '/&?q=' + encodeURIComponent(item.name);
+		card.className = 'bento-card';
+		if (item.featured) card.className += ' featured';
+
+		var cleanName = item.name.replace(/^[!] /, '');
+		var displayName = cleanName;
+
+		var img = document.createElement('img');
+		img.src = item.img || '/assets/default.png';
+		img.alt = displayName;
+		img.className = 'bento-card-img';
+		img.loading = lazyDisabled ? 'eager' : 'lazy';
+		img.onerror = function() {
+			var placeholder = createPlaceholder(displayName);
+			if (img.parentNode) img.parentNode.replaceChild(placeholder, img);
+		};
+
+		var label = document.createElement('div');
+		label.className = 'bento-card-label';
+		label.textContent = displayName;
+
+		card.appendChild(img);
+		card.appendChild(label);
+		return card;
+	}
 
 	// Games page
 	if (pathname === '/g') {
@@ -10,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			.then(function(r) { return r.json(); })
 			.then(function(data) {
 				var grid = document.querySelector('.gameContain');
-				var emptyEl = document.getElementById('gameEmpty');
 				var catTabs = document.getElementById('gameCatTabs');
 				var activeCat = 'all';
 
@@ -29,32 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					}
 
 					filtered.forEach(function(game) {
-						var card = document.createElement('a');
-						card.href = '/&?q=' + encodeURIComponent(game.name);
-						card.className = 'bento-card';
-
-						if (game.featured) card.className += ' featured';
-
-						if (game.categories && game.name) {
-							game.categories.forEach(function(cat) {
-								card.setAttribute('data-cat', (card.getAttribute('data-cat')||'')+' '+cat);
-							});
-						}
-
-						var img = document.createElement('img');
-						img.src = game.img || '/assets/default.png';
-						img.alt = game.name;
-						img.className = 'bento-card-img';
-						img.loading = 'lazy';
-						img.onerror = function() { this.src = '/assets/default.png'; };
-
-						var label = document.createElement('div');
-						label.className = 'bento-card-label';
-						label.textContent = game.name.replace(/^[!] /, '');
-
-						card.appendChild(img);
-						card.appendChild(label);
-						grid.appendChild(card);
+						grid.appendChild(createItemCard(game));
 					});
 				}
 
@@ -87,21 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							return;
 						}
 						filtered.forEach(function(game) {
-							var card = document.createElement('a');
-							card.href = '/&?q=' + encodeURIComponent(game.name);
-							card.className = 'bento-card';
-							var img = document.createElement('img');
-							img.src = game.img || '/assets/default.png';
-							img.alt = game.name;
-							img.className = 'bento-card-img';
-							img.loading = 'lazy';
-							img.onerror = function() { this.src = '/assets/default.png'; };
-							var label = document.createElement('div');
-							label.className = 'bento-card-label';
-							label.textContent = game.name.replace(/^[!] /, '');
-							card.appendChild(img);
-							card.appendChild(label);
-							grid.appendChild(card);
+							grid.appendChild(createItemCard(game));
 						});
 					});
 				}
@@ -154,21 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					}
 
 					filtered.forEach(function(app) {
-						var card = document.createElement('a');
-						card.href = '/&?q=' + encodeURIComponent(app.name);
-						card.className = 'bento-card';
-						var img = document.createElement('img');
-						img.src = app.img || '/assets/default.png';
-						img.alt = app.name;
-						img.className = 'bento-card-img';
-						img.loading = 'lazy';
-						img.onerror = function() { this.src = '/assets/default.png'; };
-						var label = document.createElement('div');
-						label.className = 'bento-card-label';
-						label.textContent = app.name.replace(/^[!] /, '');
-						card.appendChild(img);
-						card.appendChild(label);
-						grid.appendChild(card);
+						grid.appendChild(createItemCard(app));
 					});
 				}
 
@@ -197,21 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							return;
 						}
 						filtered.forEach(function(app) {
-							var card = document.createElement('a');
-							card.href = '/&?q=' + encodeURIComponent(app.name);
-							card.className = 'bento-card';
-							var img = document.createElement('img');
-							img.src = app.img || '/assets/default.png';
-							img.alt = app.name;
-							img.className = 'bento-card-img';
-							img.loading = 'lazy';
-							img.onerror = function() { this.src = '/assets/default.png'; };
-							var label = document.createElement('div');
-							label.className = 'bento-card-label';
-							label.textContent = app.name.replace(/^[!] /, '');
-							card.appendChild(img);
-							card.appendChild(label);
-							grid.appendChild(card);
+							grid.appendChild(createItemCard(app));
 						});
 					});
 				}
@@ -265,8 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
 						var img = document.createElement('img');
 						img.src = shortcut.img;
 						img.alt = shortcut.name;
-						img.style.width = '170px';
-						img.style.height = '90px';
+						img.style.width = '160px';
+						img.style.height = '88px';
 						img.style.objectFit = 'cover';
 						img.onerror = function() { this.src = '/assets/default.png'; };
 						div.appendChild(img);
