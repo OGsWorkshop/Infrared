@@ -2,19 +2,30 @@
 
 var address1 = document.getElementById('gointoinfrared');
 var address2 = document.getElementById('gointoinfrared2');
-var urlPattern = new RegExp('^(https?:\\/\\/)?'+'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ '((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
+var urlPattern = new RegExp('^(https?:\\/\\/)?'+'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ '((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
 
-var proxySetting = localStorage.getItem('dropdown-selected-text-proxyDropdown') || 'Ultraviolet';
+var proxySetting = localStorage.getItem('dropdown-selected-text-proxyDropdown') || 'Scramjet';
 
 var swConfig = {
-	'Ultraviolet': { file:'/@/sw.js', config: typeof __uv$config !== 'undefined' ? __uv$config : null },
-	'Scramjet': { file:'/scram/sw.js', config: typeof __scramjet$config !== 'undefined' ? __scramjet$config : null }
+	'Ultraviolet': { type:'sw', file:'/@/sw.js', config:typeof __uv$config !== 'undefined' ? __uv$config : null, func:null },
+	'Scramjet': {
+		type:'sw', file:'/scram/sw.js', config:typeof __scramjet$config !== 'undefined' ? __scramjet$config : null,
+		func: async function() {
+			if (typeof $scramjetLoadController !== 'undefined') {
+				var ScramjetController = $scramjetLoadController().ScramjetController;
+				var scramjet = new ScramjetController(__scramjet$config);
+				await scramjet.init();
+			}
+			await setTransports();
+		}
+	}
 };
 
-var swEntry = swConfig[proxySetting] || swConfig['Ultraviolet'];
+var swEntry = swConfig[proxySetting] || swConfig['Scramjet'];
 var swFile = swEntry.file;
 var swConfigSettings = swEntry.config;
 if (!swConfigSettings) swConfigSettings = { prefix:'/@/infrared/', encodeUrl:function(u){return u}, decodeUrl:function(u){return u} };
+var swFunction = swEntry.func;
 
 var connection = typeof BareMux !== 'undefined' ? new BareMux.BareMuxConnection('/baremux/worker.js') : null;
 
@@ -50,9 +61,9 @@ function search(input) {
 async function registerServiceWorker() {
 	if (!('serviceWorker' in navigator)) return;
 	try {
+		if (swFunction && typeof swFunction === 'function') { await swFunction(); }
+		else { await navigator.serviceWorker.register(swFile, {scope:swConfigSettings.prefix||'/@/infrared/'}); await navigator.serviceWorker.ready; }
 		await setTransports();
-		await navigator.serviceWorker.register(swFile, {scope: swConfigSettings.prefix});
-		await navigator.serviceWorker.ready;
 	} catch(e) { console.error('SW error:', e); }
 }
 

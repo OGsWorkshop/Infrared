@@ -225,21 +225,22 @@ document.addEventListener('DOMContentLoaded', function() {
 				.then(function(data) {
 					var container = document.querySelector('.shortcutsBig');
 					if (!container) return;
-					container.style.display = 'flex';
+					container.style.display = 'grid';
 					data.forEach(function(shortcut) {
 						var link = document.createElement('a');
 						link.href = shortcut.name.toLowerCase() === 'settings' ? '/~/#/proxy' : '/&?q=' + encodeURIComponent(shortcut.name);
 						var div = document.createElement('div');
 						div.className = 'browser-shortcut-big';
 						if (shortcut.bg) div.style.backgroundColor = shortcut.bg;
+						if (shortcut.color) div.style.color = shortcut.color;
 						var img = document.createElement('img');
 						img.src = shortcut.img;
 						img.alt = shortcut.name;
-						img.style.width = '160px';
-						img.style.height = '88px';
-						img.style.objectFit = 'cover';
-						img.onerror = function() { this.src = '/assets/default.png'; };
+						img.onerror = function() { this.style.display = 'none'; };
+						var span = document.createElement('span');
+						span.textContent = shortcut.name;
 						div.appendChild(img);
+						div.appendChild(span);
 						link.appendChild(div);
 						container.appendChild(link);
 					});

@@ -1,6 +1,7 @@
 // &.js - Browser page functionality
 
 var encodedUrl = '';
+var isSearching = false;
 
 function encodeForProxy(url) {
 	if (!swConfigSettings) return url;
@@ -25,6 +26,8 @@ function decodeFromProxy(url) {
 }
 
 async function executeSearch(query) {
+	if (isSearching) return;
+	isSearching = true;
 	encodedUrl = swConfigSettings.prefix + encodeForProxy(search(query));
 	localStorage.setItem('input', query);
 	localStorage.setItem('output', encodedUrl);
@@ -33,20 +36,16 @@ async function executeSearch(query) {
 	var home = document.getElementById('browserHome');
 	if (home) home.style.display = 'none';
 	var iframe = document.getElementById('intoinfrared');
-
-	await registerSW();
-	iframe.src = encodedUrl;
-	await registerSW().then(async function() {
-		await setTransports();
-		setTimeout(function() {
-			iframe.src = iframe.src;
-		}, 100);
-	});
-
-	iframe.style.display = 'block';
+	try {
+		await registerSW();
+		iframe.src = encodedUrl;
+		iframe.style.display = 'block';
+	} catch(e) {
+		console.error('executeSearch failed:', e);
+	}
 	if (spinner) spinner.style.display = 'none';
 	document.querySelectorAll('input').forEach(function(i) { i.blur(); });
-	iframe.addEventListener('load', function() {
+	var onLoad = function() {
 		try {
 			var doc = iframe.contentDocument || iframe.contentWindow.document;
 			if (doc) {
@@ -57,7 +56,10 @@ async function executeSearch(query) {
 			}
 		} catch(e) {}
 		startURLMonitoring();
-	});
+	};
+	iframe.removeEventListener('load', onLoad);
+	iframe.addEventListener('load', onLoad);
+	isSearching = false;
 }
 
 var historyArray = JSON.parse(localStorage.getItem('historyArray')) || [];
@@ -137,7 +139,7 @@ document.addEventListener('fullscreenchange', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
 	var q = new URLSearchParams(window.location.search).get('q');
-	if (q) {
+	if (q && !isSearching) {
 		Promise.all([
 			fetch('/json/g.json').then(function(r){return r.json()}).catch(function(){return[]}),
 			fetch('/json/a.json').then(function(r){return r.json()}).catch(function(){return[]}),
