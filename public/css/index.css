@@ -284,12 +284,20 @@ a { text-decoration: none; color: var(--theme-link); }
 
 .hero-title {
 	font-family: var(--font-display);
-	font-size: clamp(48px, 7vw, 84px);
+	font-size: clamp(42px, 6vw, 78px);
 	font-weight: 800;
 	line-height: 1.05;
 	letter-spacing: -2.5px;
 	margin-bottom: 22px;
 	animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+	white-space: nowrap;
+}
+
+.accent-wrap {
+	display: inline-block;
+	min-width: 14ch;
+	text-align: center;
+	vertical-align: bottom;
 	white-space: nowrap;
 }
 
@@ -667,8 +675,8 @@ a { text-decoration: none; color: var(--theme-link); }
 	align-items: center;
 	gap: 8px;
 	padding: 10px 16px;
-	background: var(--theme-nav-bg);
-	border-bottom: 1px solid var(--theme-nav-border);
+	background: rgba(0,0,0,0.85);
+	border-bottom: 1px solid rgba(255,255,255,0.1);
 	flex-shrink: 0;
 }
 
@@ -678,7 +686,7 @@ a { text-decoration: none; color: var(--theme-link); }
 	border-radius: var(--radius-sm);
 	border: none;
 	background: transparent;
-	color: var(--theme-text-dim);
+	color: rgba(255,255,255,0.65);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -688,8 +696,8 @@ a { text-decoration: none; color: var(--theme-link); }
 }
 
 .browser-nav-btn:hover {
-	background: var(--theme-surface-hover);
-	color: var(--theme-text);
+	background: rgba(255,255,255,0.1);
+	color: #fff;
 }
 
 .browser-nav-btn:disabled {
@@ -704,8 +712,8 @@ a { text-decoration: none; color: var(--theme-link); }
 	flex: 1;
 	display: flex;
 	align-items: center;
-	background: rgba(var(--theme-rgb), 0.08);
-	border: 1px solid rgba(var(--theme-rgb), 0.2);
+	background: rgba(255,255,255,0.08);
+	border: 1px solid rgba(255,255,255,0.12);
 	border-radius: var(--radius-full);
 	padding: 0 4px;
 	transition: all var(--transition-fast);
@@ -714,9 +722,9 @@ a { text-decoration: none; color: var(--theme-link); }
 }
 
 .browser-url-bar:focus-within {
-	background: rgba(var(--theme-rgb), 0.14);
-	border-color: rgba(var(--theme-rgb), 0.5);
-	box-shadow: 0 0 0 3px var(--theme-accent-glow);
+	background: rgba(255,255,255,0.14);
+	border-color: rgba(255,255,255,0.3);
+	box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
 }
 
 .browser-url-input {
@@ -724,17 +732,17 @@ a { text-decoration: none; color: var(--theme-link); }
 	padding: 10px 12px;
 	background: transparent;
 	border: none;
-	color: var(--theme-text);
+	color: #fff;
 	font-size: 14px;
 	font-family: var(--font-primary);
 	outline: none;
 }
 
-.browser-url-input::placeholder { color: var(--theme-text-dim); }
+.browser-url-input::placeholder { color: rgba(255,255,255,0.45); }
 
 .browser-url-secure {
 	padding: 0 8px;
-	color: var(--theme-text-dim);
+	color: rgba(255,255,255,0.55);
 	font-size: 16px;
 	flex-shrink: 0;
 }
@@ -748,7 +756,7 @@ a { text-decoration: none; color: var(--theme-link); }
 	width: 100%;
 	height: 100%;
 	border: none;
-	background: var(--theme-bg);
+	background: #000;
 }
 
 .browser-home {
@@ -861,10 +869,10 @@ a { text-decoration: none; color: var(--theme-link); }
 /* Browser big shortcuts */
 .browser-shortcuts-big {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	grid-template-columns: repeat(5, minmax(0, 1fr));
 	gap: 14px;
 	width: 100%;
-	max-width: 850px;
+	max-width: 880px;
 }
 
 .browser-shortcut-big {
@@ -876,9 +884,9 @@ a { text-decoration: none; color: var(--theme-link); }
 	background: var(--theme-card-bg);
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 	gap: 10px;
-	padding: 16px 14px;
+	padding: 16px;
 	font-weight: 600;
 	font-size: 14px;
 }
@@ -890,11 +898,18 @@ a { text-decoration: none; color: var(--theme-link); }
 }
 
 .browser-shortcut-big img {
-	width: 26px;
-	height: 26px;
+	width: 28px;
+	height: 28px;
 	object-fit: contain;
 	display: block;
 	filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+	flex-shrink: 0;
+}
+
+.browser-shortcut-big span {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* === Settings Page === */
@@ -1568,7 +1583,7 @@ a { text-decoration: none; color: var(--theme-link); }
 
 /* === Responsive === */
 @media (max-width: 1024px) {
-	:root { --sidebar-width: 64px; }
+	:root { --sidebar-width: 52px; }
 	.hero { padding: 30px 20px; text-align: center; }
 	.hero-text { max-width: 100%; }
 	.hero-subtitle { max-width: 100%; margin-inline: auto; }
@@ -1581,28 +1596,35 @@ a { text-decoration: none; color: var(--theme-link); }
 	.settings-content { max-height: none; }
 	.bento-card.featured { grid-column: span 2; grid-row: auto; }
 	.bento-card.featured .bento-card-img { height: 160px; }
+	.browser-shortcuts-big { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
-	:root { --sidebar-width: 56px; }
+	:root { --sidebar-width: 48px; }
 	.sidebar { padding: 12px 0; }
-	.sidebar-link, .sidebar-discord { width: 44px; height: 44px; }
+	.sidebar-link, .sidebar-discord { width: 40px; height: 40px; }
 	.page-header { flex-direction: column; align-items: stretch; }
 	.bento-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
 	.bento-card.featured { grid-column: span 2; }
 	.bento-card-img { height: 100px; }
 	.hero-title { font-size: 32px; }
+	.accent-wrap { min-width: 12ch; }
 	.browser-toolbar { flex-wrap: wrap; }
 	.settings-layout { min-height: auto; }
+	.browser-shortcuts-big { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 480px) {
-	:root { --sidebar-width: 48px; }
-	.sidebar-logo img { width: 30px; height: 30px; }
-	.sidebar-link, .sidebar-discord { width: 38px; height: 38px; font-size: 18px; }
+	:root { --sidebar-width: 44px; }
+	.sidebar-logo img { width: 28px; height: 28px; }
+	.sidebar-link, .sidebar-discord { width: 36px; height: 36px; font-size: 17px; }
+	.discord-icon { width: 18px; height: 18px; }
 	.bento-grid { grid-template-columns: repeat(2, 1fr); }
 	.bento-card.wide, .bento-card.featured { grid-column: 1 / -1; }
 	.theme-grid { grid-template-columns: 1fr 1fr; }
 	.hero { padding: 20px 12px; }
 	.main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); }
+	.hero-title { font-size: 26px; }
+	.accent-wrap { min-width: 10ch; }
+	.browser-shortcuts-big { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

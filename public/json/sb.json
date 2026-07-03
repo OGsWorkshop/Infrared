@@ -2,84 +2,84 @@
 	{
 		"name": "Google",
 		"url": "https://google.com",
-		"img": "/assets/imgs/sb/Google.webp",
+		"img": "/assets/imgs/s/Google.webp",
 		"bg": "#ffffff",
 		"color": "#000000"
 	},
 	{
 		"name": "YouTube",
 		"url": "https://youtube.com/",
-		"img": "/assets/imgs/sb/YouTube.webp",
+		"img": "/assets/imgs/s/YouTube.webp",
 		"bg": "#ff0000",
 		"color": "#ffffff"
 	},
 	{
 		"name": "Spotify",
 		"url": "https://open.spotify.com",
-		"img": "/assets/imgs/sb/Spotify.webp",
+		"img": "/assets/imgs/s/Spotify.webp",
 		"bg": "#1db954",
 		"color": "#ffffff"
 	},
 	{
 		"name": "Discord",
 		"url": "https://discord.com/login",
-		"img": "/assets/imgs/sb/Discord.webp",
+		"img": "/assets/imgs/s/Discord.webp",
 		"bg": "#5865f2",
 		"color": "#ffffff"
 	},
 	{
 		"name": "ChatGPT",
 		"url": "https://chatgpt.com/",
-		"img": "/assets/imgs/sb/ChatGPT.webp",
+		"img": "/assets/imgs/s/ChatGPT.webp",
 		"bg": "#10a37f",
 		"color": "#ffffff"
 	},
 	{
 		"name": "GeForce Now",
 		"url": "https://play.geforcenow.com/mall/",
-		"img": "/assets/imgs/sb/GeForce_Now.webp",
+		"img": "/assets/imgs/s/GeForce_Now.webp",
 		"bg": "#76b900",
 		"color": "#ffffff"
 	},
 	{
 		"name": "GitHub",
 		"url": "https://github.com/",
-		"img": "/assets/imgs/sb/GitHub.webp",
+		"img": "/assets/imgs/s/GitHub.webp",
 		"bg": "#000000",
 		"color": "#ffffff"
 	},
 	{
 		"name": "Twitch",
 		"url": "https://twitch.com/",
-		"img": "/assets/imgs/sb/Twitch.webp",
+		"img": "/assets/imgs/s/Twitch.webp",
 		"bg": "#9146ff",
 		"color": "#ffffff"
 	},
 	{
 		"name": "ESPN",
 		"url": "https://www.espn.com/",
-		"img": "/assets/imgs/sb/ESPN.webp",
+		"img": "/assets/imgs/s/ESPN.webp",
 		"bg": "#b71c1c",
 		"color": "#ffffff"
 	},
 	{
 		"name": "TikTok",
 		"url": "https://tiktok.com/",
-		"img": "/assets/imgs/sb/TikTok.webp",
+		"img": "/assets/imgs/s/TikTok.webp",
 		"bg": "#000000",
 		"color": "#ffffff"
 	},
 	{
 		"name": "Netflix",
 		"url": "https://www.netflix.com",
-		"img": "/assets/imgs/sb/Netflix.png",
+		"img": "/assets/imgs/s/Netflix.png",
 		"bg": "#e50914",
 		"color": "#ffffff"
 	},
 	{
 		"name": "Reddit",
 		"url": "https://www.reddit.com",
-		"img": "/assets/imgs/sb/Reddit.png",
+		"img": "/assets/imgs/s/Reddit.png",
 		"bg": "#ff4500",
 		"color": "#ffffff"
 	}
