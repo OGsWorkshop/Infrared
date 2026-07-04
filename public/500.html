@@ -41,33 +41,53 @@
 						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.35" />
 					</linearGradient>
 				</defs>
-				<path d="M0,420 C80,330 150,280 220,310 S360,220 440,260 S560,190 640,240 S760,200 840,250 S960,210 1040,260 S1140,230 1200,270 V420 H0Z" fill="url(#mountain-far-grad)" opacity="0.55" filter="blur(3px)"/>
+				<path d="M0,420 C30,390 70,370 110,385 C150,400 190,340 230,360 C270,380 310,310 350,335 C390,360 430,290 470,315 C510,340 550,270 590,295 C630,320 670,250 710,275 C750,300 790,230 830,255 C870,280 910,210 950,235 C990,260 1030,190 1070,215 C1110,240 1150,280 1200,300 V420 H0Z" fill="url(#mountain-far-grad)" opacity="0.5" filter="blur(4px)"/>
 			</svg>
 			<svg class="error-landscape-mountains-mid" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 				<defs>
-					<linearGradient id="mountain-mid-grad" x1="0%" y1="100%" x2="20%" y2="0%">
+					<linearGradient id="mountain-mid-grad" x1="0%" y1="100%" x2="25%" y2="0%">
 						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
-						<stop offset="45%" style="stop-color:var(--theme-surface);stop-opacity:1" />
-						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.65" />
+						<stop offset="40%" style="stop-color:var(--theme-surface);stop-opacity:1" />
+						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.75" />
 					</linearGradient>
+					<filter id="mountain-mid-glow" x="-10%" y="-30%" width="120%" height="160%">
+						<feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+						<feFlood flood-color="var(--theme-accent)" flood-opacity="0.5" result="color"/>
+						<feComposite in="color" in2="blur" operator="in" result="glow"/>
+						<feMerge>
+							<feMergeNode in="glow"/>
+							<feMergeNode in="SourceGraphic"/>
+						</feMerge>
+					</filter>
 				</defs>
-				<path d="M0,420 C100,360 180,300 260,340 S420,260 520,310 S680,250 780,300 S920,260 1020,310 S1120,280 1200,320 V420 H0Z" fill="url(#mountain-mid-grad)" opacity="0.85" filter="blur(1px)"/>
+				<path d="M0,420 C40,400 90,370 140,390 C190,410 240,340 290,365 C340,390 390,320 440,345 C490,370 540,300 590,325 C640,350 690,280 740,305 C790,330 840,260 890,285 C940,310 990,240 1040,265 C1090,290 1140,330 1200,350 V420 H0Z" fill="url(#mountain-mid-grad)" opacity="0.9" filter="url(#mountain-mid-glow)"/>
+				<path d="M0,420 C40,400 90,370 140,390 C190,410 240,340 290,365 C340,390 390,320 440,345 C490,370 540,300 590,325 C640,350 690,280 740,305 C790,330 840,260 890,285 C940,310 990,240 1040,265 C1090,290 1140,330 1200,350" fill="none" stroke="var(--theme-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" filter="blur(2px)" style="mix-blend-mode: screen"/>
 			</svg>
 			<svg class="error-landscape-mountains-near" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 				<defs>
-					<linearGradient id="mountain-near-grad" x1="0%" y1="100%" x2="70%" y2="0%">
+					<linearGradient id="mountain-near-grad" x1="0%" y1="100%" x2="75%" y2="0%">
 						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
-						<stop offset="35%" style="stop-color:var(--theme-surface);stop-opacity:1" />
-						<stop offset="100%" style="stop-color:var(--theme-accent);stop-opacity:0.8" />
+						<stop offset="30%" style="stop-color:var(--theme-surface);stop-opacity:1" />
+						<stop offset="100%" style="stop-color:var(--theme-accent);stop-opacity:0.85" />
 					</linearGradient>
 					<filter id="mountain-noise">
-						<feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="4" stitchTiles="stitch" result="noise"/>
-						<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.14 0" in="noise" result="coloredNoise"/>
+						<feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="5" stitchTiles="stitch" result="noise"/>
+						<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.16 0" in="noise" result="coloredNoise"/>
 						<feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite"/>
 						<feBlend mode="overlay" in="composite" in2="SourceGraphic"/>
 					</filter>
+					<filter id="mountain-rim-glow" x="-10%" y="-30%" width="120%" height="160%">
+						<feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
+						<feFlood flood-color="var(--theme-accent)" flood-opacity="0.7" result="color"/>
+						<feComposite in="color" in2="blur" operator="in" result="glow"/>
+						<feMerge>
+							<feMergeNode in="glow"/>
+							<feMergeNode in="SourceGraphic"/>
+						</feMerge>
+					</filter>
 				</defs>
-				<path d="M0,420 C140,380 240,320 340,370 S500,300 620,350 S780,300 900,350 S1060,310 1200,360 V420 H0Z" fill="url(#mountain-near-grad)" filter="url(#mountain-noise)"/>
+				<path d="M0,420 C60,400 120,370 180,395 C240,420 300,350 360,375 C420,400 480,330 540,355 C600,380 660,310 720,335 C780,360 840,290 900,315 C960,340 1020,270 1080,295 C1140,320 1200,350 1200,380 V420 H0Z" fill="url(#mountain-near-grad)" filter="url(#mountain-noise)"/>
+				<path d="M0,420 C60,400 120,370 180,395 C240,420 300,350 360,375 C420,400 480,330 540,355 C600,380 660,310 720,335 C780,360 840,290 900,315 C960,340 1020,270 1080,295 C1140,320 1200,350 1200,380" fill="none" stroke="var(--theme-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" filter="url(#mountain-rim-glow)" style="mix-blend-mode: screen"/>
 			</svg>
 			<canvas id="errorTerrain"></canvas>
 			<div class="error-landscape-fog"></div>

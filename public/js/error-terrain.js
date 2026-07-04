@@ -188,8 +188,8 @@
 		var glow = getThemeColor('--theme-accent-glow');
 
 		var aspect = canvas.width / canvas.height;
-		var proj = perspective(Math.PI / 3.2, aspect, 0.1, 10);
-		var view = multiply(translate(0, -0.42, -1.05), rotateX(-0.52));
+		var proj = perspective(Math.PI / 3.4, aspect, 0.1, 10);
+		var view = multiply(translate(0, -0.48, -1.12), rotateX(-0.48));
 		var matrix = multiply(proj, view);
 
 		gl.uniformMatrix4fv(uMatrix, false, matrix);
