@@ -1,4 +1,4 @@
-// error-terrain.js — animated WebGL wireframe terrain for error pages
+// error-terrain.js — animated WebGL mountain + wireframe terrain for error pages
 (function () {
 	var canvas = document.getElementById('errorTerrain');
 	if (!canvas) return;
@@ -43,38 +43,60 @@
 		'attribute vec3 aPosition;\n' +
 		'uniform mat4 uMatrix;\n' +
 		'uniform float uTime;\n' +
+		'uniform float uZBias;\n' +
 		'varying float vHeight;\n' +
 		'varying float vDist;\n' +
+		'varying float vMountain;\n' +
 		'varying float vFlicker;\n' +
+		'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }\n' +
 		'void main() {\n' +
 		'  vec3 pos = aPosition;\n' +
-		'  float w1 = sin(pos.x * 2.4 + uTime * 0.35) * cos(pos.y * 1.7 + uTime * 0.28);\n' +
-		'  float w2 = sin(pos.x * 5.2 - uTime * 0.55) * sin(pos.y * 4.1 + uTime * 0.42);\n' +
-		'  float w3 = sin(pos.x * 8.5 + uTime * 0.2) * cos(pos.y * 7.0 - uTime * 0.25) * 0.5;\n' +
-		'  pos.z = w1 * 0.16 + w2 * 0.045 + w3 * 0.02;\n' +
+		'  float mountainFactor = smoothstep(0.05, 0.62, pos.y);\n' +
+		'  float m1 = sin(pos.x * 1.6 + 0.8) * cos(pos.y * 1.1 + 0.4);\n' +
+		'  float m2 = sin(pos.x * 3.3 + 2.2) * 0.55;\n' +
+		'  float m3 = sin(pos.x * 6.0 + pos.y * 2.0) * 0.18;\n' +
+		'  float mountains = (m1 + m2 + m3) * 0.42;\n' +
+		'  float t1 = sin(pos.x * 4.5 + uTime * 0.35) * cos(pos.y * 3.2 + uTime * 0.28);\n' +
+		'  float t2 = sin(pos.x * 9.0 - uTime * 0.55) * sin(pos.y * 6.5 + uTime * 0.42) * 0.35;\n' +
+		'  float t3 = sin(pos.x * 14.0 + uTime * 0.2) * 0.12;\n' +
+		'  float terrain = t1 * 0.09 + t2 * 0.035 + t3 * 0.015;\n' +
+		'  pos.z = mountains * mountainFactor + terrain * (1.0 - mountainFactor * 0.35);\n' +
+		'  pos.z += uZBias;\n' +
 		'  vHeight = pos.z;\n' +
+		'  vMountain = mountainFactor;\n' +
 		'  vDist = length(pos.xy);\n' +
-		'  vFlicker = fract(sin(dot(pos.xy, vec2(12.9898, 78.233))) * 43758.5453);\n' +
+		'  vFlicker = hash(pos.xy * 40.0);\n' +
 		'  gl_Position = uMatrix * vec4(pos, 1.0);\n' +
-		'  gl_PointSize = (2.8 + 1.8 * vFlicker) * (1.0 + 0.5 * sin(uTime * 3.0 + vFlicker * 20.0));\n' +
+		'  gl_PointSize = (2.4 + 1.6 * vFlicker) * (1.0 + 0.5 * sin(uTime * 3.0 + vFlicker * 25.0));\n' +
 		'}';
 
 	var fsSource =
 		'precision mediump float;\n' +
 		'varying float vHeight;\n' +
 		'varying float vDist;\n' +
+		'varying float vMountain;\n' +
 		'varying float vFlicker;\n' +
 		'uniform vec3 uColor;\n' +
 		'uniform vec3 uGlowColor;\n' +
+		'uniform vec3 uBgColor;\n' +
 		'uniform float uTime;\n' +
+		'uniform float uMode;\n' +
 		'void main() {\n' +
-		'  float horizon = smoothstep(0.0, 0.35, vDist);\n' +
-		'  float fade = 1.0 - horizon * 0.92;\n' +
-		'  float pulse = 0.65 + 0.35 * sin(uTime * (2.5 + vFlicker * 4.0) + vFlicker * 30.0);\n' +
-		'  vec3 base = mix(uColor, uGlowColor, clamp(vHeight * 3.0 + 0.25, 0.0, 1.0));\n' +
-		'  vec3 final = base * pulse;\n' +
-		'  float alpha = (0.45 + 0.55 * vHeight) * fade;\n' +
-		'  gl_FragColor = vec4(final, alpha);\n' +
+		'  float horizon = smoothstep(0.0, 0.55, vDist);\n' +
+		'  float fade = 1.0 - horizon * 0.95;\n' +
+		'  float pulse = 0.6 + 0.4 * sin(uTime * (2.2 + vFlicker * 4.5) + vFlicker * 35.0);\n' +
+		'  if (uMode < 0.5) {\n' +
+		'    float lit = clamp(vHeight * 2.5 + 0.2, 0.0, 1.0);\n' +
+		'    vec3 surface = mix(uBgColor * 0.35, uGlowColor * 0.6, lit * vMountain);\n' +
+		'    surface = mix(surface, uColor, lit * 0.25 * vMountain);\n' +
+		'    float alpha = (0.85 + 0.15 * vHeight) * fade;\n' +
+		'    gl_FragColor = vec4(surface, alpha);\n' +
+		'  } else {\n' +
+		'    vec3 final = mix(uColor, uGlowColor, clamp(vHeight * 3.0 + 0.3, 0.0, 1.0));\n' +
+		'    final *= pulse;\n' +
+		'    float alpha = (0.35 + 0.65 * abs(vHeight)) * fade;\n' +
+		'    gl_FragColor = vec4(final, alpha);\n' +
+		'  }\n' +
 		'}';
 
 	function createShader(type, source) {
@@ -103,15 +125,16 @@
 	}
 	gl.useProgram(program);
 
-	var cols = 90;
-	var rows = 55;
+	var cols = 130;
+	var rows = 80;
 	var vertices = [];
-	var indices = [];
+	var indicesTriangles = [];
+	var indicesLines = [];
 
 	for (var y = 0; y <= rows; y++) {
 		for (var x = 0; x <= cols; x++) {
-			var px = (x / cols) * 2.8 - 1.4;
-			var py = (y / rows) * 1.7 - 0.15;
+			var px = (x / cols) * 3.0 - 1.5;
+			var py = (y / rows) * 1.7 - 0.05;
 			vertices.push(px, py, 0);
 		}
 	}
@@ -119,8 +142,9 @@
 	for (var y = 0; y < rows; y++) {
 		for (var x = 0; x < cols; x++) {
 			var i = y * (cols + 1) + x;
-			indices.push(i, i + 1);
-			indices.push(i, i + cols + 1);
+			var a = i, b = i + 1, c = i + cols + 1, d = i + cols + 2;
+			indicesTriangles.push(a, b, c, b, d, c);
+			indicesLines.push(a, b, b, d, d, c, c, a);
 		}
 	}
 
@@ -128,9 +152,13 @@
 	gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
-	var indexBuffer = gl.createBuffer();
-	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+	var triangleBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, triangleBuffer);
+	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indicesTriangles), gl.STATIC_DRAW);
+
+	var lineBuffer = gl.createBuffer();
+	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, lineBuffer);
+	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indicesLines), gl.STATIC_DRAW);
 
 	var aPosition = gl.getAttribLocation(program, 'aPosition');
 	gl.enableVertexAttribArray(aPosition);
@@ -138,8 +166,11 @@
 
 	var uMatrix = gl.getUniformLocation(program, 'uMatrix');
 	var uTime = gl.getUniformLocation(program, 'uTime');
+	var uZBias = gl.getUniformLocation(program, 'uZBias');
 	var uColor = gl.getUniformLocation(program, 'uColor');
 	var uGlowColor = gl.getUniformLocation(program, 'uGlowColor');
+	var uBgColor = gl.getUniformLocation(program, 'uBgColor');
+	var uMode = gl.getUniformLocation(program, 'uMode');
 
 	function perspective(fov, aspect, near, far) {
 		var f = 1.0 / Math.tan(fov / 2);
@@ -186,24 +217,41 @@
 
 		var color = getThemeColor('--theme-accent');
 		var glow = getThemeColor('--theme-accent-glow');
+		var bg = getThemeColor('--theme-bg');
 
 		var aspect = canvas.width / canvas.height;
 		var proj = perspective(Math.PI / 3.4, aspect, 0.1, 10);
-		var view = multiply(translate(0, -0.48, -1.12), rotateX(-0.48));
+		var view = multiply(translate(0, -0.46, -1.08), rotateX(-0.5));
 		var matrix = multiply(proj, view);
 
 		gl.uniformMatrix4fv(uMatrix, false, matrix);
 		gl.uniform1f(uTime, time);
 		gl.uniform3f(uColor, color.r, color.g, color.b);
 		gl.uniform3f(uGlowColor, glow.r, glow.g, glow.b);
+		gl.uniform3f(uBgColor, bg.r, bg.g, bg.b);
 
 		gl.clearColor(0, 0, 0, 0);
 		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		gl.enable(gl.BLEND);
-		gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 		gl.enable(gl.DEPTH_TEST);
+		gl.depthFunc(gl.LEQUAL);
 
-		gl.drawElements(gl.LINES, indices.length, gl.UNSIGNED_SHORT, 0);
+		// Filled mountain faces
+		gl.uniform1f(uZBias, 0.0);
+		gl.uniform1f(uMode, 0.0);
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, triangleBuffer);
+		gl.drawElements(gl.TRIANGLES, indicesTriangles.length, gl.UNSIGNED_SHORT, 0);
+
+		// Wireframe overlay
+		gl.uniform1f(uZBias, 0.002);
+		gl.uniform1f(uMode, 1.0);
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, lineBuffer);
+		gl.drawElements(gl.LINES, indicesLines.length, gl.UNSIGNED_SHORT, 0);
+
+		// Glowing nodes
+		gl.uniform1f(uZBias, 0.003);
+		gl.uniform1f(uMode, 1.0);
 		gl.drawArrays(gl.POINTS, 0, vertices.length / 3);
 
 		requestAnimationFrame(render);

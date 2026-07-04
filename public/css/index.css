@@ -1574,9 +1574,9 @@ a { text-decoration: none; color: var(--theme-link); }
 	display: block;
 }
 
-.error-landscape-mountains-far { opacity: 0.7; height: 66%; }
-.error-landscape-mountains-mid { opacity: 0.95; height: 60%; }
-.error-landscape-mountains-near { opacity: 1; height: 52%; filter: drop-shadow(0 0 24px var(--theme-accent-glow)); }
+.error-landscape-mountains-far { opacity: 0.25; height: 66%; filter: blur(6px); }
+.error-landscape-mountains-mid { opacity: 0.35; height: 60%; filter: blur(3px); }
+.error-landscape-mountains-near { opacity: 0.45; height: 52%; filter: blur(1px) drop-shadow(0 0 24px var(--theme-accent-glow)); }
 
 .error-landscape-mountains-far path,
 .error-landscape-mountains-mid path,
