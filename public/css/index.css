@@ -1530,135 +1530,28 @@ a { text-decoration: none; color: var(--theme-link); }
 }
 
 .error-landscape-mountains,
-.error-landscape-mountains-glow,
-.error-landscape-mountains-dots,
-.error-landscape-mountains-ridges {
+.error-landscape-mountains-glow {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
 	height: 65%;
+	display: block;
 }
 
-.error-landscape-mountains::before,
-.error-landscape-mountains::after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: var(--theme-bg);
+.error-landscape-mountains {
+	filter: drop-shadow(0 0 18px var(--theme-accent-glow)) drop-shadow(0 0 40px var(--theme-accent-glow));
 }
 
-.error-landscape-mountains::before {
-	clip-path: polygon(
-		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
-		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
-	);
-	opacity: 0.5;
-	filter: blur(1px);
+.error-landscape-mountains path {
+	transition: fill 0.4s ease;
 }
 
-.error-landscape-mountains::after {
-	clip-path: polygon(
-		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
-		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
-	);
-	opacity: 0.8;
-}
-
-.error-landscape-mountains-glow::before,
-.error-landscape-mountains-glow::after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: var(--theme-accent);
-	filter: blur(18px);
+.error-landscape-mountains-glow {
+	filter: blur(26px);
 	mix-blend-mode: screen;
-}
-
-.error-landscape-mountains-glow::before {
-	clip-path: polygon(
-		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
-		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
-	);
-	opacity: 0.35;
+	opacity: 0.65;
 	transform: scale(1.02);
-}
-
-.error-landscape-mountains-glow::after {
-	clip-path: polygon(
-		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
-		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
-	);
-	opacity: 0.55;
-	transform: scale(1.01);
-}
-
-.error-landscape-mountains-dots::before,
-.error-landscape-mountains-dots::after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image:
-		radial-gradient(circle at center, var(--theme-accent) 1.2px, transparent 1.6px),
-		radial-gradient(circle at center, var(--theme-accent-glow) 0.8px, transparent 1px);
-	background-size: 18px 18px, 10px 10px;
-	background-position: 0 0, 6px 6px;
-	mix-blend-mode: screen;
-}
-
-.error-landscape-mountains-dots::before {
-	clip-path: polygon(
-		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
-		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
-	);
-	opacity: 0.55;
-}
-
-.error-landscape-mountains-dots::after {
-	clip-path: polygon(
-		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
-		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
-	);
-	opacity: 0.85;
-}
-
-.error-landscape-mountains-ridges::before,
-.error-landscape-mountains-ridges::after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: transparent;
-	border-bottom: 2px solid var(--theme-accent);
-	box-shadow: 0 6px 24px var(--theme-accent-glow), 0 0 60px var(--theme-accent-glow-strong);
-	mix-blend-mode: screen;
-}
-
-.error-landscape-mountains-ridges::before {
-	clip-path: polygon(
-		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
-		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
-	);
-	opacity: 0.4;
-}
-
-.error-landscape-mountains-ridges::after {
-	clip-path: polygon(
-		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
-		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
-	);
-	opacity: 0.6;
 }
 
 .error-landscape-grid {

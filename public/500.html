@@ -26,10 +26,52 @@
 		<div class="error-landscape">
 			<div class="error-landscape-sky"></div>
 			<div class="error-landscape-sun"></div>
-			<div class="error-landscape-mountains"></div>
-			<div class="error-landscape-mountains-glow"></div>
-			<div class="error-landscape-mountains-dots"></div>
-			<div class="error-landscape-mountains-ridges"></div>
+			<svg class="error-landscape-mountains-glow" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<defs>
+					<linearGradient id="mountain-glow-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+						<stop offset="0%" style="stop-color:var(--theme-accent);stop-opacity:0" />
+						<stop offset="100%" style="stop-color:var(--theme-accent);stop-opacity:0.9" />
+					</linearGradient>
+				</defs>
+				<path d="M0,420 Q100,260 220,330 T440,230 T660,310 T880,210 T1100,290 T1200,250 V420 H0Z" fill="url(#mountain-glow-grad)" opacity="0.45"/>
+				<path d="M0,420 Q130,320 280,360 T520,280 T760,340 T960,270 T1200,330 V420 H0Z" fill="url(#mountain-glow-grad)" opacity="0.6"/>
+				<path d="M0,420 Q180,350 360,390 T620,310 T880,370 T1200,320 V420 H0Z" fill="url(#mountain-glow-grad)" opacity="0.8"/>
+			</svg>
+			<svg class="error-landscape-mountains" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<defs>
+					<linearGradient id="mountain-back-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
+						<stop offset="55%" style="stop-color:var(--theme-bg-alt);stop-opacity:1" />
+						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.55" />
+					</linearGradient>
+					<linearGradient id="mountain-mid-grad" x1="0%" y1="100%" x2="30%" y2="0%">
+						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
+						<stop offset="45%" style="stop-color:var(--theme-surface);stop-opacity:1" />
+						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.75" />
+					</linearGradient>
+					<linearGradient id="mountain-front-grad" x1="0%" y1="100%" x2="80%" y2="0%">
+						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
+						<stop offset="40%" style="stop-color:var(--theme-surface);stop-opacity:1" />
+						<stop offset="100%" style="stop-color:var(--theme-accent);stop-opacity:0.85" />
+					</linearGradient>
+					<filter id="mountain-noise">
+						<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+						<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.12 0" in="noise" result="coloredNoise"/>
+						<feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite"/>
+						<feBlend mode="overlay" in="composite" in2="SourceGraphic"/>
+					</filter>
+					<pattern id="mountain-dots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+						<circle cx="3" cy="3" r="1.2" fill="var(--theme-accent)" opacity="0.45"/>
+						<circle cx="14" cy="14" r="0.7" fill="var(--theme-accent-glow)" opacity="0.35"/>
+					</pattern>
+				</defs>
+				<path class="mountain-back" d="M0,420 Q100,260 220,330 T440,230 T660,310 T880,210 T1100,290 T1200,250 V420 H0Z" fill="url(#mountain-back-grad)" opacity="0.75"/>
+				<path class="mountain-mid" d="M0,420 Q130,320 280,360 T520,280 T760,340 T960,270 T1200,330 V420 H0Z" fill="url(#mountain-mid-grad)" opacity="0.9"/>
+				<path class="mountain-front" d="M0,420 Q180,350 360,390 T620,310 T880,370 T1200,320 V420 H0Z" fill="url(#mountain-front-grad)" filter="url(#mountain-noise)"/>
+				<path class="mountain-dots-back" d="M0,420 Q100,260 220,330 T440,230 T660,310 T880,210 T1100,290 T1200,250 V420 H0Z" fill="url(#mountain-dots)" opacity="0.25"/>
+				<path class="mountain-dots-mid" d="M0,420 Q130,320 280,360 T520,280 T760,340 T960,270 T1200,330 V420 H0Z" fill="url(#mountain-dots)" opacity="0.35"/>
+				<path class="mountain-dots-front" d="M0,420 Q180,350 360,390 T620,310 T880,370 T1200,320 V420 H0Z" fill="url(#mountain-dots)" opacity="0.5"/>
+			</svg>
 			<div class="error-landscape-grid"></div>
 			<div class="error-landscape-particles"></div>
 			<div class="error-landscape-fog"></div>
