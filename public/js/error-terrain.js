@@ -1,4 +1,4 @@
-// error-terrain.js — animated WebGL mountain + wireframe terrain for error pages
+// error-terrain.js — cinematic WebGL mountain landscape for error pages
 (function () {
 	var canvas = document.getElementById('errorTerrain');
 	if (!canvas) return;
@@ -46,55 +46,81 @@
 		'uniform float uZBias;\n' +
 		'varying float vHeight;\n' +
 		'varying float vDist;\n' +
-		'varying float vMountain;\n' +
 		'varying float vFlicker;\n' +
-		'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }\n' +
+		'varying float vMask;\n' +
+		'float hash(vec2 p) {\n' +
+		'  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);\n' +
+		'}\n' +
+		'float noise(vec2 p) {\n' +
+		'  vec2 i = floor(p);\n' +
+		'  vec2 f = fract(p);\n' +
+		'  f = f * f * (3.0 - 2.0 * f);\n' +
+		'  float a = hash(i);\n' +
+		'  float b = hash(i + vec2(1.0, 0.0));\n' +
+		'  float c = hash(i + vec2(0.0, 1.0));\n' +
+		'  float d = hash(i + vec2(1.0, 1.0));\n' +
+		'  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);\n' +
+		'}\n' +
+		'float fbm(vec2 p) {\n' +
+		'  float v = 0.0;\n' +
+		'  float a = 0.5;\n' +
+		'  for (int i = 0; i < 6; i++) {\n' +
+		'    v += a * noise(p);\n' +
+		'    p *= 2.02;\n' +
+		'    a *= 0.5;\n' +
+		'  }\n' +
+		'  return v;\n' +
+		'}\n' +
 		'void main() {\n' +
 		'  vec3 pos = aPosition;\n' +
-		'  float mountainFactor = smoothstep(0.05, 0.62, pos.y);\n' +
-		'  float m1 = sin(pos.x * 1.6 + 0.8) * cos(pos.y * 1.1 + 0.4);\n' +
-		'  float m2 = sin(pos.x * 3.3 + 2.2) * 0.55;\n' +
-		'  float m3 = sin(pos.x * 6.0 + pos.y * 2.0) * 0.18;\n' +
-		'  float mountains = (m1 + m2 + m3) * 0.42;\n' +
-		'  float t1 = sin(pos.x * 4.5 + uTime * 0.35) * cos(pos.y * 3.2 + uTime * 0.28);\n' +
-		'  float t2 = sin(pos.x * 9.0 - uTime * 0.55) * sin(pos.y * 6.5 + uTime * 0.42) * 0.35;\n' +
-		'  float t3 = sin(pos.x * 14.0 + uTime * 0.2) * 0.12;\n' +
-		'  float terrain = t1 * 0.09 + t2 * 0.035 + t3 * 0.015;\n' +
-		'  pos.z = mountains * mountainFactor + terrain * (1.0 - mountainFactor * 0.35);\n' +
+		'  float sideMask = smoothstep(0.0, 0.95, abs(pos.x));\n' +
+		'  float backMask = smoothstep(0.15, 0.95, pos.y);\n' +
+		'  float mountainMask = max(sideMask, backMask);\n' +
+		'  vMask = mountainMask;\n' +
+		'  vec2 q = vec2(fbm(pos.xy * 1.4 + uTime * 0.04), fbm(pos.xy * 1.4 + vec2(5.2, 1.3)));\n' +
+		'  vec2 r = vec2(fbm(pos.xy * 1.4 + 3.0 * q + vec2(1.7, 9.2)), fbm(pos.xy * 1.4 + 3.0 * q + vec2(8.3, 2.8)));\n' +
+		'  float mountains = fbm(pos.xy * 1.6 + 1.8 * r);\n' +
+		'  mountains = pow(mountains, 1.35);\n' +
+		'  float terrainTime = uTime * 0.25;\n' +
+		'  float t1 = sin(pos.x * 4.0 + terrainTime) * cos(pos.y * 3.0 + terrainTime * 0.8);\n' +
+		'  float t2 = sin(pos.x * 8.0 - terrainTime * 1.2) * sin(pos.y * 6.0 + terrainTime);\n' +
+		'  float terrain = t1 * 0.07 + t2 * 0.025;\n' +
+		'  pos.z = mountains * 0.55 * mountainMask + terrain * (0.4 + 0.6 * mountainMask);\n' +
 		'  pos.z += uZBias;\n' +
 		'  vHeight = pos.z;\n' +
-		'  vMountain = mountainFactor;\n' +
 		'  vDist = length(pos.xy);\n' +
-		'  vFlicker = hash(pos.xy * 40.0);\n' +
+		'  vFlicker = hash(pos.xy * 50.0);\n' +
 		'  gl_Position = uMatrix * vec4(pos, 1.0);\n' +
-		'  gl_PointSize = (2.4 + 1.6 * vFlicker) * (1.0 + 0.5 * sin(uTime * 3.0 + vFlicker * 25.0));\n' +
+		'  gl_PointSize = (2.2 + 1.6 * vFlicker) * (1.0 + 0.6 * sin(uTime * 2.5 + vFlicker * 30.0));\n' +
 		'}';
 
 	var fsSource =
 		'precision mediump float;\n' +
 		'varying float vHeight;\n' +
 		'varying float vDist;\n' +
-		'varying float vMountain;\n' +
 		'varying float vFlicker;\n' +
+		'varying float vMask;\n' +
 		'uniform vec3 uColor;\n' +
 		'uniform vec3 uGlowColor;\n' +
 		'uniform vec3 uBgColor;\n' +
 		'uniform float uTime;\n' +
 		'uniform float uMode;\n' +
 		'void main() {\n' +
-		'  float horizon = smoothstep(0.0, 0.55, vDist);\n' +
+		'  float horizon = smoothstep(0.0, 0.65, vDist);\n' +
 		'  float fade = 1.0 - horizon * 0.95;\n' +
-		'  float pulse = 0.6 + 0.4 * sin(uTime * (2.2 + vFlicker * 4.5) + vFlicker * 35.0);\n' +
+		'  float pulse = 0.55 + 0.45 * sin(uTime * (2.0 + vFlicker * 5.0) + vFlicker * 40.0);\n' +
 		'  if (uMode < 0.5) {\n' +
-		'    float lit = clamp(vHeight * 2.5 + 0.2, 0.0, 1.0);\n' +
-		'    vec3 surface = mix(uBgColor * 0.35, uGlowColor * 0.6, lit * vMountain);\n' +
-		'    surface = mix(surface, uColor, lit * 0.25 * vMountain);\n' +
-		'    float alpha = (0.85 + 0.15 * vHeight) * fade;\n' +
+		'    float lit = clamp(vHeight * 2.2 + 0.15, 0.0, 1.0);\n' +
+		'    vec3 surface = mix(uBgColor * 0.18, uBgColor * 0.45, lit);\n' +
+		'    surface = mix(surface, uGlowColor * 0.5, lit * vMask);\n' +
+		'    surface = mix(surface, uColor * 0.35, lit * 0.35 * vMask);\n' +
+		'    float alpha = (0.8 + 0.2 * vHeight) * fade;\n' +
 		'    gl_FragColor = vec4(surface, alpha);\n' +
 		'  } else {\n' +
-		'    vec3 final = mix(uColor, uGlowColor, clamp(vHeight * 3.0 + 0.3, 0.0, 1.0));\n' +
+		'    vec3 final = mix(uColor, uGlowColor, clamp(vHeight * 2.5 + 0.25, 0.0, 1.0));\n' +
 		'    final *= pulse;\n' +
-		'    float alpha = (0.35 + 0.65 * abs(vHeight)) * fade;\n' +
+		'    float alpha = (0.25 + 0.75 * abs(vHeight)) * fade;\n' +
+		'    alpha *= 0.7 + 0.3 * vMask;\n' +
 		'    gl_FragColor = vec4(final, alpha);\n' +
 		'  }\n' +
 		'}';
@@ -125,16 +151,16 @@
 	}
 	gl.useProgram(program);
 
-	var cols = 130;
-	var rows = 80;
+	var cols = 160;
+	var rows = 90;
 	var vertices = [];
 	var indicesTriangles = [];
 	var indicesLines = [];
 
 	for (var y = 0; y <= rows; y++) {
 		for (var x = 0; x <= cols; x++) {
-			var px = (x / cols) * 3.0 - 1.5;
-			var py = (y / rows) * 1.7 - 0.05;
+			var px = (x / cols) * 3.2 - 1.6;
+			var py = (y / rows) * 1.75 - 0.05;
 			vertices.push(px, py, 0);
 		}
 	}
@@ -220,8 +246,8 @@
 		var bg = getThemeColor('--theme-bg');
 
 		var aspect = canvas.width / canvas.height;
-		var proj = perspective(Math.PI / 3.4, aspect, 0.1, 10);
-		var view = multiply(translate(0, -0.46, -1.08), rotateX(-0.5));
+		var proj = perspective(Math.PI / 3.2, aspect, 0.1, 10);
+		var view = multiply(translate(0, -0.44, -1.12), rotateX(-0.48));
 		var matrix = multiply(proj, view);
 
 		gl.uniformMatrix4fv(uMatrix, false, matrix);
