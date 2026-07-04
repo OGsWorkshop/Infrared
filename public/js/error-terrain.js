@@ -1,4 +1,4 @@
-// error-terrain.js — low-poly connected-line mountain landscape for error pages
+// error-terrain.js — cinematic animated mountain landscape for error pages
 (function () {
 	var canvas = document.getElementById('errorTerrain');
 	if (!canvas || typeof THREE === 'undefined' || typeof SimplexNoise === 'undefined' || typeof Delaunator === 'undefined') {
@@ -28,42 +28,38 @@
 	var accent = parseColor(cssVar('--theme-accent', '#ff2d2d'));
 	var accentGlow = parseColor(cssVar('--theme-accent-glow', 'rgba(255,45,45,0.5)'));
 	var bg = parseColor(cssVar('--theme-bg', '#050505'));
-	var accentHover = parseColor(cssVar('--theme-accent-hover', '#ff5050'));
 
 	var theme = {
-		skyTop: '#030303',
-		skyHorizon: '#' + accent.getHexString(),
-		fogColor: '#020202',
-		terrainLine: '#' + accent.getHexString(),
-		terrainGlow: '#' + accentGlow.getHexString(),
-		nodeColor: '#' + accentHover.getHexString(),
-		mountainColor: '#' + bg.clone().multiplyScalar(0.6).getHexString(),
-		mountainGlow: '#' + accentGlow.clone().multiplyScalar(0.5).getHexString(),
-		bloomStrength: 0.75,
-		bloomRadius: 0.4,
-		bloomThreshold: 0.15
+		skyTop: '#020202',
+		skyHorizon: '#' + accent.clone().multiplyScalar(0.5).getHexString(),
+		fogColor: '#010101',
+		lineColor: '#' + accent.getHexString(),
+		lineGlow: '#' + accentGlow.getHexString(),
+		mountainColor: '#' + bg.clone().multiplyScalar(0.35).getHexString(),
+		bloomStrength: 0.9,
+		bloomRadius: 0.45,
+		bloomThreshold: 0.1
 	};
 
 	var scene = new THREE.Scene();
-	scene.fog = new THREE.FogExp2(theme.fogColor, 0.055);
+	scene.fog = new THREE.FogExp2(theme.fogColor, 0.065);
 
-	var camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 1000);
-	camera.position.set(0, 1.4, 7.0);
-	camera.lookAt(0, 2.8, -18);
+	var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+	camera.position.set(0, 1.3, 7.5);
+	camera.lookAt(0, 2.6, -20);
 
 	var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
 	renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.setClearColor(0x000000, 0);
 
-	// === Sky dome ===
+	// === Sky ===
 	var skyGeo = new THREE.SphereGeometry(400, 32, 32);
 	var skyMat = new THREE.ShaderMaterial({
 		side: THREE.BackSide,
 		uniforms: {
 			topColor: { value: parseColor(theme.skyTop) },
-			horizonColor: { value: parseColor(theme.skyHorizon).clone().multiplyScalar(0.55) },
-			height: { value: 0.35 }
+			horizonColor: { value: parseColor(theme.skyHorizon) }
 		},
 		vertexShader: [
 			'varying vec3 vWorldPosition;',
@@ -76,116 +72,114 @@
 		fragmentShader: [
 			'uniform vec3 topColor;',
 			'uniform vec3 horizonColor;',
-			'uniform float height;',
 			'varying vec3 vWorldPosition;',
 			'void main() {',
-			'  float h = normalize(vWorldPosition + vec3(0.0, height * 50.0, 0.0)).y;',
+			'  float h = normalize(vWorldPosition + vec3(0.0, 25.0, 0.0)).y;',
 			'  float t = max(0.0, h * 0.5 + 0.5);',
-			'  vec3 color = mix(horizonColor, topColor, pow(t, 0.55));',
+			'  vec3 color = mix(horizonColor, topColor, pow(t, 0.5));',
 			'  gl_FragColor = vec4(color, 1.0);',
 			'}'
 		].join('\n')
 	});
 	scene.add(new THREE.Mesh(skyGeo, skyMat));
 
-	// === Clouds ===
-	function createCloudTexture() {
-		var c = document.createElement('canvas');
-		c.width = 256;
-		c.height = 128;
-		var ctx = c.getContext('2d');
-		var grd = ctx.createRadialGradient(128, 64, 10, 128, 64, 110);
-		grd.addColorStop(0, 'rgba(255,60,60,0.28)');
-		grd.addColorStop(0.5, 'rgba(120,30,30,0.08)');
-		grd.addColorStop(1, 'rgba(0,0,0,0)');
-		ctx.fillStyle = grd;
-		ctx.fillRect(0, 0, 256, 128);
-		return new THREE.CanvasTexture(c);
-	}
-	var cloudTex = createCloudTexture();
-	for (var i = 0; i < 12; i++) {
-		var cloud = new THREE.Sprite(new THREE.SpriteMaterial({
-			map: cloudTex,
-			transparent: true,
-			opacity: 0.18 + Math.random() * 0.18,
-			blending: THREE.AdditiveBlending,
-			depthWrite: false,
-			color: parseColor(theme.skyHorizon).clone().multiplyScalar(0.7)
-		}));
-		cloud.position.set(
-			(Math.random() - 0.5) * 140,
-			20 + Math.random() * 16,
-			-50 - Math.random() * 70
-		);
-		cloud.scale.set(35 + Math.random() * 45, 14 + Math.random() * 18, 1);
-		scene.add(cloud);
-	}
-
-	// === Terrain point generation ===
+	// === Noise ===
 	var simplex = new SimplexNoise();
-	var points = [];
-	var pointCount = 360;
-	var terrainWidth = 50;
-	var terrainDepth = 55;
-	var terrainOffsetZ = -8;
 
-	function terrainNoise(x, z, time) {
-		var h = simplex.noise2D(x * 0.055 + time * 0.012, z * 0.045 + time * 0.008) * 2.6;
-		h += simplex.noise2D(x * 0.12 - time * 0.02, z * 0.10 + time * 0.015) * 1.1;
-		h += simplex.noise2D(x * 0.25, z * 0.22) * 0.35;
+	function mountainNoise(x, z, time) {
+		var h = simplex.noise2D(x * 0.035 + time * 0.008, z * 0.028 + time * 0.005) * 3.0;
+		h += simplex.noise2D(x * 0.09 - time * 0.012, z * 0.075) * 1.2;
+		h += simplex.noise2D(x * 0.22, z * 0.18 + time * 0.01) * 0.4;
 		return h;
 	}
 
-	function mountainShape(x, z) {
-		var nx = x / (terrainWidth * 0.5);
-		var nz = 1.0 - (z - terrainOffsetZ + terrainDepth * 0.5) / terrainDepth;
-		var center = Math.exp(-nx * nx * 1.8);
-		var horizon = smoothstep(0.15, 0.85, nz);
-		return center * horizon;
+	function terrainNoise(x, z, time) {
+		var h = simplex.noise2D(x * 0.08 + time * 0.03, z * 0.07 + time * 0.02) * 0.7;
+		h += simplex.noise2D(x * 0.18 - time * 0.04, z * 0.15 + time * 0.03) * 0.25;
+		h += simplex.noise2D(x * 0.35, z * 0.3) * 0.08;
+		return h;
 	}
 
-	function smoothstep(min, max, value) {
-		var x = Math.max(0, Math.min(1, (value - min) / (max - min)));
+	// === Distant mountain layers ===
+	function createMountainLayer(zOffset, scale, opacity, blur) {
+		var geo = new THREE.PlaneGeometry(200, 55, 90, 24);
+		geo.rotateX(-Math.PI / 2);
+		var pos = geo.attributes.position.array;
+		for (var i = 0; i < pos.length; i += 3) {
+			var x = pos[i];
+			var z = pos[i + 2];
+			var h = mountainNoise(x * scale, (z - zOffset) * scale, 0);
+			h += simplex.noise2D(x * 0.06 * scale + 50.0, z * 0.04 * scale) * 2.0 * scale;
+			h *= Math.max(0.0, 1.0 - Math.abs(x) / 85.0);
+			pos[i + 1] = Math.max(-0.5, h);
+		}
+		geo.computeVertexNormals();
+		var mat = new THREE.MeshBasicMaterial({
+			color: parseColor(theme.mountainColor),
+			transparent: true,
+			opacity: opacity,
+			side: THREE.DoubleSide
+		});
+		var mesh = new THREE.Mesh(geo, mat);
+		mesh.position.set(0, -2.0, zOffset);
+		return mesh;
+	}
+
+	var mtFar = createMountainLayer(-48, 1.2, 0.5);
+	mtFar.material.color = parseColor(theme.mountainColor).clone().lerp(parseColor(theme.skyHorizon), 0.08);
+	scene.add(mtFar);
+
+	var mtMid = createMountainLayer(-34, 0.95, 0.72);
+	mtMid.material.color = parseColor(theme.mountainColor);
+	scene.add(mtMid);
+
+	var mtNear = createMountainLayer(-20, 0.72, 0.88);
+	mtNear.material.color = parseColor(theme.mountainColor).clone().multiplyScalar(0.8);
+	scene.add(mtNear);
+
+	// === Low-poly mountain mesh ===
+	var points = [];
+	var pointCount = 280;
+	var meshWidth = 42;
+	var meshDepth = 38;
+	var meshZ = -10;
+
+	function smoothstep(min, max, v) {
+		var x = Math.max(0, Math.min(1, (v - min) / (max - min)));
 		return x * x * (3 - 2 * x);
 	}
 
-	// Add boundary points first so edges don't collapse
-	for (var i = 0; i <= 10; i++) {
-		var t = i / 10;
-		points.push({ x: (t - 0.5) * terrainWidth, y: -4, z: terrainOffsetZ + terrainDepth * 0.5, boundary: true });
-		points.push({ x: (t - 0.5) * terrainWidth, y: -4, z: terrainOffsetZ - terrainDepth * 0.5, boundary: true });
-		points.push({ x: -terrainWidth * 0.5, y: -4, z: terrainOffsetZ + terrainDepth * 0.5 - t * terrainDepth, boundary: true });
-		points.push({ x: terrainWidth * 0.5, y: -4, z: terrainOffsetZ + terrainDepth * 0.5 - t * terrainDepth, boundary: true });
+	function silhouette(x, z) {
+		var nx = x / (meshWidth * 0.45);
+		var nz = 1.0 - (z - meshZ + meshDepth * 0.5) / meshDepth;
+		var center = Math.exp(-nx * nx * 2.2);
+		var horizon = smoothstep(0.1, 0.85, nz);
+		return center * horizon;
 	}
 
 	for (var i = 0; i < pointCount; i++) {
-		var r = Math.pow(Math.random(), 0.7);
-		var angle = (Math.random() - 0.5) * Math.PI * 0.85;
-		var dist = r * terrainWidth * 0.52;
-		var x = Math.sin(angle) * dist;
-		var zRaw = Math.random();
-		var zBias = Math.pow(zRaw, 0.75);
-		var z = terrainOffsetZ + terrainDepth * 0.5 - zBias * terrainDepth;
-		var shape = mountainShape(x, z);
-		var h = terrainNoise(x, z, 0) * (0.6 + shape * 2.8);
-		h += shape * 4.5;
-		h -= 1.2;
-		points.push({ x: x, y: h, z: z, shape: shape, boundary: false });
+		var r = Math.pow(Math.random(), 0.75);
+		var angle = (Math.random() - 0.5) * Math.PI * 0.9;
+		var x = Math.sin(angle) * r * meshWidth * 0.55;
+		var zRaw = Math.pow(Math.random(), 0.8);
+		var z = meshZ + meshDepth * 0.5 - zRaw * meshDepth;
+		var shape = silhouette(x, z);
+		var h = mountainNoise(x, z, 0) * (0.5 + shape * 2.2);
+		h += shape * 5.5;
+		h -= 0.8;
+		points.push({ x: x, y: h, z: z, shape: shape, index: i });
 	}
 
-	// === Delaunay triangulation on x/z ===
 	var coords = [];
-	for (var i = 0; i < points.length; i++) {
-		coords.push(points[i].x, points[i].z);
-	}
+	for (var i = 0; i < points.length; i++) coords.push(points[i].x, points[i].z);
 	var delaunay = Delaunator.from(coords);
 	var triangles = delaunay.triangles;
 
-	// === Line mesh from triangle edges ===
 	var edgeSet = new Set();
 	var linePositions = [];
 	var lineColors = [];
-	var color = parseColor(theme.terrainLine);
+	var lineAlphas = [];
+	var color = parseColor(theme.lineColor);
 
 	function addEdge(a, b) {
 		var key = a < b ? a + ':' + b : b + ':' + a;
@@ -193,13 +187,11 @@
 		edgeSet.add(key);
 		var pa = points[a];
 		var pb = points[b];
-		var avgShape = ((pa.shape || 0) + (pb.shape || 0)) * 0.5;
-		var peak = Math.max(pa.shape || 0, pb.shape || 0);
-		var alpha = 0.12 + peak * 0.82;
-		if (pa.boundary || pb.boundary) alpha *= 0.25;
+		var peak = Math.max(pa.shape, pb.shape);
+		var alpha = 0.08 + peak * 0.9;
 		linePositions.push(pa.x, pa.y, pa.z, pb.x, pb.y, pb.z);
-		lineColors.push(color.r * alpha, color.g * alpha, color.b * alpha);
-		lineColors.push(color.r * alpha, color.g * alpha, color.b * alpha);
+		lineColors.push(color.r, color.g, color.b, color.r, color.g, color.b);
+		lineAlphas.push(alpha, alpha);
 	}
 
 	for (var i = 0; i < triangles.length; i += 3) {
@@ -211,9 +203,34 @@
 	var lineGeo = new THREE.BufferGeometry();
 	lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
 	lineGeo.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
+	lineGeo.setAttribute('alpha', new THREE.Float32BufferAttribute(lineAlphas, 1));
 
-	var lineMat = new THREE.LineBasicMaterial({
-		vertexColors: true,
+	var lineMat = new THREE.ShaderMaterial({
+		uniforms: {
+			color: { value: parseColor(theme.lineColor) },
+			accent: { value: parseColor(theme.lineGlow) },
+			time: { value: 0 }
+		},
+		vertexShader: [
+			'attribute vec3 color;',
+			'attribute float alpha;',
+			'varying vec3 vColor;',
+			'varying float vAlpha;',
+			'void main() {',
+			'  vColor = color;',
+			'  vAlpha = alpha;',
+			'  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
+			'}'
+		].join('\n'),
+		fragmentShader: [
+			'uniform vec3 accent;',
+			'varying vec3 vColor;',
+			'varying float vAlpha;',
+			'void main() {',
+			'  vec3 final = mix(vColor, accent, vAlpha * 0.35);',
+			'  gl_FragColor = vec4(final, vAlpha * 0.9);',
+			'}'
+		].join('\n'),
 		transparent: true,
 		blending: THREE.AdditiveBlending,
 		depthWrite: false
@@ -221,126 +238,57 @@
 	var lineMesh = new THREE.LineSegments(lineGeo, lineMat);
 	scene.add(lineMesh);
 
-	// === Glowing nodes ===
-	var nodePositions = [];
-	var nodePhases = [];
-	var nodeSizes = [];
-	var nodeAlphas = [];
-	for (var i = 0; i < points.length; i++) {
-		if (points[i].boundary) continue;
-		nodePositions.push(points[i].x, points[i].y, points[i].z);
-		nodePhases.push(Math.random() * Math.PI * 2);
-		nodeSizes.push(0.5 + Math.random() * 0.7);
-		var peak = points[i].shape || 0;
-		nodeAlphas.push(0.35 + peak * 0.65);
+	// === Foreground rolling terrain grid ===
+	var gridGeo = new THREE.PlaneGeometry(70, 50, 100, 70);
+	gridGeo.rotateX(-Math.PI / 2);
+	var gridPos = gridGeo.attributes.position.array;
+	for (var i = 0; i < gridPos.length; i += 3) {
+		var x = gridPos[i];
+		var z = gridPos[i + 2];
+		gridPos[i + 1] = terrainNoise(x, z, 0);
 	}
-	var nodeGeo = new THREE.BufferGeometry();
-	nodeGeo.setAttribute('position', new THREE.Float32BufferAttribute(nodePositions, 3));
-	nodeGeo.setAttribute('phase', new THREE.Float32BufferAttribute(nodePhases, 1));
-	nodeGeo.setAttribute('size', new THREE.Float32BufferAttribute(nodeSizes, 1));
-	nodeGeo.setAttribute('alpha', new THREE.Float32BufferAttribute(nodeAlphas, 1));
+	gridGeo.computeVertexNormals();
 
-	var nodeMat = new THREE.ShaderMaterial({
-		uniforms: {
-			color: { value: parseColor(theme.nodeColor) },
-			pixelRatio: { value: renderer.getPixelRatio() }
-		},
-		vertexShader: [
-			'attribute float phase;',
-			'attribute float size;',
-			'attribute float alpha;',
-			'varying float vAlpha;',
-			'uniform float pixelRatio;',
-			'void main() {',
-			'  vAlpha = alpha * 0.65;',
-			'  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);',
-			'  gl_PointSize = size * 5.5 * pixelRatio * (120.0 / -mvPosition.z);',
-			'  gl_Position = projectionMatrix * mvPosition;',
-			'}'
-		].join('\n'),
-		fragmentShader: [
-			'uniform vec3 color;',
-			'varying float vAlpha;',
-			'void main() {',
-			'  float d = length(gl_PointCoord - vec2(0.5));',
-			'  if (d > 0.5) discard;',
-			'  float glow = 1.0 - smoothstep(0.0, 0.5, d);',
-			'  gl_FragColor = vec4(color, vAlpha * glow);',
-			'}'
-		].join('\n'),
+	var gridMat = new THREE.MeshBasicMaterial({
+		color: parseColor(theme.lineColor),
+		wireframe: true,
 		transparent: true,
+		opacity: 0.18,
 		blending: THREE.AdditiveBlending,
 		depthWrite: false
 	});
-	var nodes = new THREE.Points(nodeGeo, nodeMat);
-	scene.add(nodes);
-
-	// === Distant mountain fill ===
-	function createMountainLayer(zOffset, scale, opacity) {
-		var mGeo = new THREE.PlaneGeometry(180, 50, 80, 24);
-		mGeo.rotateX(-Math.PI / 2);
-		var mPos = mGeo.attributes.position.array;
-		for (var i = 0; i < mPos.length; i += 3) {
-			var x = mPos[i];
-			var z = mPos[i + 2];
-			var h = simplex.noise2D(x * 0.04 * scale, z * 0.025 * scale) * 9 * scale;
-			h += simplex.noise2D(x * 0.10 * scale + 30.0, z * 0.06 * scale) * 3.5 * scale;
-			h += simplex.noise2D(x * 0.22 * scale, z * 0.14 * scale) * 1.2 * scale;
-			h *= Math.max(0.0, 1.0 - Math.abs(x) / 80.0);
-			mPos[i + 1] = Math.max(0.0, h);
-		}
-		mGeo.computeVertexNormals();
-		var mMat = new THREE.MeshBasicMaterial({
-			color: parseColor(theme.mountainColor),
-			transparent: true,
-			opacity: opacity,
-			side: THREE.DoubleSide
-		});
-		var mesh = new THREE.Mesh(mGeo, mMat);
-		mesh.position.set(0, -1.8, zOffset);
-		return mesh;
-	}
-
-	var mountainsFar = createMountainLayer(-42, 1.3, 0.55);
-	mountainsFar.material.color = parseColor(theme.mountainColor).clone().lerp(parseColor(theme.skyHorizon), 0.1);
-	scene.add(mountainsFar);
-
-	var mountainsMid = createMountainLayer(-30, 1.0, 0.75);
-	mountainsMid.material.color = parseColor(theme.mountainColor);
-	scene.add(mountainsMid);
-
-	var mountainsNear = createMountainLayer(-18, 0.75, 0.9);
-	mountainsNear.material.color = parseColor(theme.mountainColor).clone().multiplyScalar(0.85);
-	scene.add(mountainsNear);
+	var gridMesh = new THREE.Mesh(gridGeo, gridMat);
+	gridMesh.position.set(0, -2.6, -5);
+	scene.add(gridMesh);
 
 	// === Horizon glow ===
-	function createGlowTexture() {
+	function glowTexture() {
 		var c = document.createElement('canvas');
 		c.width = 512;
-		c.height = 128;
+		c.height = 96;
 		var ctx = c.getContext('2d');
-		var grd = ctx.createRadialGradient(256, 64, 0, 256, 64, 200);
-		grd.addColorStop(0, 'rgba(255,60,60,0.55)');
-		grd.addColorStop(0.5, 'rgba(160,40,40,0.18)');
-		grd.addColorStop(1, 'rgba(0,0,0,0)');
-		ctx.fillStyle = grd;
-		ctx.fillRect(0, 0, 512, 128);
+		var g = ctx.createRadialGradient(256, 48, 0, 256, 48, 180);
+		g.addColorStop(0, 'rgba(255,60,60,0.45)');
+		g.addColorStop(0.5, 'rgba(160,40,40,0.12)');
+		g.addColorStop(1, 'rgba(0,0,0,0)');
+		ctx.fillStyle = g;
+		ctx.fillRect(0, 0, 512, 96);
 		return new THREE.CanvasTexture(c);
 	}
 	var horizonGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-		map: createGlowTexture(),
+		map: glowTexture(),
 		transparent: true,
-		opacity: 0.28,
+		opacity: 0.22,
 		blending: THREE.AdditiveBlending,
 		depthWrite: false,
 		color: parseColor(theme.skyHorizon)
 	}));
-	horizonGlow.position.set(0, 4, -55);
-	horizonGlow.scale.set(100, 16, 1);
+	horizonGlow.position.set(0, 3, -58);
+	horizonGlow.scale.set(110, 14, 1);
 	scene.add(horizonGlow);
 
 	// === Ambient light ===
-	scene.add(new THREE.AmbientLight(parseColor(theme.skyHorizon), 0.15));
+	scene.add(new THREE.AmbientLight(parseColor(theme.skyHorizon), 0.12));
 
 	// === Post-processing ===
 	var composer = new THREE.EffectComposer(renderer);
@@ -357,8 +305,8 @@
 	var vignetteShader = {
 		uniforms: {
 			'tDiffuse': { value: null },
-			'offset': { value: 0.9 },
-			'darkness': { value: 2.6 }
+			'offset': { value: 0.95 },
+			'darkness': { value: 2.8 }
 		},
 		vertexShader: [
 			'varying vec2 vUv;',
@@ -381,59 +329,33 @@
 	};
 	composer.addPass(new THREE.ShaderPass(vignetteShader));
 
-	var grainShader = {
-		uniforms: {
-			'tDiffuse': { value: null },
-			'time': { value: 0 },
-			'intensity': { value: 0.03 }
-		},
-		vertexShader: [
-			'varying vec2 vUv;',
-			'void main() {',
-			'  vUv = uv;',
-			'  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
-			'}'
-		].join('\n'),
-		fragmentShader: [
-			'uniform sampler2D tDiffuse;',
-			'uniform float time;',
-			'uniform float intensity;',
-			'varying vec2 vUv;',
-			'float rand(vec2 co) { return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453); }',
-			'void main() {',
-			'  vec4 texel = texture2D(tDiffuse, vUv);',
-			'  float g = rand(vUv * time) * intensity;',
-			'  gl_FragColor = vec4(texel.rgb + vec3(g), texel.a);',
-			'}'
-		].join('\n')
-	};
 	// === Fog drift ===
-	function createDriftTexture() {
+	function cloudTexture() {
 		var c = document.createElement('canvas');
 		c.width = 256;
 		c.height = 64;
 		var ctx = c.getContext('2d');
-		var grd = ctx.createRadialGradient(128, 32, 0, 128, 32, 100);
-		grd.addColorStop(0, 'rgba(255,50,50,0.18)');
-		grd.addColorStop(1, 'rgba(0,0,0,0)');
-		ctx.fillStyle = grd;
+		var g = ctx.createRadialGradient(128, 32, 0, 128, 32, 100);
+		g.addColorStop(0, 'rgba(255,50,50,0.14)');
+		g.addColorStop(1, 'rgba(0,0,0,0)');
+		ctx.fillStyle = g;
 		ctx.fillRect(0, 0, 256, 64);
 		return new THREE.CanvasTexture(c);
 	}
-	var driftTex = createDriftTexture();
+	var driftTex = cloudTexture();
 	var drifts = [];
-	for (var i = 0; i < 4; i++) {
+	for (var i = 0; i < 5; i++) {
 		var drift = new THREE.Sprite(new THREE.SpriteMaterial({
 			map: driftTex,
 			transparent: true,
-			opacity: 0.12 + Math.random() * 0.1,
+			opacity: 0.08 + Math.random() * 0.08,
 			blending: THREE.AdditiveBlending,
 			depthWrite: false,
 			color: parseColor(theme.skyHorizon)
 		}));
-		drift.position.set((Math.random() - 0.5) * 50, -1.2 + Math.random() * 1.0, -4 - Math.random() * 12);
-		drift.scale.set(20 + Math.random() * 16, 4 + Math.random() * 3, 1);
-		drift.userData = { speed: 0.2 + Math.random() * 0.3 };
+		drift.position.set((Math.random() - 0.5) * 60, -1.0 + Math.random() * 0.8, -6 - Math.random() * 14);
+		drift.scale.set(22 + Math.random() * 16, 4 + Math.random() * 3, 1);
+		drift.userData = { speed: 0.15 + Math.random() * 0.25 };
 		scene.add(drift);
 		drifts.push(drift);
 	}
@@ -444,16 +366,47 @@
 		camera.updateProjectionMatrix();
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		composer.setSize(window.innerWidth, window.innerHeight);
-		nodeMat.uniforms.pixelRatio.value = renderer.getPixelRatio();
 	});
 
 	// === Animation ===
+	var clock = new THREE.Clock();
 	function animate() {
 		requestAnimationFrame(animate);
+		var time = clock.getElapsedTime();
 
+		// Animate low-poly mountain mesh
+		var pos = lineGeo.attributes.position.array;
+		for (var i = 0, idx = 0; i < points.length; i++) {
+			var p = points[i];
+			var h = mountainNoise(p.x, p.z, time) * (0.5 + p.shape * 2.2);
+			h += p.shape * 5.5;
+			h -= 0.8;
+			var baseY = h;
+			// Update all edges connected to this point
+			for (var e = 0; e < pos.length; e += 6) {
+				if (Math.abs(pos[e] - p.x) < 0.001 && Math.abs(pos[e + 2] - p.z) < 0.001) {
+					pos[e + 1] = baseY;
+				}
+				if (Math.abs(pos[e + 3] - p.x) < 0.001 && Math.abs(pos[e + 5] - p.z) < 0.001) {
+					pos[e + 4] = baseY;
+				}
+			}
+		}
+		lineGeo.attributes.position.needsUpdate = true;
+
+		// Animate foreground grid
+		var gPos = gridGeo.attributes.position.array;
+		for (var i = 0; i < gPos.length; i += 3) {
+			var x = gPos[i];
+			var z = gPos[i + 2];
+			gPos[i + 1] = terrainNoise(x, z, time);
+		}
+		gridGeo.attributes.position.needsUpdate = true;
+
+		// Drift fog
 		for (var i = 0; i < drifts.length; i++) {
-			drifts[i].position.x += drifts[i].userData.speed * 0.015;
-			if (drifts[i].position.x > 30) drifts[i].position.x = -30;
+			drifts[i].position.x += drifts[i].userData.speed * 0.012;
+			if (drifts[i].position.x > 32) drifts[i].position.x = -32;
 		}
 
 		composer.render();
