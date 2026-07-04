@@ -796,7 +796,7 @@ a { text-decoration: none; color: var(--theme-link); }
 	width: 100%;
 	padding: 18px 58px 18px 56px;
 	background: var(--theme-input-bg);
-	border: 1px solid rgba(255,255,255,0.22);
+	border: 1px solid rgba(255,255,255,0.35);
 	border-radius: var(--radius-full);
 	color: var(--theme-text);
 	font-size: 16px;
