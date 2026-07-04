@@ -25,56 +25,53 @@
 		<div class="bg-grid"></div>
 		<div class="error-landscape">
 			<div class="error-landscape-sky"></div>
+			<div class="error-landscape-horizon"></div>
+			<div class="error-landscape-clouds">
+				<div class="error-cloud error-cloud-1"></div>
+				<div class="error-cloud error-cloud-2"></div>
+				<div class="error-cloud error-cloud-3"></div>
+				<div class="error-cloud error-cloud-4"></div>
+			</div>
 			<div class="error-landscape-sun"></div>
-			<svg class="error-landscape-mountains-glow" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<svg class="error-landscape-mountains-far" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 				<defs>
-					<linearGradient id="mountain-glow-grad" x1="0%" y1="100%" x2="0%" y2="0%">
-						<stop offset="0%" style="stop-color:var(--theme-accent);stop-opacity:0" />
-						<stop offset="100%" style="stop-color:var(--theme-accent);stop-opacity:0.9" />
+					<linearGradient id="mountain-far-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
+						<stop offset="50%" style="stop-color:var(--theme-bg-alt);stop-opacity:0.95" />
+						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.35" />
 					</linearGradient>
 				</defs>
-				<path d="M0,420 Q100,260 220,330 T440,230 T660,310 T880,210 T1100,290 T1200,250 V420 H0Z" fill="url(#mountain-glow-grad)" opacity="0.45"/>
-				<path d="M0,420 Q130,320 280,360 T520,280 T760,340 T960,270 T1200,330 V420 H0Z" fill="url(#mountain-glow-grad)" opacity="0.6"/>
-				<path d="M0,420 Q180,350 360,390 T620,310 T880,370 T1200,320 V420 H0Z" fill="url(#mountain-glow-grad)" opacity="0.8"/>
+				<path d="M0,420 C80,330 150,280 220,310 S360,220 440,260 S560,190 640,240 S760,200 840,250 S960,210 1040,260 S1140,230 1200,270 V420 H0Z" fill="url(#mountain-far-grad)" opacity="0.55" filter="blur(3px)"/>
 			</svg>
-			<svg class="error-landscape-mountains" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<svg class="error-landscape-mountains-mid" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 				<defs>
-					<linearGradient id="mountain-back-grad" x1="0%" y1="100%" x2="0%" y2="0%">
-						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
-						<stop offset="55%" style="stop-color:var(--theme-bg-alt);stop-opacity:1" />
-						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.55" />
-					</linearGradient>
-					<linearGradient id="mountain-mid-grad" x1="0%" y1="100%" x2="30%" y2="0%">
+					<linearGradient id="mountain-mid-grad" x1="0%" y1="100%" x2="20%" y2="0%">
 						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
 						<stop offset="45%" style="stop-color:var(--theme-surface);stop-opacity:1" />
-						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.75" />
+						<stop offset="100%" style="stop-color:var(--theme-accent-glow);stop-opacity:0.65" />
 					</linearGradient>
-					<linearGradient id="mountain-front-grad" x1="0%" y1="100%" x2="80%" y2="0%">
+				</defs>
+				<path d="M0,420 C100,360 180,300 260,340 S420,260 520,310 S680,250 780,300 S920,260 1020,310 S1120,280 1200,320 V420 H0Z" fill="url(#mountain-mid-grad)" opacity="0.85" filter="blur(1px)"/>
+			</svg>
+			<svg class="error-landscape-mountains-near" viewBox="0 0 1200 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				<defs>
+					<linearGradient id="mountain-near-grad" x1="0%" y1="100%" x2="70%" y2="0%">
 						<stop offset="0%" style="stop-color:var(--theme-bg);stop-opacity:1" />
-						<stop offset="40%" style="stop-color:var(--theme-surface);stop-opacity:1" />
-						<stop offset="100%" style="stop-color:var(--theme-accent);stop-opacity:0.85" />
+						<stop offset="35%" style="stop-color:var(--theme-surface);stop-opacity:1" />
+						<stop offset="100%" style="stop-color:var(--theme-accent);stop-opacity:0.8" />
 					</linearGradient>
 					<filter id="mountain-noise">
-						<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
-						<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.12 0" in="noise" result="coloredNoise"/>
+						<feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="4" stitchTiles="stitch" result="noise"/>
+						<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.14 0" in="noise" result="coloredNoise"/>
 						<feComposite operator="in" in="coloredNoise" in2="SourceGraphic" result="composite"/>
 						<feBlend mode="overlay" in="composite" in2="SourceGraphic"/>
 					</filter>
-					<pattern id="mountain-dots" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
-						<circle cx="3" cy="3" r="1.2" fill="var(--theme-accent)" opacity="0.45"/>
-						<circle cx="14" cy="14" r="0.7" fill="var(--theme-accent-glow)" opacity="0.35"/>
-					</pattern>
 				</defs>
-				<path class="mountain-back" d="M0,420 Q100,260 220,330 T440,230 T660,310 T880,210 T1100,290 T1200,250 V420 H0Z" fill="url(#mountain-back-grad)" opacity="0.75"/>
-				<path class="mountain-mid" d="M0,420 Q130,320 280,360 T520,280 T760,340 T960,270 T1200,330 V420 H0Z" fill="url(#mountain-mid-grad)" opacity="0.9"/>
-				<path class="mountain-front" d="M0,420 Q180,350 360,390 T620,310 T880,370 T1200,320 V420 H0Z" fill="url(#mountain-front-grad)" filter="url(#mountain-noise)"/>
-				<path class="mountain-dots-back" d="M0,420 Q100,260 220,330 T440,230 T660,310 T880,210 T1100,290 T1200,250 V420 H0Z" fill="url(#mountain-dots)" opacity="0.25"/>
-				<path class="mountain-dots-mid" d="M0,420 Q130,320 280,360 T520,280 T760,340 T960,270 T1200,330 V420 H0Z" fill="url(#mountain-dots)" opacity="0.35"/>
-				<path class="mountain-dots-front" d="M0,420 Q180,350 360,390 T620,310 T880,370 T1200,320 V420 H0Z" fill="url(#mountain-dots)" opacity="0.5"/>
+				<path d="M0,420 C140,380 240,320 340,370 S500,300 620,350 S780,300 900,350 S1060,310 1200,360 V420 H0Z" fill="url(#mountain-near-grad)" filter="url(#mountain-noise)"/>
 			</svg>
-			<div class="error-landscape-grid"></div>
-			<div class="error-landscape-particles"></div>
+			<canvas id="errorTerrain"></canvas>
 			<div class="error-landscape-fog"></div>
+			<div class="error-landscape-fog-drift"></div>
 		</div>
 		<div class="error-page">
 			<img src="/assets/404.png" alt="404" style="width:280px" />
@@ -83,5 +80,6 @@
 			<a href="/" class="btn-primary">Take Me Home</a>
 		</div>
 	</div>
+	<script src="/js/error-terrain.js"></script>
 </body>
 </html>
