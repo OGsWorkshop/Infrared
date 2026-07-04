@@ -666,6 +666,7 @@ a { text-decoration: none; color: var(--theme-link); }
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
+	background: transparent;
 }
 
 .browser-toolbar {
@@ -673,9 +674,12 @@ a { text-decoration: none; color: var(--theme-link); }
 	align-items: center;
 	gap: 8px;
 	padding: 10px 16px;
-	background: rgba(0,0,0,0.85);
-	border-bottom: 1px solid rgba(255,255,255,0.1);
+	background: var(--theme-surface);
+	border-bottom: 1px solid var(--theme-border);
 	flex-shrink: 0;
+	backdrop-filter: blur(20px);
+	-webkit-backdrop-filter: blur(20px);
+	transition: background var(--transition-slow), border-color var(--transition-slow);
 }
 
 .browser-nav-btn {
@@ -684,7 +688,7 @@ a { text-decoration: none; color: var(--theme-link); }
 	border-radius: var(--radius-sm);
 	border: none;
 	background: transparent;
-	color: rgba(255,255,255,0.65);
+	color: var(--theme-text-dim);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -694,8 +698,8 @@ a { text-decoration: none; color: var(--theme-link); }
 }
 
 .browser-nav-btn:hover {
-	background: rgba(255,255,255,0.1);
-	color: #fff;
+	background: var(--theme-surface-hover);
+	color: var(--theme-text);
 }
 
 .browser-nav-btn:disabled {
@@ -710,8 +714,8 @@ a { text-decoration: none; color: var(--theme-link); }
 	flex: 1;
 	display: flex;
 	align-items: center;
-	background: rgba(255,255,255,0.08);
-	border: 1px solid rgba(255,255,255,0.12);
+	background: var(--theme-input-bg);
+	border: 1px solid var(--theme-input-border);
 	border-radius: var(--radius-full);
 	padding: 0 4px;
 	transition: all var(--transition-fast);
@@ -720,9 +724,9 @@ a { text-decoration: none; color: var(--theme-link); }
 }
 
 .browser-url-bar:focus-within {
-	background: rgba(255,255,255,0.14);
-	border-color: rgba(255,255,255,0.3);
-	box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+	background: var(--theme-surface);
+	border-color: var(--theme-border-accent);
+	box-shadow: 0 0 0 3px var(--theme-accent-glow);
 }
 
 .browser-url-input {
@@ -730,17 +734,17 @@ a { text-decoration: none; color: var(--theme-link); }
 	padding: 10px 12px;
 	background: transparent;
 	border: none;
-	color: #fff;
+	color: var(--theme-text);
 	font-size: 14px;
 	font-family: var(--font-primary);
 	outline: none;
 }
 
-.browser-url-input::placeholder { color: rgba(255,255,255,0.45); }
+.browser-url-input::placeholder { color: var(--theme-text-dim); }
 
 .browser-url-secure {
 	padding: 0 8px;
-	color: rgba(255,255,255,0.55);
+	color: var(--theme-text-dim);
 	font-size: 16px;
 	flex-shrink: 0;
 }
@@ -764,7 +768,7 @@ a { text-decoration: none; color: var(--theme-link); }
 	justify-content: center;
 	height: 100%;
 	padding: 40px 24px;
-	background: rgba(0,0,0,0.92);
+	background: transparent;
 	gap: 32px;
 }
 
@@ -791,23 +795,25 @@ a { text-decoration: none; color: var(--theme-link); }
 .browser-home-search input {
 	width: 100%;
 	padding: 18px 58px 18px 56px;
-	background: rgba(255,255,255,0.06);
-	border: 1px solid rgba(255,255,255,0.1);
+	background: var(--theme-input-bg);
+	border: 1px solid var(--theme-input-border);
 	border-radius: var(--radius-full);
-	color: #fff;
+	color: var(--theme-text);
 	font-size: 16px;
 	outline: none;
 	font-family: var(--font-primary);
 	transition: all var(--transition-fast);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
 }
 
 .browser-home-search input:focus {
-	background: rgba(255,255,255,0.1);
-	border-color: rgba(255,255,255,0.25);
-	box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+	background: var(--theme-surface);
+	border-color: var(--theme-border-accent);
+	box-shadow: 0 0 0 3px var(--theme-accent-glow);
 }
 
-.browser-home-search input::placeholder { color: rgba(255,255,255,0.45); }
+.browser-home-search input::placeholder { color: var(--theme-text-dim); }
 
 .browser-home-search .search-icon-left,
 .browser-home-search .search-icon-right {
@@ -819,7 +825,7 @@ a { text-decoration: none; color: var(--theme-link); }
 
 .browser-home-search .search-icon-left {
 	left: 20px;
-	color: #fff;
+	color: var(--theme-text);
 	font-size: 20px;
 	font-weight: 700;
 	font-family: var(--font-display);
@@ -827,7 +833,7 @@ a { text-decoration: none; color: var(--theme-link); }
 
 .browser-home-search .search-icon-right {
 	right: 20px;
-	color: rgba(255,255,255,0.55);
+	color: var(--theme-text-dim);
 	font-size: 20px;
 }
 

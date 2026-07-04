@@ -58,7 +58,7 @@
 	<script src="/js/starfield.js"></script>
 	<script src="/js/c.js"></script>
 	<script>
-		var words=['all you need.','everything.','freedom.','any site.','games.','privacy.','speed.'];
+		var words=['perfection.','games.','freedom.','speed.','fun.','browse.','proxy.'];
 		var i=0,j=0,del=false,el=document.querySelector('.hero-title .accent');
 		function type(){var w=words[i];el.textContent=del?w.substring(0,j-1):w.substring(0,j+1);j+=del?-1:1;if(!del&&j===w.length){setTimeout(function(){del=true;type()},2000);return}if(del&&j===0){del=false;i=(i+1)%words.length}setTimeout(type,del?50:100+Math.random()*80)}type();
 	</script>
