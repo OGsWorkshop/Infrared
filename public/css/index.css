@@ -1529,7 +1529,10 @@ a { text-decoration: none; color: var(--theme-link); }
 	box-shadow: 0 0 120px 40px var(--theme-accent-glow);
 }
 
-.error-landscape-mountains {
+.error-landscape-mountains,
+.error-landscape-mountains-glow,
+.error-landscape-mountains-dots,
+.error-landscape-mountains-ridges {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -1553,7 +1556,7 @@ a { text-decoration: none; color: var(--theme-link); }
 		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
 		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
 	);
-	opacity: 0.55;
+	opacity: 0.5;
 	filter: blur(1px);
 }
 
@@ -1562,7 +1565,100 @@ a { text-decoration: none; color: var(--theme-link); }
 		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
 		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
 	);
+	opacity: 0.8;
+}
+
+.error-landscape-mountains-glow::before,
+.error-landscape-mountains-glow::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--theme-accent);
+	filter: blur(18px);
+	mix-blend-mode: screen;
+}
+
+.error-landscape-mountains-glow::before {
+	clip-path: polygon(
+		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
+		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
+	);
+	opacity: 0.35;
+	transform: scale(1.02);
+}
+
+.error-landscape-mountains-glow::after {
+	clip-path: polygon(
+		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
+		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
+	);
+	opacity: 0.55;
+	transform: scale(1.01);
+}
+
+.error-landscape-mountains-dots::before,
+.error-landscape-mountains-dots::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image:
+		radial-gradient(circle at center, var(--theme-accent) 1.2px, transparent 1.6px),
+		radial-gradient(circle at center, var(--theme-accent-glow) 0.8px, transparent 1px);
+	background-size: 18px 18px, 10px 10px;
+	background-position: 0 0, 6px 6px;
+	mix-blend-mode: screen;
+}
+
+.error-landscape-mountains-dots::before {
+	clip-path: polygon(
+		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
+		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
+	);
+	opacity: 0.55;
+}
+
+.error-landscape-mountains-dots::after {
+	clip-path: polygon(
+		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
+		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
+	);
 	opacity: 0.85;
+}
+
+.error-landscape-mountains-ridges::before,
+.error-landscape-mountains-ridges::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	border-bottom: 2px solid var(--theme-accent);
+	box-shadow: 0 6px 24px var(--theme-accent-glow), 0 0 60px var(--theme-accent-glow-strong);
+	mix-blend-mode: screen;
+}
+
+.error-landscape-mountains-ridges::before {
+	clip-path: polygon(
+		0% 100%, 0% 72%, 8% 58%, 18% 68%, 25% 52%, 35% 62%, 42% 45%, 52% 58%,
+		60% 42%, 70% 55%, 78% 48%, 88% 62%, 95% 54%, 100% 68%, 100% 100%
+	);
+	opacity: 0.4;
+}
+
+.error-landscape-mountains-ridges::after {
+	clip-path: polygon(
+		0% 100%, 0% 82%, 12% 70%, 22% 78%, 30% 64%, 42% 75%, 50% 62%,
+		62% 72%, 72% 60%, 82% 70%, 92% 64%, 100% 74%, 100% 100%
+	);
+	opacity: 0.6;
 }
 
 .error-landscape-grid {
@@ -1586,9 +1682,29 @@ a { text-decoration: none; color: var(--theme-link); }
 		);
 	transform: perspective(260px) rotateX(64deg);
 	transform-origin: 50% 100%;
-	opacity: 0.22;
+	opacity: 0.28;
 	mask-image: linear-gradient(to top, black 10%, transparent 85%);
 	-webkit-mask-image: linear-gradient(to top, black 10%, transparent 85%);
+}
+
+.error-landscape-particles {
+	position: absolute;
+	inset: 0;
+	background-image:
+		radial-gradient(circle, var(--theme-accent) 1px, transparent 2px),
+		radial-gradient(circle, var(--theme-accent-glow) 1.5px, transparent 3px);
+	background-size: 120px 120px, 180px 180px;
+	background-position: 20px 40px, 80px 10px;
+	opacity: 0.45;
+	animation: particleDrift 18s linear infinite;
+	mix-blend-mode: screen;
+	mask-image: linear-gradient(to bottom, black 20%, transparent 70%);
+	-webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 70%);
+}
+
+@keyframes particleDrift {
+	0% { background-position: 20px 40px, 80px 10px; }
+	100% { background-position: 140px 160px, 260px 190px; }
 }
 
 .error-landscape-fog {
