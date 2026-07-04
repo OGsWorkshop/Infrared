@@ -221,9 +221,6 @@
 	var lineMesh = new THREE.LineSegments(lineGeo, lineMat);
 	scene.add(lineMesh);
 
-	// === Animated line colors ===
-	var originalColors = new Float32Array(lineColors);
-
 	// === Glowing nodes ===
 	var nodePositions = [];
 	var nodePhases = [];
@@ -246,7 +243,6 @@
 	var nodeMat = new THREE.ShaderMaterial({
 		uniforms: {
 			color: { value: parseColor(theme.nodeColor) },
-			time: { value: 0 },
 			pixelRatio: { value: renderer.getPixelRatio() }
 		},
 		vertexShader: [
@@ -254,13 +250,11 @@
 			'attribute float size;',
 			'attribute float alpha;',
 			'varying float vAlpha;',
-			'uniform float time;',
 			'uniform float pixelRatio;',
 			'void main() {',
-			'  float pulse = 0.45 + 0.55 * sin(time * (2.0 + phase * 3.5) + phase * 25.0);',
-			'  vAlpha = alpha * (0.5 + 0.5 * pulse);',
+			'  vAlpha = alpha * 0.65;',
 			'  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);',
-			'  gl_PointSize = size * (5.0 + 4.0 * pulse) * pixelRatio * (120.0 / -mvPosition.z);',
+			'  gl_PointSize = size * 5.5 * pixelRatio * (120.0 / -mvPosition.z);',
 			'  gl_Position = projectionMatrix * mvPosition;',
 			'}'
 		].join('\n'),
@@ -413,9 +407,6 @@
 			'}'
 		].join('\n')
 	};
-	var grainPass = new THREE.ShaderPass(grainShader);
-	composer.addPass(grainPass);
-
 	// === Fog drift ===
 	function createDriftTexture() {
 		var c = document.createElement('canvas');
@@ -457,42 +448,14 @@
 	});
 
 	// === Animation ===
-	var clock = new THREE.Clock();
 	function animate() {
 		requestAnimationFrame(animate);
-		var time = clock.getElapsedTime();
-
-		// Animate line colors/opacity with pulse
-		var colors = lineGeo.attributes.color.array;
-		for (var i = 0; i < originalColors.length; i += 6) {
-			var baseAlpha = (originalColors[i] / color.r) || 0;
-			var pulse = 0.85 + 0.15 * Math.sin(time * 1.5 + i * 0.05);
-			var a = baseAlpha * pulse;
-			for (var j = 0; j < 6; j += 3) {
-				colors[i + j] = color.r * a;
-				colors[i + j + 1] = color.g * a;
-				colors[i + j + 2] = color.b * a;
-			}
-		}
-		lineGeo.attributes.color.needsUpdate = true;
-
-		// Animate node positions (subtle terrain undulation)
-		var pos = nodeGeo.attributes.position.array;
-		for (var i = 0, p = 0; i < points.length; i++) {
-			if (points[i].boundary) continue;
-			pos[p + 1] = points[i].y + terrainNoise(points[i].x, points[i].z, time) * 0.12;
-			p += 3;
-		}
-		nodeGeo.attributes.position.needsUpdate = true;
-
-		nodeMat.uniforms.time.value = time;
 
 		for (var i = 0; i < drifts.length; i++) {
 			drifts[i].position.x += drifts[i].userData.speed * 0.015;
 			if (drifts[i].position.x > 30) drifts[i].position.x = -30;
 		}
 
-		grainPass.uniforms.time.value = time;
 		composer.render();
 	}
 	animate();
