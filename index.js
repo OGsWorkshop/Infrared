@@ -11,15 +11,29 @@ import { baremuxPath } from '@mercuryworkshop/bare-mux/node';
 import { scramjetPath } from '@mercuryworkshop/scramjet/path';
 import { server as wisp } from '@mercuryworkshop/wisp-js/server';
 import routes from './src/routes.js';
+import { readSession } from './src/auth.js';
 
 const server = http.createServer();
 const app = express();
 const __dirname = process.cwd();
 const PORT = process.env.PORT || 6060;
 
+if (process.env.NODE_ENV === 'production' && !process.env.INFRARED_AUTH_SECRET) {
+	throw new Error('INFRARED_AUTH_SECRET must be configured in production');
+}
+
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Protect application pages while leaving the login page and static assets public.
+app.use((req, res, next) => {
+	const publicPath = req.path === '/login' || req.path.startsWith('/api/auth/') ||
+		/^\/(assets|css|js|json|scram|@|epoxy|libcurl|baremux)\//.test(req.path) || req.path === '/favicon.ico';
+	if (publicPath || readSession(req)) return next();
+	return res.redirect('/login');
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/epoxy/', express.static(epoxyPath));
 app.use('/@/', express.static(uvPath));

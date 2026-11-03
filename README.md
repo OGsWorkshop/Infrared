@@ -21,6 +21,23 @@
 
 ## Deployment
 
+### Login configuration
+
+Infrared includes a server-side login gate. Configure these environment variables in your deployment platform:
+
+```env
+INFRARED_AUTH_USER=admin
+INFRARED_AUTH_PASSWORD=use-a-strong-password
+INFRARED_AUTH_SECRET=generate-a-long-random-secret
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_CALLBACK_URL=https://your-domain.example/api/auth/google/callback
+```
+
+Generate a session secret with `pnpm auth:secret`. The password is never stored in the browser; sessions use an HttpOnly, signed cookie.
+
+Add the exact `GOOGLE_CALLBACK_URL` to Google Cloud Console under **OAuth client → Authorized redirect URIs**.
+
 > [!WARNING]
 > You **can not** host Infrared locally via a static web hosting site
 > such as Netlify, Github Pages, and Cloudflare Pages.
