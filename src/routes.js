@@ -1,8 +1,32 @@
 import express from 'express';
 import path from 'path';
+import { clearSession, credentialsMatch, readSession, setSession } from './auth.js';
 const router = express.Router();
 
 let __dirname = process.cwd();
+
+router.get('/login', (_req, res) => {
+	res.sendFile(path.join(__dirname, 'public/login.html'));
+});
+
+router.post('/api/auth/login', (req, res) => {
+	const { username = '', password = '' } = req.body || {};
+	if (!credentialsMatch(String(username).trim(), String(password))) {
+		return res.status(401).json({ error: 'Invalid username or password' });
+	}
+	setSession(res, String(username).trim());
+	return res.json({ authenticated: true, username: String(username).trim() });
+});
+
+router.get('/api/auth/me', (req, res) => {
+	const session = readSession(req);
+	res.json(session ? { authenticated: true, username: session.username } : { authenticated: false });
+});
+
+router.post('/api/auth/logout', (_req, res) => {
+	clearSession(res);
+	res.json({ authenticated: false });
+});
 
 router.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public/index.html'));
