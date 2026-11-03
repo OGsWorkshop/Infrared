@@ -21,6 +21,18 @@
 
 ## Deployment
 
+### Login configuration
+
+Infrared includes a server-side login gate. Configure these environment variables in your deployment platform:
+
+```env
+INFRARED_AUTH_USER=admin
+INFRARED_AUTH_PASSWORD=use-a-strong-password
+INFRARED_AUTH_SECRET=generate-a-long-random-secret
+```
+
+Generate a session secret with `pnpm auth:secret`. The password is never stored in the browser; sessions use an HttpOnly, signed cookie.
+
 > [!WARNING]
 > You **can not** host Infrared locally via a static web hosting site
 > such as Netlify, Github Pages, and Cloudflare Pages.

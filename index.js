@@ -18,6 +18,10 @@ const app = express();
 const __dirname = process.cwd();
 const PORT = process.env.PORT || 6060;
 
+if (process.env.NODE_ENV === 'production' && !process.env.INFRARED_AUTH_SECRET) {
+	throw new Error('INFRARED_AUTH_SECRET must be configured in production');
+}
+
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
