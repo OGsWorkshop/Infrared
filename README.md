@@ -1,84 +1,121 @@
-<div align="center">
-        <img src="https://i.imgur.com/THCaiVp.png" style="width: 1200px"/>
-    <h2>Launch into Infrared, the next gen proxy.</h2>
-</div>
+<h1 align="center">Cherri</h1>
 
-![inpreview](https://i.imgur.com/JM3Jazt.png)
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/d0532d69-892b-4b08-ae29-f2191295fbf7" />
+</p>
 
-> [!IMPORTANT]
-> If you fork this repo please consider giving the original repo a
-> star. Thank you!
+<p align="center">
+  A UBG project built to be clean, simple, and easy to use. With over 700 games sourced from two different stores, 40 apps, a fast and powerful browser, extensive customization options, and much more, this is easily one of the best unblocked websites.
+</p>
+ 
+<hr>
 
-## Features
+## Roadmap
 
--   Out of this world UI
--   Games
--   Apps
--   Proxy
--   Settings
--   Cloaking [Blob & About:Blank]
--   Tab Cloaking [Presets]
+* [x] Games
+* [x] Apps
+* [x] Proxy
+* [x] Movies
+* [x] Chatroom
+* [x] Game overlay
 
 ## Deployment
 
-### Login configuration
+Cherri is deployable to remotely any hosting service, and even locally deployable.
 
-Infrared includes a server-side login gate. Configure these environment variables in your deployment platform:
+Follow the steps below to deploy.
 
-```env
-INFRARED_AUTH_USER=admin
-INFRARED_AUTH_PASSWORD=use-a-strong-password
-INFRARED_AUTH_SECRET=generate-a-long-random-secret
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-GOOGLE_CALLBACK_URL=https://your-domain.example/api/auth/google/callback
-CLOUDFLARE_TUNNEL_ID=your-tunnel-uuid
-CLOUDFLARE_TUNNEL_CREDENTIALS={"AccountTag":"...","TunnelID":"...","TunnelSecret":"..."}
-CLOUDFLARE_TUNNEL_HOSTNAME=infrared.earth
-CLOUDFLARE_TUNNEL_ORIGIN=http://127.0.0.1:2000
+### Method 1: Deploy Buttons
+
+[![Deploy to Heroku](https://binbashbanana.github.io/deploy-buttons/buttons/remade/heroku.svg)](https://heroku.com/deploy/?template=https://github.com/x8rr/cherri)
+[![Run on Replit](https://binbashbanana.github.io/deploy-buttons/buttons/remade/replit.svg)](https://replit.com/github/x8rr/cherri)
+[![Remix on Glitch](https://binbashbanana.github.io/deploy-buttons/buttons/remade/glitch.svg)](https://glitch.com/edit/#!/import/github/x8rr/cherri)
+[![Deploy to Amplify Console](https://binbashbanana.github.io/deploy-buttons/buttons/remade/amplifyconsole.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/x8rr/cherri)
+[![Run on Google Cloud](https://binbashbanana.github.io/deploy-buttons/buttons/remade/googlecloud.svg)](https://deploy.cloud.run/?git_repo=https://github.com/x8rr/cherri)
+[![Deploy to Oracle Cloud](https://binbashbanana.github.io/deploy-buttons/buttons/remade/oraclecloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/x8rr/cherri/archive/refs/heads/main.zip)
+[![Deploy on Railway](https://binbashbanana.github.io/deploy-buttons/buttons/remade/railway.svg)](https://railway.app/new/template?template=https://github.com/x8rr/cherri)
+[![Deploy to Vercel](https://binbashbanana.github.io/deploy-buttons/buttons/remade/vercel.svg)](https://vercel.com/new/clone?repository-url=https://github.com/x8rr/cherri)
+[![Deploy to Netlify](https://binbashbanana.github.io/deploy-buttons/buttons/remade/netlify.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/x8rr/cherri)
+[![Deploy to Koyeb](https://binbashbanana.github.io/deploy-buttons/buttons/remade/koyeb.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/x8rr/cherri&branch=Main&name=cherri)
+[![Deploy to Render](https://binbashbanana.github.io/deploy-buttons/buttons/remade/render.svg)](https://render.com/deploy?repo=https://github.com/x8rr/cherri)
+[![Deploy to Cyclic](https://binbashbanana.github.io/deploy-buttons/buttons/remade/cyclic.svg)](https://app.cyclic.sh/api/app/deploy/x8rr/cherri)
+
+> [!IMPORTANT]
+> To deploy on Cloudflare Pages, use [this repository.](https://github.com/x8rr/cherri-cloudflare)
+> This version excludes Classplay store files due to Cloudflare’s 25 MB limit.
+
+### Method 2: Deploying Locally
+
+Clone the repository:
+
+```sh
+git clone https://github.com/x8rr/cherri.git
 ```
 
-Generate a session secret with `pnpm auth:secret`. The password is never stored in the browser; sessions use an HttpOnly, signed cookie.
+Enter the directory:
 
-Add the exact `GOOGLE_CALLBACK_URL` to Google Cloud Console under **OAuth client → Authorized redirect URIs**.
-
-For a locally managed Cloudflare Tunnel, add the tunnel ID and credentials JSON as Railway secrets. The credentials JSON must never be committed to Git.
-
-> [!WARNING]
-> You **can not** host Infrared locally via a static web hosting site
-> such as Netlify, Github Pages, and Cloudflare Pages.
-
-Please run the following commands to host a server:
-
-```
-git clone https://github.com/OGsWorkshop/Infrared.Git
-cd Infrared
-pnpm i
-pnpm start
+```sh
+cd cherri
 ```
 
-### Updating
+Run a local development server:
 
+```sh
+python3 -m http.server        # simple Python HTTP server
+netlify dev                   # emulate a Netlify production environment
 ```
-git pull --force --allow-unrelated-histories
+
+### Method 3: Deploying to Firebase
+
+Ensure you have a Firebase account and a project ready.
+
+Install the Firebase CLI:
+
+```sh
+npm i -g firebase-tools
 ```
 
-## Where to ask for help
+Initialize a hosting project:
 
-> [!NOTE]
-> If you'd like to get links, support, or other deployment methods join
-> our [Discord Server](https://discord.gg/yTmmCFv59Q)) or open a discussion.
+```sh
+firebase init hosting
+```
 
-## Contribution
+Follow the CLI steps, then deploy.
 
-To contribute to Infrared, clone the repo locally and submit your code in a pull
-request. If you are making large changes, please make sure you test your code
-before submitting a pull request. Please check contributing.md for a more in-depth explanation.
+---
 
-## Contributors
+## If You Fork This Project
 
-Thank you to the following people for contributing to Infrared.
+Please consider starring the repository.
 
-## Discord
+You must **not**:
 
-[Discord](https://discord.gg/yTmmCFv59Q)
+* Modify the AGPL license
+* Claim this code as your own
+* Fail to provide proper credit
+* Use this code in your website without attribution
+* Detach from the fork network without giving credit
+* Violate the license in any way
+* Steal the code or redistribute it without acknowledgment
+
+You *may*:
+
+* Deploy it without any modifications
+* Deploy it with modifications (as long as credit and a changelog are included)
+* Perform other allowed actions as defined by the license
+
+To remain compliant, it is recommended that you include a notice like this:
+
+---
+
+## FORK NOTICE
+
+This repository was derived from [x8rr/cherri](https://github.com/x8rr/cherri). All original code was written by the project owner (x8rr). The following changes have been made to this fork:
+
+* Change 1
+* Change 2
+* Change 3
+
+---
+ 
