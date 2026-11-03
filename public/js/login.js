@@ -20,7 +20,9 @@ form.addEventListener('submit', async (event) => {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ username: form.username.value, password: form.password.value }),
 		});
-		const data = await response.json();
+		const responseText = await response.text();
+		let data = {};
+		try { data = responseText ? JSON.parse(responseText) : {}; } catch { /* use status fallback */ }
 		if (!response.ok) throw new Error(data.error || 'Unable to sign in');
 		window.location.assign('/');
 	} catch (err) {
