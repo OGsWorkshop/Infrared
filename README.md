@@ -32,11 +32,17 @@ INFRARED_AUTH_SECRET=generate-a-long-random-secret
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GOOGLE_CALLBACK_URL=https://your-domain.example/api/auth/google/callback
+CLOUDFLARE_TUNNEL_ID=your-tunnel-uuid
+CLOUDFLARE_TUNNEL_CREDENTIALS={"AccountTag":"...","TunnelID":"...","TunnelSecret":"..."}
+CLOUDFLARE_TUNNEL_HOSTNAME=infrared.earth
+CLOUDFLARE_TUNNEL_ORIGIN=http://localhost:6060
 ```
 
 Generate a session secret with `pnpm auth:secret`. The password is never stored in the browser; sessions use an HttpOnly, signed cookie.
 
 Add the exact `GOOGLE_CALLBACK_URL` to Google Cloud Console under **OAuth client → Authorized redirect URIs**.
+
+For a locally managed Cloudflare Tunnel, add the tunnel ID and credentials JSON as Railway secrets. The credentials JSON must never be committed to Git.
 
 > [!WARNING]
 > You **can not** host Infrared locally via a static web hosting site

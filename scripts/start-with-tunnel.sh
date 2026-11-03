@@ -1,12 +1,25 @@
 #!/bin/sh
 set -eu
 
-if [ -z "${CLOUDFLARE_TUNNEL_TOKEN:-}" ]; then
-  echo "CLOUDFLARE_TUNNEL_TOKEN is required" >&2
+if [ -n "${CLOUDFLARE_TUNNEL_TOKEN:-}" ]; then
+  cloudflared tunnel --no-autoupdate run --token "$CLOUDFLARE_TUNNEL_TOKEN" &
+elif [ -n "${CLOUDFLARE_TUNNEL_ID:-}" ] && [ -n "${CLOUDFLARE_TUNNEL_CREDENTIALS:-}" ]; then
+  credentials_file=/tmp/infrared-tunnel-credentials.json
+  config_file=/tmp/infrared-tunnel-config.yml
+  printf '%s' "$CLOUDFLARE_TUNNEL_CREDENTIALS" > "$credentials_file"
+  cat > "$config_file" <<EOF
+tunnel: ${CLOUDFLARE_TUNNEL_ID}
+credentials-file: ${credentials_file}
+ingress:
+  - hostname: ${CLOUDFLARE_TUNNEL_HOSTNAME:-infrared.earth}
+    service: ${CLOUDFLARE_TUNNEL_ORIGIN:-http://localhost:6060}
+  - service: http_status:404
+EOF
+  cloudflared tunnel --no-autoupdate --config "$config_file" run &
+else
+  echo "Configure CLOUDFLARE_TUNNEL_TOKEN or CLOUDFLARE_TUNNEL_ID plus CLOUDFLARE_TUNNEL_CREDENTIALS" >&2
   exit 1
 fi
-
-cloudflared tunnel --no-autoupdate run --token "$CLOUDFLARE_TUNNEL_TOKEN" &
 tunnel_pid=$!
 
 pnpm start &
