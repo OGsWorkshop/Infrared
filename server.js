@@ -9,6 +9,10 @@ const types = { ".html":"text/html; charset=utf-8", ".css":"text/css; charset=ut
 
 http.createServer((req, res) => {
   const requested = decodeURIComponent((req.url || "/").split("?")[0]);
+  if (requested === "/start.html") {
+    res.writeHead(302, { Location: "/" });
+    return res.end();
+  }
   const file = path.resolve(root, requested === "/" ? "index.html" : requested.slice(1));
   if (!file.startsWith(root + path.sep)) { res.writeHead(403); return res.end("Forbidden"); }
   fs.stat(file, (error, stats) => {
