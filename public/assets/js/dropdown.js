@@ -1,11 +1,11 @@
 // thanks to https://waves.lat for custom dropdowns || https://gitlab.com/waveslab/waves
 const appSettings = {
-  backend: localStorage.getItem("Infrared_backend") || "Scramjet",
-  searchEngine: localStorage.getItem("Infrared_searchEngine") || "DuckDuckGo",
+  backend: localStorage.getItem("cherri_backend") || "Scramjet",
+  searchEngine: localStorage.getItem("cherri_searchEngine") || "DuckDuckGo",
   decoy: localStorage.getItem("decoy") || "None",
-  wisp: localStorage.getItem("Infrared_wispUrlSelected") || "rhw",
-  theme: localStorage.getItem("Infrared_theme") || "default",
-  store: localStorage.getItem("Infrared_gameStore") || "Classplay",
+  wisp: localStorage.getItem("cherri_wispUrlSelected") || "rhw",
+  theme: localStorage.getItem("cherri_theme") || "default",
+  store: localStorage.getItem("cherri_gameStore") || "Classplay",
 };
 
 const searchEngineSelector = document.querySelector(".search-engine-selector");
@@ -248,7 +248,7 @@ function applyDecoy(s) {
         s +
         " was selected"
     );
-    document.title = "Infrared";
+    document.title = "cherri";
     favicon.href = "/assets/img/fav.png";
     return;
   } else {
@@ -264,7 +264,7 @@ createSelector(
   searchEngineOptions,
   allSearchEngineOptions,
   appSettings.searchEngine,
-  "Infrared_searchEngine",
+  "cherri_searchEngine",
   null,
   "Successfully updated Search Engine!"
 );
@@ -286,7 +286,7 @@ createSelector(
   backendOptions,
   allBackendOptions,
   appSettings.backend,
-  "Infrared_backend",
+  "cherri_backend",
   "backendUpdated",
   "Successfully updated backend!"
 );
@@ -297,7 +297,7 @@ createSelector(
   themeOptions,
   allThemeOptions,
   appSettings.theme,
-  "Infrared_theme",
+  "cherri_theme",
   "themeUpdated",
   "Successfully updated theme! Refresh to see background change."
 );
@@ -308,7 +308,7 @@ createSelector(
   storeOptions,
   allStoreOptions,
   appSettings.store,
-  "Infrared_gameStore",
+  "cherri_gameStore",
   "storeUpdated",
   "Successfully updated game library!"
 );
@@ -327,7 +327,7 @@ document.addEventListener("themeUpdated", (e) => {
 document.addEventListener("wispUpdated", (e) => {
   const wisp = wispPresets[e.detail];
 
-  localStorage.setItem("Infrared_wispUrl", wisp.url);
+  localStorage.setItem("cherri_wispUrl", wisp.url);
   console.log(wisp.url);
 });
 window.addEventListener("load", () => {

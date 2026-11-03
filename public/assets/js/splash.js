@@ -9,7 +9,7 @@ const splashes = [
   "plz star",
   "sock",
   "sdakjlfhaskdfg",
-  "#InfraredTeam",
+  "#CherriTeam",
   "1 2 skip a few",
   ":broken-heart: :wilted-rose:",
   "canceled due to the rain :(",
