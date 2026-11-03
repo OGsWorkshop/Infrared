@@ -2,9 +2,10 @@ import crypto from 'node:crypto';
 
 const COOKIE_NAME = 'infrared_session';
 const SESSION_TTL = 7 * 24 * 60 * 60 * 1000;
+const runtimeSecret = process.env.INFRARED_AUTH_SECRET?.trim() || crypto.randomBytes(48).toString('base64url');
 
 function secret() {
-	return process.env.INFRARED_AUTH_SECRET || 'change-this-infrared-secret';
+	return runtimeSecret;
 }
 
 function sign(value) {
