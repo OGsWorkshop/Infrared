@@ -17,7 +17,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN chmod +x ./scripts/start-with-tunnel.sh
 
-ENV PORT=6060
-EXPOSE 6060
+ENV PORT=2000
+EXPOSE 2000
 
 CMD ["./scripts/start-with-tunnel.sh"]

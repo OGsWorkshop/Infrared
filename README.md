@@ -35,7 +35,7 @@ GOOGLE_CALLBACK_URL=https://your-domain.example/api/auth/google/callback
 CLOUDFLARE_TUNNEL_ID=your-tunnel-uuid
 CLOUDFLARE_TUNNEL_CREDENTIALS={"AccountTag":"...","TunnelID":"...","TunnelSecret":"..."}
 CLOUDFLARE_TUNNEL_HOSTNAME=infrared.earth
-CLOUDFLARE_TUNNEL_ORIGIN=http://localhost:6060
+CLOUDFLARE_TUNNEL_ORIGIN=http://127.0.0.1:2000
 ```
 
 Generate a session secret with `pnpm auth:secret`. The password is never stored in the browser; sessions use an HttpOnly, signed cookie.

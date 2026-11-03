@@ -12,7 +12,7 @@ tunnel: ${CLOUDFLARE_TUNNEL_ID}
 credentials-file: ${credentials_file}
 ingress:
   - hostname: ${CLOUDFLARE_TUNNEL_HOSTNAME:-infrared.earth}
-    service: ${CLOUDFLARE_TUNNEL_ORIGIN:-http://localhost:6060}
+    service: ${CLOUDFLARE_TUNNEL_ORIGIN:-http://127.0.0.1:2000}
   - service: http_status:404
 EOF
   cloudflared tunnel --no-autoupdate --config "$config_file" run &
