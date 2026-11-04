@@ -17,7 +17,12 @@ http.createServer((req, res) => {
   if (!file.startsWith(root + path.sep)) { res.writeHead(403); return res.end("Forbidden"); }
   fs.stat(file, (error, stats) => {
     if (error || !stats.isFile()) { res.writeHead(404); return res.end("Not found"); }
-    res.writeHead(200, { "Content-Type": types[path.extname(file).toLowerCase()] || "application/octet-stream" });
+    const headers = { "Content-Type": types[path.extname(file).toLowerCase()] || "application/octet-stream" };
+    if (requested === "/") {
+      headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+      headers["Clear-Site-Data"] = '"cache", "storage", "executionContexts"';
+    }
+    res.writeHead(200, headers);
     fs.createReadStream(file).pipe(res);
   });
 }).listen(port, "0.0.0.0", () => console.log(`Cherri listening on ${port}`));
