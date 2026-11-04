@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="Infrared-hs" content="__InfraredHs" />
-<script>(function(){if(sessionStorage.getItem("infrared_sw_reset"))return;sessionStorage.setItem("infrared_sw_reset","1");navigator.serviceWorker?.getRegistrations().then(function(registrations){return Promise.all(registrations.map(function(registration){return registration.unregister()}));}).then(function(){return caches?.keys?.().then(function(keys){return Promise.all(keys.map(function(key){return caches.delete(key)}));})}).then(function(){location.reload()}).catch(function(){location.reload()})})();</script>
+<script>(function(){navigator.serviceWorker?.getRegistrations().then(function(registrations){if(!registrations.length)return false;return Promise.all(registrations.map(function(registration){return registration.unregister()})).then(function(){return caches?.keys?.().then(function(keys){return Promise.all(keys.map(function(key){return caches.delete(key)}));})}).then(function(){location.reload();return true})}).catch(function(){})})();</script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
