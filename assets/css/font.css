@@ -94,37 +94,37 @@
 
 @font-face {
     font-family: sfc;
-    src: url(/assets/fonts/sfc/SFCompactText-Light.otf);
+    src: url(/assets/fonts/figtree.ttf);
     font-weight: 300;
 }
 
 @font-face {
     font-family: sfc;
-    src: url(/assets/fonts/sfc/SFCompactText-Regular.otf);
+    src: url(/assets/fonts/figtree.ttf);
     font-weight: 400;
 }
 
 @font-face {
     font-family: sfc;
-    src: url(/assets/fonts/sfc/SFCompactText-Medium.otf);
+    src: url(/assets/fonts/figtree.ttf);
     font-weight: 500;
 }
 
 @font-face {
     font-family: sfc;
-    src: url(/assets/fonts/sfc/SFCompactText-Semibold.otf);
+    src: url(/assets/fonts/figtree.ttf);
     font-weight: 600;
 }
 
 @font-face {
     font-family: sfc;
-    src: url(/assets/fonts/sfc/SFCompactText-Bold.otf);
+    src: url(/assets/fonts/figtree.ttf);
     font-weight: 700;
 }
 
 @font-face {
     font-family: sfc;
-    src: url(/assets/fonts/sfc/SFCompactText-Heavy.otf);
+    src: url(/assets/fonts/figtree.ttf);
     font-weight: 900;
 }
 

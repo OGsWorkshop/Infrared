@@ -9,6 +9,9 @@ const types = { ".html":"text/html; charset=utf-8", ".css":"text/css; charset=ut
 
 http.createServer((req, res) => {
   const requested = decodeURIComponent((req.url || "/").split("?")[0]);
+  if (requested === "/api/geo") return json(res, { country: null, region: null, city: null, timezone: null });
+  if (requested === "/api/device/hello") return json(res, { ok: true, device: null });
+  if (requested === "/api/presence/heartbeat") return json(res, { ok: true });
   if (requested === "/start.html") {
     res.writeHead(302, { Location: "/" });
     return res.end();
@@ -18,11 +21,13 @@ http.createServer((req, res) => {
   fs.stat(file, (error, stats) => {
     if (error || !stats.isFile()) { res.writeHead(404); return res.end("Not found"); }
     const headers = { "Content-Type": types[path.extname(file).toLowerCase()] || "application/octet-stream" };
-    if (requested === "/") {
-      headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
-      headers["Clear-Site-Data"] = '"cache", "storage", "executionContexts"';
-    }
+    if (requested === "/") headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
     res.writeHead(200, headers);
     fs.createReadStream(file).pipe(res);
   });
 }).listen(port, "0.0.0.0", () => console.log(`Cherri listening on ${port}`));
+
+function json(res, value) {
+  res.writeHead(200, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" });
+  res.end(JSON.stringify(value));
+}
