@@ -45,6 +45,11 @@ RUN node /app/remove-mc.cjs /app/backend/public/pages/home.html \
 COPY overlays/patch-backend.cjs /app/patch-backend.cjs
 RUN node /app/patch-backend.cjs /app/backend
 
+# Movie playback: the in-browser proxy's transport can't complete TLS to the
+# embed hosts, so embed the providers directly (they're iframe embeds) and
+# default to one that permits framing.
+RUN sed -i -e 's#/pages/embed.html?link=##g' -e 's#&type=uv##g' -e 's# (Proxied)##g' -e "s#selectedSource: 'vidking'#selectedSource: 'embedmaster'#" public/pages/movie.html
+
 # The leak repo's libcurl transport is truncated (unterminated wasm base64),
 # which makes setTransport fail ("there are no bare clients"). Use our valid copy.
 COPY libcurl/index.mjs /app/backend/public/libcurl/index.mjs
