@@ -33,6 +33,13 @@ RUN node /app/inject-brand.cjs /app/backend/public
 COPY overlays/edit-credits.cjs /app/edit-credits.cjs
 RUN node /app/edit-credits.cjs /app/backend/public/pages/settings.html
 
+# Remove the "Join the Minecraft Server" button + modal from home/chatrooms,
+# and point the Discord invite at the requested server.
+COPY overlays/remove-mc.cjs /app/remove-mc.cjs
+RUN node /app/remove-mc.cjs /app/backend/public/pages/home.html \
+ && node /app/remove-mc.cjs /app/backend/public/pages/chatrooms.html \
+ && find public -name '*.html' -exec sed -i 's#https://discord.gg/hUYzETaQ9U#https://discord.gg/XNMTdDvjKJ#g' {} +
+
 COPY scripts/start-backend.sh /app/start-backend.sh
 RUN chmod +x /app/start-backend.sh
 
