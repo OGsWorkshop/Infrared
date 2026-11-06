@@ -19,7 +19,8 @@ RUN bun install
 # working WISP (the same-origin /socket/ server isn't served in production).
 RUN sed -i 's/"cherri_enableAds") || "yes"/"cherri_enableAds") || "no"/g' public/index.html \
  && sed -i 's#https://woofbeginner.com/51/25/ea/5125ea799eaf5473f38787565afde88f.js#data:text/javascript,#g' public/index.html \
- && node -e "const fs=require('fs');const p='public/assets/js/cherri.browse.js';let s=fs.readFileSync(p,'utf8');s=s.replace('const wispUrl = defaultWispUrl;','const wispUrl = \"wss://anura.pro/\";');fs.writeFileSync(p,s);console.log('wisp patched:',s.includes('wss://anura.pro/'))"
+ && node -e "const fs=require('fs');const p='public/assets/js/cherri.browse.js';let s=fs.readFileSync(p,'utf8');s=s.replace('const wispUrl = defaultWispUrl;','const wispUrl = \"wss://anura.pro/\";');fs.writeFileSync(p,s);console.log('wisp patched:',s.includes('wss://anura.pro/'))" \
+ && sed -i 's#/assets/js/cherri.browse.js"#/assets/js/cherri.browse.js?v=2"#g' public/pages/browse.html public/pages/minibrowse.html
 
 COPY scripts/start-backend.sh /app/start-backend.sh
 RUN chmod +x /app/start-backend.sh
