@@ -22,7 +22,7 @@ RUN sed -i 's/"cherri_enableAds") || "yes"/"cherri_enableAds") || "no"/g' public
  && cp public/assets/css/colors/crimson.css public/assets/css/colors/default.css \
  && find public -type f \( -name '*.html' -o -name '*.js' \) -exec sed -i -e 's/cherri_theme") ?? "default"/cherri_theme") ?? "crimson"/g' -e 's/cherri_theme") || "default"/cherri_theme") || "crimson"/g' -e 's/cherri_theme")??"default"/cherri_theme")??"crimson"/g' {} + \
  && sed -i 's#href="/assets/css/colors/default.css"#href="/assets/css/colors/crimson.css"#' public/onboarding/index.html \
- && node -e "const fs=require('fs');const p='public/assets/js/cherri.browse.js';let s=fs.readFileSync(p,'utf8');s=s.replace('const wispUrl = defaultWispUrl;','const wispUrl = \"wss://anura.pro/\";');s=s.replace('/libcurl/index.mjs','/libcurl/index.mjs?v=2');s=s.replace('/epoxy/index.mjs','/epoxy/index.mjs?v=2');fs.writeFileSync(p,s);console.log('wisp patched:',s.includes('wss://anura.pro/'))" \
+ && find public -type f \( -name '*.html' -o -name '*.js' \) -exec sed -i -e 's#/libcurl/index.mjs#/libcurl/index.mjs?v=2#g' -e 's#/epoxy/index.mjs#/epoxy/index.mjs?v=2#g' -e 's#const wispUrl = defaultWispUrl;#const wispUrl = "wss://anura.pro/";#g' {} + \
  && sed -i 's#/assets/js/cherri.browse.js"#/assets/js/cherri.browse.js?v=3"#g' public/pages/browse.html public/pages/minibrowse.html
 
 # Rebrand visible "Cherri" -> "Infrared" (static capital-Cherri in HTML, plus a
