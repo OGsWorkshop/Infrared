@@ -48,6 +48,8 @@ RUN node /app/patch-backend.cjs /app/backend
 # The leak repo's libcurl transport is truncated (unterminated wasm base64),
 # which makes setTransport fail ("there are no bare clients"). Use our valid copy.
 COPY libcurl/index.mjs /app/backend/public/libcurl/index.mjs
+# Same corruption in the leaked uv.bundle.js; use our valid UV runtime.
+COPY uv/ /app/backend/public/uv/
 
 COPY scripts/start-backend.sh /app/start-backend.sh
 RUN chmod +x /app/start-backend.sh
