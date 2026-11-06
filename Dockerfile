@@ -1,10 +1,12 @@
-FROM oven/bun:1
+FROM node:24-bookworm-slim
 WORKDIR /app
 
 RUN apt-get update \
- && apt-get install -y --no-install-recommends curl ca-certificates git \
+ && apt-get install -y --no-install-recommends curl ca-certificates git unzip \
  && curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared \
  && chmod +x /usr/local/bin/cloudflared \
+ && curl -fsSL https://bun.sh/install | bash \
+ && ln -sf /root/.bun/bin/bun /usr/local/bin/bun \
  && rm -rf /var/lib/apt/lists/*
 
 # Self-contained site: the backend serves the frontend (public/) plus the /api
@@ -13,10 +15,11 @@ RUN git clone --depth 1 https://github.com/x8rr/cherri-v2-leak.git /app/backend
 WORKDIR /app/backend
 RUN bun install
 
-# Ads off: the site injects a third-party ad script by default. Flip the default
-# to "no" and neutralize the ad tag URL so no ad/reseller bidder chain loads.
+# Ads off by default + neutralize the ad tag URL; point the browser proxy at a
+# working WISP (the same-origin /socket/ server isn't served in production).
 RUN sed -i 's/"cherri_enableAds") || "yes"/"cherri_enableAds") || "no"/g' public/index.html \
- && sed -i 's#https://woofbeginner.com/51/25/ea/5125ea799eaf5473f38787565afde88f.js#data:text/javascript,#g' public/index.html
+ && sed -i 's#https://woofbeginner.com/51/25/ea/5125ea799eaf5473f38787565afde88f.js#data:text/javascript,#g' public/index.html \
+ && sed -i 's#^const wispUrl = defaultWispUrl;#const wispUrl = "wss://anura.pro/";#' public/assets/js/cherri.browse.js
 
 COPY scripts/start-backend.sh /app/start-backend.sh
 RUN chmod +x /app/start-backend.sh
