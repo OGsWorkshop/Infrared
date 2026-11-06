@@ -40,6 +40,11 @@ RUN node /app/remove-mc.cjs /app/backend/public/pages/home.html \
  && node /app/remove-mc.cjs /app/backend/public/pages/chatrooms.html \
  && find public -name '*.html' -exec sed -i 's#https://discord.gg/hUYzETaQ9U#https://discord.gg/XNMTdDvjKJ#g' {} +
 
+# Make Movies work (TMDB has no CORS, so proxy it server-side) and make AI work
+# (proxy to cherrion.top, rewriting the model to the one it accepts).
+COPY overlays/patch-backend.cjs /app/patch-backend.cjs
+RUN node /app/patch-backend.cjs /app/backend
+
 COPY scripts/start-backend.sh /app/start-backend.sh
 RUN chmod +x /app/start-backend.sh
 
