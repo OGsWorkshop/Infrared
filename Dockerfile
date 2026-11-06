@@ -45,6 +45,10 @@ RUN node /app/remove-mc.cjs /app/backend/public/pages/home.html \
 COPY overlays/patch-backend.cjs /app/patch-backend.cjs
 RUN node /app/patch-backend.cjs /app/backend
 
+# The leak repo's libcurl transport is truncated (unterminated wasm base64),
+# which makes setTransport fail ("there are no bare clients"). Use our valid copy.
+COPY libcurl/index.mjs /app/backend/public/libcurl/index.mjs
+
 COPY scripts/start-backend.sh /app/start-backend.sh
 RUN chmod +x /app/start-backend.sh
 
