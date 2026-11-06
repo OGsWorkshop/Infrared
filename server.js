@@ -16,9 +16,37 @@ const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 const stubs = {
   "/api/geo": { country: null, region: null, city: null, timezone: null },
   "/api/device/hello": { ok: true, device: null },
-  "/api/presence/heartbeat": { ok: true },
-  "/api/presence/count": { count: 0 }
+  "/api/presence/heartbeat": { ok: true }
 };
+
+// Home page shows "N users online" from /api/presence/count; surface the
+// Discord server's live presence instead of a placeholder.
+const DISCORD_INVITE = "XNMTdDvjKJ";
+let presence = { at: 0, count: 0 };
+
+function getJson(url) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(url, { headers: { "User-Agent": UA, Accept: "application/json" } }, (res) => {
+      if (res.statusCode !== 200) { res.resume(); return reject(new Error("status " + res.statusCode)); }
+      const chunks = [];
+      res.on("data", (c) => chunks.push(c));
+      res.on("end", () => { try { resolve(JSON.parse(Buffer.concat(chunks).toString("utf8"))); } catch (e) { reject(e); } });
+    });
+    req.on("error", reject);
+    req.setTimeout(8000, () => req.destroy(new Error("timeout")));
+  });
+}
+
+async function presenceCount(res) {
+  if (Date.now() - presence.at > 30000) {
+    try {
+      const data = await getJson(`https://discord.com/api/v10/invites/${DISCORD_INVITE}?with_counts=true`);
+      const count = Number(data.approximate_presence_count);
+      if (Number.isFinite(count)) presence = { at: Date.now(), count };
+    } catch { presence = { at: Date.now(), count: presence.count }; }
+  }
+  return json(res, { count: presence.count });
+}
 
 function proxy(req, res) {
   const headers = { ...req.headers, host: UPSTREAM, referer: `https://${UPSTREAM}/`, origin: `https://${UPSTREAM}`, "user-agent": req.headers["user-agent"] || UA };
@@ -42,6 +70,7 @@ function proxy(req, res) {
 
 http.createServer((req, res) => {
   const requested = decodeURIComponent((req.url || "/").split("?")[0]);
+  if (requested === "/api/presence/count") return void presenceCount(res);
   if (stubs[requested]) return json(res, stubs[requested]);
   if (requested === "/start.html") {
     res.writeHead(302, { Location: "/" });
